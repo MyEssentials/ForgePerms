@@ -29,8 +29,8 @@ public class MappingNode extends CollectionNode {
     private List<NodeTuple> value;
     private boolean merged = false;
 
-    public MappingNode(Tag tag, boolean resolved, List<NodeTuple> value, Mark startMark,
-            Mark endMark, Boolean flowStyle) {
+    public MappingNode(Tag tag, boolean resolved, List<NodeTuple> value,
+            Mark startMark, Mark endMark, Boolean flowStyle) {
         super(tag, startMark, endMark, flowStyle);
         if (value == null) {
             throw new NullPointerException("value in a Node is required.");
@@ -67,7 +67,8 @@ public class MappingNode extends CollectionNode {
         }
     }
 
-    public void setTypes(Class<? extends Object> keyType, Class<? extends Object> valueType) {
+    public void setTypes(Class<? extends Object> keyType,
+            Class<? extends Object> valueType) {
         for (NodeTuple nodes : value) {
             nodes.getValueNode().setType(valueType);
             nodes.getKeyNode().setType(keyType);
@@ -91,7 +92,8 @@ public class MappingNode extends CollectionNode {
             buf.append(" }");
         }
         values = buf.toString();
-        return "<" + this.getClass().getName() + " (tag=" + getTag() + ", values=" + values + ")>";
+        return "<" + this.getClass().getName() + " (tag=" + getTag()
+                + ", values=" + values + ")>";
     }
 
     /**

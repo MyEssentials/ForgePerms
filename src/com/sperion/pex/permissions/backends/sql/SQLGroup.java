@@ -29,12 +29,12 @@ public class SQLGroup extends ProxyPermissionGroup {
     public SQLGroup(String name, PermissionManager manager, SQLConnection sql) {
         super(new SQLEntity(name, manager, SQLEntity.Type.GROUP, sql));
 
-        this.backend = (SQLEntity) this.backendEntity;
+        backend = (SQLEntity) backendEntity;
     }
 
     @Override
     protected String[] getParentGroupsNamesImpl(String worldName) {
-        return this.backend.getParentNames(worldName);
+        return backend.getParentNames(worldName);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class SQLGroup extends ProxyPermissionGroup {
             return;
         }
 
-        this.backend.setParents(parentGroups, worldName);
-        
+        backend.setParents(parentGroups, worldName);
+
         this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
     }
 }

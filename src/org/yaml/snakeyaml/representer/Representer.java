@@ -40,10 +40,11 @@ import org.yaml.snakeyaml.nodes.Tag;
 public class Representer extends SafeRepresenter {
 
     public Representer() {
-        this.representers.put(null, new RepresentJavaBean());
+        representers.put(null, new RepresentJavaBean());
     }
 
     protected class RepresentJavaBean implements Represent {
+        @Override
         public Node representData(Object data) {
             try {
                 return representJavaBean(getProperties(data.getClass()), data);
@@ -67,7 +68,8 @@ public class Representer extends SafeRepresenter {
      *            instance for Node
      * @return Node to get serialized
      */
-    protected MappingNode representJavaBean(Set<Property> properties, Object javaBean) {
+    protected MappingNode representJavaBean(Set<Property> properties,
+            Object javaBean) {
         List<NodeTuple> value = new ArrayList<NodeTuple>(properties.size());
         Tag tag;
         Tag customTag = classTags.get(javaBean.getClass());
@@ -78,10 +80,10 @@ public class Representer extends SafeRepresenter {
         boolean bestStyle = true;
         for (Property property : properties) {
             Object memberValue = property.get(javaBean);
-            Tag customPropertyTag = memberValue == null ? null : classTags.get(memberValue
-                    .getClass());
-            NodeTuple tuple = representJavaBeanProperty(javaBean, property, memberValue,
-                    customPropertyTag);
+            Tag customPropertyTag = memberValue == null ? null : classTags
+                    .get(memberValue.getClass());
+            NodeTuple tuple = representJavaBeanProperty(javaBean, property,
+                    memberValue, customPropertyTag);
             if (tuple == null) {
                 continue;
             }
@@ -89,7 +91,8 @@ public class Representer extends SafeRepresenter {
                 bestStyle = false;
             }
             Node nodeValue = tuple.getValueNode();
-            if (!((nodeValue instanceof ScalarNode && ((ScalarNode) nodeValue).getStyle() == null))) {
+            if (!(nodeValue instanceof ScalarNode && ((ScalarNode) nodeValue)
+                    .getStyle() == null)) {
                 bestStyle = false;
             }
             value.add(tuple);
@@ -116,11 +119,11 @@ public class Representer extends SafeRepresenter {
      * @return NodeTuple to be used in a MappingNode. Return null to skip the
      *         property
      */
-    protected NodeTuple representJavaBeanProperty(Object javaBean, Property property,
-            Object propertyValue, Tag customTag) {
+    protected NodeTuple representJavaBeanProperty(Object javaBean,
+            Property property, Object propertyValue, Tag customTag) {
         ScalarNode nodeKey = (ScalarNode) representData(property.getName());
         // the first occurrence of the node must keep the tag
-        boolean hasAlias = this.representedObjects.containsKey(propertyValue);
+        boolean hasAlias = representedObjects.containsKey(propertyValue);
 
         Node nodeValue = representData(propertyValue);
 
@@ -179,10 +182,11 @@ public class Representer extends SafeRepresenter {
                 for (Node childNode : snode.getValue()) {
                     Object member = iter.next();
                     if (member != null) {
-                        if (t.equals(member.getClass()))
+                        if (t.equals(member.getClass())) {
                             if (childNode.getNodeId() == NodeId.mapping) {
                                 childNode.setTag(Tag.MAP);
                             }
+                        }
                     }
                 }
             } else if (object instanceof Set) {

@@ -26,13 +26,15 @@ public final class Constant {
     private final static String NULL_BL_LINEBR_S = " " + NULL_OR_LINEBR_S;
     private final static String NULL_BL_T_LINEBR_S = "\t" + NULL_BL_LINEBR_S;
     private final static String NULL_BL_T_S = "\0 \t";
-    private final static String URI_CHARS_S = ALPHA_S + "-;/?:@&=+$,_.!~*\'()[]%";
+    private final static String URI_CHARS_S = ALPHA_S
+            + "-;/?:@&=+$,_.!~*\'()[]%";
 
     public final static Constant LINEBR = new Constant(LINEBR_S);
     public final static Constant FULL_LINEBR = new Constant(FULL_LINEBR_S);
     public final static Constant NULL_OR_LINEBR = new Constant(NULL_OR_LINEBR_S);
     public final static Constant NULL_BL_LINEBR = new Constant(NULL_BL_LINEBR_S);
-    public final static Constant NULL_BL_T_LINEBR = new Constant(NULL_BL_T_LINEBR_S);
+    public final static Constant NULL_BL_T_LINEBR = new Constant(
+            NULL_BL_T_LINEBR_S);
     public final static Constant NULL_BL_T = new Constant(NULL_BL_T_S);
     public final static Constant URI_CHARS = new Constant(URI_CHARS_S);
 
@@ -47,10 +49,11 @@ public final class Constant {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < content.length(); i++) {
             char ch = content.charAt(i);
-            if (ch < 128)
+            if (ch < 128) {
                 contains[ch] = true;
-            else
+            } else {
                 sb.append(ch);
+            }
         }
         if (sb.length() > 0) {
             noASCII = true;
@@ -59,7 +62,8 @@ public final class Constant {
     }
 
     public boolean has(char ch) {
-        return (ch < 128) ? contains[ch] : noASCII && content.indexOf(ch, 0) != -1;
+        return ch < 128 ? contains[ch] : noASCII
+                && content.indexOf(ch, 0) != -1;
     }
 
     public boolean hasNo(char ch) {

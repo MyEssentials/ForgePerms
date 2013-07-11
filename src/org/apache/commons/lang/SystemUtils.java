@@ -24,9 +24,9 @@ import java.io.File;
  * </p>
  * 
  * <p>
- * If a system property cannot be read due to security restrictions,
- * the corresponding field in this class will be set to <code>null</code>
- * and a message will be written to <code>System.err</code>.
+ * If a system property cannot be read due to security restrictions, the
+ * corresponding field in this class will be set to <code>null</code> and a
+ * message will be written to <code>System.err</code>.
  * </p>
  * 
  * <p>
@@ -83,21 +83,23 @@ public class SystemUtils {
      * The <code>awt.toolkit</code> System Property.
      * </p>
      * <p>
-     * Holds a class name, on Windows XP this is <code>sun.awt.windows.WToolkit</code>.
+     * Holds a class name, on Windows XP this is
+     * <code>sun.awt.windows.WToolkit</code>.
      * </p>
      * <p>
      * <b>On platforms without a GUI, this value is <code>null</code>.</b>
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value will
-     * be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.1
@@ -113,14 +115,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.0
@@ -130,18 +133,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>file.separator</code> System Property. File separator (<code>&quot;/&quot;</code> on UNIX).
+     * The <code>file.separator</code> System Property. File separator (
+     * <code>&quot;/&quot;</code> on UNIX).
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -154,14 +159,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.1
@@ -174,14 +180,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.1
@@ -190,19 +197,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.awt.headless</code> System Property.
-     * The value of this property is the String <code>"true"</code> or <code>"false"</code>. 
+     * The <code>java.awt.headless</code> System Property. The value of this
+     * property is the String <code>"true"</code> or <code>"false"</code>.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @see #isJavaAwtHeadless()
@@ -217,14 +225,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.1
@@ -237,14 +246,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -253,18 +263,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.class.version</code> System Property. Java class format version number.
+     * The <code>java.class.version</code> System Property. Java class format
+     * version number.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -273,19 +285,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.compiler</code> System Property. Name of JIT compiler to use.
-     * First in JDK version 1.2. Not used in Sun JDKs after 1.2.
+     * The <code>java.compiler</code> System Property. Name of JIT compiler to
+     * use. First in JDK version 1.2. Not used in Sun JDKs after 1.2.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2. Not used in Sun versions after 1.2.
@@ -294,18 +307,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.endorsed.dirs</code> System Property. Path of endorsed directory or directories.
+     * The <code>java.endorsed.dirs</code> System Property. Path of endorsed
+     * directory or directories.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.4
@@ -314,18 +329,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.ext.dirs</code> System Property. Path of extension directory or directories.
+     * The <code>java.ext.dirs</code> System Property. Path of extension
+     * directory or directories.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.3
@@ -338,14 +355,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -358,14 +376,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -374,18 +393,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.library.path</code> System Property. List of paths to search when loading libraries.
+     * The <code>java.library.path</code> System Property. List of paths to
+     * search when loading libraries.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -394,18 +415,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.runtime.name</code> System Property. Java Runtime Environment name.
+     * The <code>java.runtime.name</code> System Property. Java Runtime
+     * Environment name.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.0
@@ -415,18 +438,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.runtime.version</code> System Property. Java Runtime Environment version.
+     * The <code>java.runtime.version</code> System Property. Java Runtime
+     * Environment version.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.0
@@ -436,18 +461,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.specification.name</code> System Property. Java Runtime Environment specification name.
+     * The <code>java.specification.name</code> System Property. Java Runtime
+     * Environment specification name.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -456,18 +483,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.specification.vendor</code> System Property. Java Runtime Environment specification vendor.
+     * The <code>java.specification.vendor</code> System Property. Java Runtime
+     * Environment specification vendor.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -476,18 +505,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.specification.version</code> System Property. Java Runtime Environment specification version.
+     * The <code>java.specification.version</code> System Property. Java Runtime
+     * Environment specification version.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.3
@@ -496,40 +527,43 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.util.prefs.PreferencesFactory</code> System Property. A class name.
+     * The <code>java.util.prefs.PreferencesFactory</code> System Property. A
+     * class name.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.1
      * @since Java 1.4
      */
-    public static final String JAVA_UTIL_PREFS_PREFERENCES_FACTORY = 
-        getSystemProperty("java.util.prefs.PreferencesFactory");
+    public static final String JAVA_UTIL_PREFS_PREFERENCES_FACTORY = getSystemProperty("java.util.prefs.PreferencesFactory");
 
     /**
      * <p>
-     * The <code>java.vendor</code> System Property. Java vendor-specific string.
+     * The <code>java.vendor</code> System Property. Java vendor-specific
+     * string.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -542,14 +576,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -562,14 +597,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -578,18 +614,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.info</code> System Property. Java Virtual Machine implementation info.
+     * The <code>java.vm.info</code> System Property. Java Virtual Machine
+     * implementation info.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.0
@@ -599,18 +637,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.name</code> System Property. Java Virtual Machine implementation name.
+     * The <code>java.vm.name</code> System Property. Java Virtual Machine
+     * implementation name.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -619,18 +659,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.specification.name</code> System Property. Java Virtual Machine specification name.
+     * The <code>java.vm.specification.name</code> System Property. Java Virtual
+     * Machine specification name.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -639,18 +681,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.specification.vendor</code> System Property. Java Virtual Machine specification vendor.
+     * The <code>java.vm.specification.vendor</code> System Property. Java
+     * Virtual Machine specification vendor.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -659,18 +703,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.specification.version</code> System Property. Java Virtual Machine specification version.
+     * The <code>java.vm.specification.version</code> System Property. Java
+     * Virtual Machine specification version.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -679,18 +725,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.vendor</code> System Property. Java Virtual Machine implementation vendor.
+     * The <code>java.vm.vendor</code> System Property. Java Virtual Machine
+     * implementation vendor.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -699,18 +747,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>java.vm.version</code> System Property. Java Virtual Machine implementation version.
+     * The <code>java.vm.version</code> System Property. Java Virtual Machine
+     * implementation version.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.2
@@ -719,18 +769,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>line.separator</code> System Property. Line separator (<code>&quot;\n&quot;</code> on UNIX).
+     * The <code>line.separator</code> System Property. Line separator (
+     * <code>&quot;\n&quot;</code> on UNIX).
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -743,14 +795,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -763,14 +816,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -783,14 +837,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -799,18 +854,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>path.separator</code> System Property. Path separator (<code>&quot;:&quot;</code> on UNIX).
+     * The <code>path.separator</code> System Property. Path separator (
+     * <code>&quot;:&quot;</code> on UNIX).
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -819,43 +876,46 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.country</code> or <code>user.region</code> System Property.
-     * User's country code, such as <code>GB</code>. First in
-     * Java version 1.2 as <code>user.region</code>. Renamed to <code>user.country</code> in 1.4
+     * The <code>user.country</code> or <code>user.region</code> System
+     * Property. User's country code, such as <code>GB</code>. First in Java
+     * version 1.2 as <code>user.region</code>. Renamed to
+     * <code>user.country</code> in 1.4
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.0
      * @since Java 1.2
      */
-    public static final String USER_COUNTRY = 
-        getSystemProperty("user.country") == null ?
-            getSystemProperty("user.region") : getSystemProperty("user.country");
+    public static final String USER_COUNTRY = getSystemProperty("user.country") == null ? getSystemProperty("user.region")
+            : getSystemProperty("user.country");
 
     /**
      * <p>
-     * The <code>user.dir</code> System Property. User's current working directory.
+     * The <code>user.dir</code> System Property. User's current working
+     * directory.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -868,14 +928,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -884,18 +945,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.language</code> System Property. User's language code, such as <code>"en"</code>.
+     * The <code>user.language</code> System Property. User's language code,
+     * such as <code>"en"</code>.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.0
@@ -909,14 +972,15 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since Java 1.1
@@ -925,18 +989,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * The <code>user.timezone</code> System Property. For example: <code>"America/Los_Angeles"</code>.
+     * The <code>user.timezone</code> System Property. For example:
+     * <code>"America/Los_Angeles"</code>.
      * </p>
      * 
      * <p>
-     * Defaults to <code>null</code> if the runtime does not have
-     * security access to read this property or the property does not exist.
+     * Defaults to <code>null</code> if the runtime does not have security
+     * access to read this property or the property does not exist.
      * </p>
      * 
      * <p>
-     * This value is initialized when the class is loaded. If {@link System#setProperty(String,String)} or
-     * {@link System#setProperties(java.util.Properties)} is called after this class is loaded, the value
-     * will be out of sync with that System property.
+     * This value is initialized when the class is loaded. If
+     * {@link System#setProperty(String,String)} or
+     * {@link System#setProperties(java.util.Properties)} is called after this
+     * class is loaded, the value will be out of sync with that System property.
      * </p>
      * 
      * @since 2.1
@@ -954,7 +1020,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>null</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>null</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.1
@@ -1019,7 +1086,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>false</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      */
     public static final boolean IS_JAVA_1_1 = getJavaVersionMatches("1.1");
@@ -1030,7 +1098,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>false</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      */
     public static final boolean IS_JAVA_1_2 = getJavaVersionMatches("1.2");
@@ -1041,7 +1110,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>false</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      */
     public static final boolean IS_JAVA_1_3 = getJavaVersionMatches("1.3");
@@ -1052,7 +1122,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>false</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      */
     public static final boolean IS_JAVA_1_4 = getJavaVersionMatches("1.4");
@@ -1063,7 +1134,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>false</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      */
     public static final boolean IS_JAVA_1_5 = getJavaVersionMatches("1.5");
@@ -1074,7 +1146,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>false</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      */
     public static final boolean IS_JAVA_1_6 = getJavaVersionMatches("1.6");
@@ -1085,7 +1158,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if {@link #JAVA_VERSION} is <code>null</code>.
+     * The field will return <code>false</code> if {@link #JAVA_VERSION} is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.5
@@ -1106,7 +1180,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1119,7 +1194,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1132,7 +1208,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1145,12 +1222,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
      */
-    public static final boolean IS_OS_LINUX = getOSMatchesName("Linux") || getOSMatchesName("LINUX");
+    public static final boolean IS_OS_LINUX = getOSMatchesName("Linux")
+            || getOSMatchesName("LINUX");
 
     /**
      * <p>
@@ -1158,7 +1237,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1171,7 +1251,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1184,7 +1265,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1197,7 +1279,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1210,7 +1293,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1219,19 +1303,20 @@ public class SystemUtils {
 
     /**
      * <p>
-     * Is <code>true</code> if this is a UNIX like system,
-     * as in any of AIX, HP-UX, Irix, Linux, MacOSX, Solaris or SUN OS.
+     * Is <code>true</code> if this is a UNIX like system, as in any of AIX,
+     * HP-UX, Irix, Linux, MacOSX, Solaris or SUN OS.
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.1
      */
-    public static final boolean IS_OS_UNIX =
-        IS_OS_AIX || IS_OS_HP_UX || IS_OS_IRIX || IS_OS_LINUX ||
-        IS_OS_MAC_OSX || IS_OS_SOLARIS || IS_OS_SUN_OS;
+    public static final boolean IS_OS_UNIX = IS_OS_AIX || IS_OS_HP_UX
+            || IS_OS_IRIX || IS_OS_LINUX || IS_OS_MAC_OSX || IS_OS_SOLARIS
+            || IS_OS_SUN_OS;
 
     /**
      * <p>
@@ -1239,7 +1324,8 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
@@ -1252,12 +1338,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
      */
-    public static final boolean IS_OS_WINDOWS_2000 = getOSMatches(OS_NAME_WINDOWS_PREFIX, "5.0");
+    public static final boolean IS_OS_WINDOWS_2000 = getOSMatches(
+            OS_NAME_WINDOWS_PREFIX, "5.0");
 
     /**
      * <p>
@@ -1265,12 +1353,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
      */
-    public static final boolean IS_OS_WINDOWS_95 = getOSMatches(OS_NAME_WINDOWS_PREFIX + " 9", "4.0");
+    public static final boolean IS_OS_WINDOWS_95 = getOSMatches(
+            OS_NAME_WINDOWS_PREFIX + " 9", "4.0");
     // Java 1.2 running on Windows98 returns 'Windows 95', hence the above
 
     /**
@@ -1279,12 +1369,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
      */
-    public static final boolean IS_OS_WINDOWS_98 = getOSMatches(OS_NAME_WINDOWS_PREFIX + " 9", "4.1");
+    public static final boolean IS_OS_WINDOWS_98 = getOSMatches(
+            OS_NAME_WINDOWS_PREFIX + " 9", "4.1");
     // Java 1.2 running on Windows98 returns 'Windows 95', hence the above
 
     /**
@@ -1293,12 +1385,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
      */
-    public static final boolean IS_OS_WINDOWS_ME = getOSMatches(OS_NAME_WINDOWS_PREFIX, "4.9");
+    public static final boolean IS_OS_WINDOWS_ME = getOSMatches(
+            OS_NAME_WINDOWS_PREFIX, "4.9");
     // Java 1.2 running on WindowsME may return 'Windows 95', hence the above
 
     /**
@@ -1307,13 +1401,16 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
      */
-    public static final boolean IS_OS_WINDOWS_NT = getOSMatchesName(OS_NAME_WINDOWS_PREFIX + " NT");
-    // Windows 2000 returns 'Windows 2000' but may suffer from same Java1.2 problem
+    public static final boolean IS_OS_WINDOWS_NT = getOSMatchesName(OS_NAME_WINDOWS_PREFIX
+            + " NT");
+    // Windows 2000 returns 'Windows 2000' but may suffer from same Java1.2
+    // problem
 
     /**
      * <p>
@@ -1321,12 +1418,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.0
      */
-    public static final boolean IS_OS_WINDOWS_XP = getOSMatches(OS_NAME_WINDOWS_PREFIX, "5.1");
+    public static final boolean IS_OS_WINDOWS_XP = getOSMatches(
+            OS_NAME_WINDOWS_PREFIX, "5.1");
 
     // -----------------------------------------------------------------------
     /**
@@ -1335,12 +1434,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.4
      */
-    public static final boolean IS_OS_WINDOWS_VISTA = getOSMatches(OS_NAME_WINDOWS_PREFIX, "6.0");
+    public static final boolean IS_OS_WINDOWS_VISTA = getOSMatches(
+            OS_NAME_WINDOWS_PREFIX, "6.0");
 
     /**
      * <p>
@@ -1348,12 +1449,14 @@ public class SystemUtils {
      * </p>
      * 
      * <p>
-     * The field will return <code>false</code> if <code>OS_NAME</code> is <code>null</code>.
+     * The field will return <code>false</code> if <code>OS_NAME</code> is
+     * <code>null</code>.
      * </p>
      * 
      * @since 2.5
      */
-    public static final boolean IS_OS_WINDOWS_7 = getOSMatches(OS_NAME_WINDOWS_PREFIX, "6.1");
+    public static final boolean IS_OS_WINDOWS_7 = getOSMatches(
+            OS_NAME_WINDOWS_PREFIX, "6.1");
 
     /**
      * <p>
@@ -1361,8 +1464,10 @@ public class SystemUtils {
      * </p>
      * 
      * @return a directory
-     * @throws SecurityException if a security manager exists and its
-     * <code>checkPropertyAccess</code> method doesn't allow access to the specified system property.
+     * @throws SecurityException
+     *             if a security manager exists and its
+     *             <code>checkPropertyAccess</code> method doesn't allow access
+     *             to the specified system property.
      * @see System#getProperty(String)
      * @since 2.1
      */
@@ -1376,9 +1481,10 @@ public class SystemUtils {
      * </p>
      * 
      * @return a directory
-     * @throws SecurityException if a security manager exists and its
-     * <code>checkPropertyAccess</code> method doesn't allow access to the specified system
-     *             property.
+     * @throws SecurityException
+     *             if a security manager exists and its
+     *             <code>checkPropertyAccess</code> method doesn't allow access
+     *             to the specified system property.
      * @see System#getProperty(String)
      * @since 2.1
      */
@@ -1387,18 +1493,23 @@ public class SystemUtils {
     }
 
     /**
-     * <p>Gets the Java version number as a <code>float</code>.</p>
-     *
-     * <p>Example return values:</p>
+     * <p>
+     * Gets the Java version number as a <code>float</code>.
+     * </p>
+     * 
+     * <p>
+     * Example return values:
+     * </p>
      * <ul>
-     *  <li><code>1.2f</code> for JDK 1.2
-     *  <li><code>1.31f</code> for JDK 1.3.1
+     * <li><code>1.2f</code> for JDK 1.2
+     * <li><code>1.31f</code> for JDK 1.3.1
      * </ul>
      * 
      * @return the version, for example 1.31f for JDK 1.3.1
-     * @deprecated Use {@link #JAVA_VERSION_FLOAT} instead.
-     *             Method will be removed in Commons Lang 3.0.
+     * @deprecated Use {@link #JAVA_VERSION_FLOAT} instead. Method will be
+     *             removed in Commons Lang 3.0.
      */
+    @Deprecated
     public static float getJavaVersion() {
         return JAVA_VERSION_FLOAT;
     }
@@ -1424,7 +1535,8 @@ public class SystemUtils {
      * @return the version, for example 1.31f for Java 1.3.1
      */
     private static float getJavaVersionAsFloat() {
-        return toVersionFloat(toJavaVersionIntArray(SystemUtils.JAVA_VERSION, JAVA_VERSION_TRIM_SIZE));
+        return toVersionFloat(toJavaVersionIntArray(SystemUtils.JAVA_VERSION,
+                JAVA_VERSION_TRIM_SIZE));
     }
 
     /**
@@ -1448,7 +1560,8 @@ public class SystemUtils {
      * @return the version, for example 131 for Java 1.3.1
      */
     private static int getJavaVersionAsInt() {
-        return toVersionInt(toJavaVersionIntArray(SystemUtils.JAVA_VERSION, JAVA_VERSION_TRIM_SIZE));
+        return toVersionInt(toJavaVersionIntArray(SystemUtils.JAVA_VERSION,
+                JAVA_VERSION_TRIM_SIZE));
     }
 
     /**
@@ -1490,7 +1603,8 @@ public class SystemUtils {
      *            the prefix for the version
      * @return true if matches, or false if not or can't determine
      */
-    private static boolean getOSMatches(String osNamePrefix, String osVersionPrefix) {
+    private static boolean getOSMatches(String osNamePrefix,
+            String osVersionPrefix) {
         return isOSMatch(OS_NAME, OS_VERSION, osNamePrefix, osVersionPrefix);
     }
 
@@ -1508,25 +1622,29 @@ public class SystemUtils {
     // -----------------------------------------------------------------------
     /**
      * <p>
-     * Gets a System property, defaulting to <code>null</code> if the property cannot be read.
+     * Gets a System property, defaulting to <code>null</code> if the property
+     * cannot be read.
      * </p>
      * 
      * <p>
-     * If a <code>SecurityException</code> is caught, the return value is <code>null</code> and a message is written to
-     * <code>System.err</code>.
+     * If a <code>SecurityException</code> is caught, the return value is
+     * <code>null</code> and a message is written to <code>System.err</code>.
      * </p>
      * 
      * @param property
      *            the system property name
-     * @return the system property value or <code>null</code> if a security problem occurs
+     * @return the system property value or <code>null</code> if a security
+     *         problem occurs
      */
     private static String getSystemProperty(String property) {
         try {
             return System.getProperty(property);
         } catch (SecurityException ex) {
             // we are not allowed to look at this property
-            System.err.println("Caught a SecurityException reading the system property '" + property
-                    + "'; the SystemUtils property value will default to null.");
+            System.err
+                    .println("Caught a SecurityException reading the system property '"
+                            + property
+                            + "'; the SystemUtils property value will default to null.");
             return null;
         }
     }
@@ -1537,8 +1655,10 @@ public class SystemUtils {
      * </p>
      * 
      * @return a directory
-     * @throws SecurityException if a security manager exists and its
-     * <code>checkPropertyAccess</code> method doesn't allow access to the specified system property.
+     * @throws SecurityException
+     *             if a security manager exists and its
+     *             <code>checkPropertyAccess</code> method doesn't allow access
+     *             to the specified system property.
      * @see System#getProperty(String)
      * @since 2.1
      */
@@ -1552,8 +1672,10 @@ public class SystemUtils {
      * </p>
      * 
      * @return a directory
-     * @throws SecurityException if a security manager exists and its
-     * <code>checkPropertyAccess</code> method doesn't allow access to the specified system property.
+     * @throws SecurityException
+     *             if a security manager exists and its
+     *             <code>checkPropertyAccess</code> method doesn't allow access
+     *             to the specified system property.
      * @see System#getProperty(String)
      * @since 2.1
      */
@@ -1562,16 +1684,19 @@ public class SystemUtils {
     }
 
     /**
-     * Returns whether the {@link #JAVA_AWT_HEADLESS} value is <code>true</code>.
+     * Returns whether the {@link #JAVA_AWT_HEADLESS} value is <code>true</code>
+     * .
      * 
-     * @return <code>true</code> if <code>JAVA_AWT_HEADLESS</code> is <code>"true"</code>, <code>false</code> otherwise.
+     * @return <code>true</code> if <code>JAVA_AWT_HEADLESS</code> is
+     *         <code>"true"</code>, <code>false</code> otherwise.
      * 
      * @see #JAVA_AWT_HEADLESS
      * @since 2.1
      * @since Java 1.4
      */
     public static boolean isJavaAwtHeadless() {
-        return JAVA_AWT_HEADLESS != null ? JAVA_AWT_HEADLESS.equals(Boolean.TRUE.toString()) : false;
+        return JAVA_AWT_HEADLESS != null ? JAVA_AWT_HEADLESS
+                .equals(Boolean.TRUE.toString()) : false;
     }
 
     /**
@@ -1589,7 +1714,8 @@ public class SystemUtils {
      * 
      * @param requiredVersion
      *            the required version, for example 1.31f
-     * @return <code>true</code> if the actual version is equal or greater than the required version
+     * @return <code>true</code> if the actual version is equal or greater than
+     *         the required version
      */
     public static boolean isJavaVersionAtLeast(float requiredVersion) {
         return JAVA_VERSION_FLOAT >= requiredVersion;
@@ -1610,7 +1736,8 @@ public class SystemUtils {
      * 
      * @param requiredVersion
      *            the required version, for example 131
-     * @return <code>true</code> if the actual version is equal or greater than the required version
+     * @return <code>true</code> if the actual version is equal or greater than
+     *         the required version
      * @since 2.0
      */
     public static boolean isJavaVersionAtLeast(int requiredVersion) {
@@ -1622,7 +1749,8 @@ public class SystemUtils {
      * Decides if the Java version matches.
      * </p>
      * <p>
-     * This method is package private instead of private to support unit test invocation.
+     * This method is package private instead of private to support unit test
+     * invocation.
      * </p>
      * 
      * @param version
@@ -1641,7 +1769,8 @@ public class SystemUtils {
     /**
      * Decides if the operating system matches.
      * <p>
-     * This method is package private instead of private to support unit test invocation.
+     * This method is package private instead of private to support unit test
+     * invocation.
      * </p>
      * 
      * @param osName
@@ -1654,17 +1783,20 @@ public class SystemUtils {
      *            the prefix for the expected OS version
      * @return true if matches, or false if not or can't determine
      */
-    static boolean isOSMatch(String osName, String osVersion, String osNamePrefix, String osVersionPrefix) {
+    static boolean isOSMatch(String osName, String osVersion,
+            String osNamePrefix, String osVersionPrefix) {
         if (osName == null || osVersion == null) {
             return false;
         }
-        return osName.startsWith(osNamePrefix) && osVersion.startsWith(osVersionPrefix);
+        return osName.startsWith(osNamePrefix)
+                && osVersion.startsWith(osVersionPrefix);
     }
 
     /**
      * Decides if the operating system matches.
      * <p>
-     * This method is package private instead of private to support unit test invocation.
+     * This method is package private instead of private to support unit test
+     * invocation.
      * </p>
      * 
      * @param osName
@@ -1698,14 +1830,17 @@ public class SystemUtils {
      * Patch releases are not reported.
      * </p>
      * <p>
-     * This method is package private instead of private to support unit test invocation.
+     * This method is package private instead of private to support unit test
+     * invocation.
      * </p>
      * 
-     * @param version The string version
+     * @param version
+     *            The string version
      * @return the version, for example 1.31f for Java 1.3.1
      */
     static float toJavaVersionFloat(String version) {
-        return toVersionFloat(toJavaVersionIntArray(version, JAVA_VERSION_TRIM_SIZE));
+        return toVersionFloat(toJavaVersionIntArray(version,
+                JAVA_VERSION_TRIM_SIZE));
     }
 
     /**
@@ -1726,19 +1861,23 @@ public class SystemUtils {
      * Patch releases are not reported.
      * </p>
      * <p>
-     * This method is package private instead of private to support unit test invocation.
+     * This method is package private instead of private to support unit test
+     * invocation.
      * </p>
      * 
-     * @param version The string version
+     * @param version
+     *            The string version
      * @return the version, for example 131 for Java 1.3.1
      */
     static int toJavaVersionInt(String version) {
-        return toVersionInt(toJavaVersionIntArray(version, JAVA_VERSION_TRIM_SIZE));
+        return toVersionInt(toJavaVersionIntArray(version,
+                JAVA_VERSION_TRIM_SIZE));
     }
 
     /**
      * <p>
-     * Converts the given Java version string to an <code>int[]</code> of maximum size <code>3</code>.
+     * Converts the given Java version string to an <code>int[]</code> of
+     * maximum size <code>3</code>.
      * </p>
      * 
      * <p>
@@ -1750,10 +1889,12 @@ public class SystemUtils {
      * <li><code>[1, 5, 0]</code> for Java 1.5.0_21</li>
      * </ul>
      * <p>
-     * This method is package private instead of private to support unit test invocation.
+     * This method is package private instead of private to support unit test
+     * invocation.
      * </p>
      * 
-     * @param version The string version
+     * @param version
+     *            The string version
      * @return the version, for example [1, 5, 0] for Java 1.5.0_21
      */
     static int[] toJavaVersionIntArray(String version) {
@@ -1762,7 +1903,8 @@ public class SystemUtils {
 
     /**
      * <p>
-     * Converts the given Java version string to an <code>int[]</code> of maximum size <code>limit</code>.
+     * Converts the given Java version string to an <code>int[]</code> of
+     * maximum size <code>limit</code>.
      * </p>
      * 
      * <p>
@@ -1774,8 +1916,10 @@ public class SystemUtils {
      * <li><code>[1, 5, 0, 21]</code> for Java 1.5.0_21</li>
      * </ul>
      * 
-     * @param version The string version
-     * @param limit version limit
+     * @param version
+     *            The string version
+     * @param limit
+     *            version limit
      * @return the version, for example [1, 5, 0, 21] for Java 1.5.0_21
      */
     private static int[] toJavaVersionIntArray(String version, int limit) {
@@ -1791,8 +1935,7 @@ public class SystemUtils {
                 try {
                     ints[j] = Integer.parseInt(s);
                     j++;
-                } catch (Exception e) {
-                }
+                } catch (Exception e) {}
             }
         }
         if (ints.length > j) {
@@ -1821,7 +1964,8 @@ public class SystemUtils {
      * Patch releases are not reported.
      * </p>
      * 
-     * @param javaVersions The version numbers
+     * @param javaVersions
+     *            The version numbers
      * @return the version, for example 1.31f for Java 1.3.1
      */
     private static float toVersionFloat(int[] javaVersions) {
@@ -1862,7 +2006,8 @@ public class SystemUtils {
      * Patch releases are not reported.
      * </p>
      * 
-     * @param javaVersions The version numbers
+     * @param javaVersions
+     *            The version numbers
      * @return the version, for example 1.31f for Java 1.3.1
      */
     private static int toVersionInt(int[] javaVersions) {
@@ -1886,12 +2031,14 @@ public class SystemUtils {
     // -----------------------------------------------------------------------
     /**
      * <p>
-     * SystemUtils instances should NOT be constructed in standard programming. Instead, the class should be used as
+     * SystemUtils instances should NOT be constructed in standard programming.
+     * Instead, the class should be used as
      * <code>SystemUtils.FILE_SEPARATOR</code>.
      * </p>
      * 
      * <p>
-     * This constructor is public to permit tools that require a JavaBean instance to operate.
+     * This constructor is public to permit tools that require a JavaBean
+     * instance to operate.
      * </p>
      */
     public SystemUtils() {

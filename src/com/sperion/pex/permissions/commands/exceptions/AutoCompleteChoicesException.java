@@ -19,14 +19,13 @@
 
 package com.sperion.pex.permissions.commands.exceptions;
 
-
 @SuppressWarnings("serial")
 public class AutoCompleteChoicesException extends RuntimeException {
 
     protected String[] choices;
     protected String argName;
 
-    public AutoCompleteChoicesException(String[] choices, String argName){
+    public AutoCompleteChoicesException(String[] choices, String argName) {
         super();
         this.choices = choices;
         this.argName = argName;
@@ -36,7 +35,7 @@ public class AutoCompleteChoicesException extends RuntimeException {
         return argName;
     }
 
-    public String[] getChoices(){
-        return this.choices;
+    public String[] getChoices() {
+        return choices;
     }
 }

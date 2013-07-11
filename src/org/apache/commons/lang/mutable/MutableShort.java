@@ -46,7 +46,8 @@ public class MutableShort extends Number implements Comparable, Mutable {
     /**
      * Constructs a new MutableShort with the specified value.
      * 
-     * @param value  the initial value to store
+     * @param value
+     *            the initial value to store
      */
     public MutableShort(short value) {
         super();
@@ -56,8 +57,10 @@ public class MutableShort extends Number implements Comparable, Mutable {
     /**
      * Constructs a new MutableShort with the specified value.
      * 
-     * @param value  the initial value to store, not null
-     * @throws NullPointerException if the object is null
+     * @param value
+     *            the initial value to store, not null
+     * @throws NullPointerException
+     *             if the object is null
      */
     public MutableShort(Number value) {
         super();
@@ -67,8 +70,10 @@ public class MutableShort extends Number implements Comparable, Mutable {
     /**
      * Constructs a new MutableShort parsing the given string.
      * 
-     * @param value  the string to parse, not null
-     * @throws NumberFormatException if the string cannot be parsed into a short
+     * @param value
+     *            the string to parse, not null
+     * @throws NumberFormatException
+     *             if the string cannot be parsed into a short
      * @since 2.5
      */
     public MutableShort(String value) throws NumberFormatException {
@@ -76,20 +81,22 @@ public class MutableShort extends Number implements Comparable, Mutable {
         this.value = Short.parseShort(value);
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Gets the value as a Short instance.
      * 
      * @return the value as a Short, never null
      */
+    @Override
     public Object getValue() {
-        return new Short(this.value);
+        return new Short(value);
     }
 
     /**
      * Sets the value.
      * 
-     * @param value  the value to set
+     * @param value
+     *            the value to set
      */
     public void setValue(short value) {
         this.value = value;
@@ -98,18 +105,22 @@ public class MutableShort extends Number implements Comparable, Mutable {
     /**
      * Sets the value from any Number instance.
      * 
-     * @param value  the value to set, not null
-     * @throws NullPointerException if the object is null
-     * @throws ClassCastException if the type is not a {@link Number}
+     * @param value
+     *            the value to set, not null
+     * @throws NullPointerException
+     *             if the object is null
+     * @throws ClassCastException
+     *             if the type is not a {@link Number}
      */
+    @Override
     public void setValue(Object value) {
         setValue(((Number) value).shortValue());
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Increments the value.
-     *
+     * 
      * @since Commons Lang 2.2
      */
     public void increment() {
@@ -118,122 +129,143 @@ public class MutableShort extends Number implements Comparable, Mutable {
 
     /**
      * Decrements the value.
-     *
+     * 
      * @since Commons Lang 2.2
      */
     public void decrement() {
         value--;
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Adds a value to the value of this instance.
      * 
-     * @param operand  the value to add, not null
+     * @param operand
+     *            the value to add, not null
      * @since Commons Lang 2.2
      */
     public void add(short operand) {
-        this.value += operand;
+        value += operand;
     }
 
     /**
      * Adds a value to the value of this instance.
      * 
-     * @param operand  the value to add, not null
-     * @throws NullPointerException if the object is null
+     * @param operand
+     *            the value to add, not null
+     * @throws NullPointerException
+     *             if the object is null
      * @since Commons Lang 2.2
      */
     public void add(Number operand) {
-        this.value += operand.shortValue();
+        value += operand.shortValue();
     }
 
     /**
      * Subtracts a value from the value of this instance.
      * 
-     * @param operand  the value to subtract, not null
+     * @param operand
+     *            the value to subtract, not null
      * @since Commons Lang 2.2
      */
     public void subtract(short operand) {
-        this.value -= operand;
+        value -= operand;
     }
 
     /**
      * Subtracts a value from the value of this instance.
      * 
-     * @param operand  the value to subtract, not null
-     * @throws NullPointerException if the object is null
+     * @param operand
+     *            the value to subtract, not null
+     * @throws NullPointerException
+     *             if the object is null
      * @since Commons Lang 2.2
      */
     public void subtract(Number operand) {
-        this.value -= operand.shortValue();
+        value -= operand.shortValue();
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     // bytValue relies on Number implementation
     /**
      * Returns the value of this MutableShort as a short.
-     *
-     * @return the numeric value represented by this object after conversion to type short.
+     * 
+     * @return the numeric value represented by this object after conversion to
+     *         type short.
      */
+    @Override
     public short shortValue() {
         return value;
     }
 
     /**
      * Returns the value of this MutableShort as an int.
-     *
-     * @return the numeric value represented by this object after conversion to type int.
+     * 
+     * @return the numeric value represented by this object after conversion to
+     *         type int.
      */
+    @Override
     public int intValue() {
         return value;
     }
 
     /**
      * Returns the value of this MutableShort as a long.
-     *
-     * @return the numeric value represented by this object after conversion to type long.
+     * 
+     * @return the numeric value represented by this object after conversion to
+     *         type long.
      */
+    @Override
     public long longValue() {
         return value;
     }
 
     /**
      * Returns the value of this MutableShort as a float.
-     *
-     * @return the numeric value represented by this object after conversion to type float.
+     * 
+     * @return the numeric value represented by this object after conversion to
+     *         type float.
      */
+    @Override
     public float floatValue() {
         return value;
     }
 
     /**
      * Returns the value of this MutableShort as a double.
-     *
-     * @return the numeric value represented by this object after conversion to type double.
+     * 
+     * @return the numeric value represented by this object after conversion to
+     *         type double.
      */
+    @Override
     public double doubleValue() {
         return value;
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Gets this mutable as an instance of Short.
-     *
-     * @return a Short instance containing the value from this mutable, never null
+     * 
+     * @return a Short instance containing the value from this mutable, never
+     *         null
      */
     public Short toShort() {
         return new Short(shortValue());
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * Compares this object to the specified object. The result is <code>true</code> if and only if the argument
-     * is not <code>null</code> and is a <code>MutableShort</code> object that contains the same <code>short</code>
-     * value as this object.
+     * Compares this object to the specified object. The result is
+     * <code>true</code> if and only if the argument is not <code>null</code>
+     * and is a <code>MutableShort</code> object that contains the same
+     * <code>short</code> value as this object.
      * 
-     * @param obj  the object to compare with, null returns false
-     * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
+     * @param obj
+     *            the object to compare with, null returns false
+     * @return <code>true</code> if the objects are the same; <code>false</code>
+     *         otherwise.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof MutableShort) {
             return value == ((MutableShort) obj).shortValue();
@@ -246,30 +278,35 @@ public class MutableShort extends Number implements Comparable, Mutable {
      * 
      * @return a suitable hash code
      */
+    @Override
     public int hashCode() {
         return value;
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Compares this mutable to another in ascending order.
      * 
-     * @param obj the other mutable to compare to, not null
+     * @param obj
+     *            the other mutable to compare to, not null
      * @return negative if this is less, zero if equal, positive if greater
-     * @throws ClassCastException if the argument is not a MutableShort
+     * @throws ClassCastException
+     *             if the argument is not a MutableShort
      */
+    @Override
     public int compareTo(Object obj) {
         MutableShort other = (MutableShort) obj;
         short anotherVal = other.value;
-        return value < anotherVal ? -1 : (value == anotherVal ? 0 : 1);
+        return value < anotherVal ? -1 : value == anotherVal ? 0 : 1;
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Returns the String value of this mutable.
      * 
      * @return the mutable value as a string
      */
+    @Override
     public String toString() {
         return String.valueOf(value);
     }

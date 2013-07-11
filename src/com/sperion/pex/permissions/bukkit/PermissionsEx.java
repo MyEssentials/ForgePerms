@@ -54,205 +54,218 @@ import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid="PermissionsEx", name="PermissionsEx", version="1.5.0.0")
-@NetworkMod(clientSideRequired=false, serverSideRequired=true)
-public class PermissionsEx implements IPermissions
-{
-	@Mod.Instance("PermissionsEx")
-	public static PermissionsEx instance;
+@Mod(modid = "PermissionsEx", name = "PermissionsEx", version = "1.5.0.0")
+@NetworkMod(clientSideRequired = false, serverSideRequired = true)
+public class PermissionsEx implements IPermissions {
+    @Mod.Instance("PermissionsEx")
+    public static PermissionsEx instance;
 
-	protected static final Logger logger = Logger.getLogger("Minecraft");
-	protected PermissionManager permissionsManager;
-	protected CommandsManager commandsManager;
-	protected Configuration config;
-	
-	protected File configFile;
-	//protected BukkitPermissions superms;
+    protected static final Logger logger = Logger.getLogger("Minecraft");
+    protected PermissionManager permissionsManager;
+    protected CommandsManager commandsManager;
+    protected Configuration config;
 
-	public PermissionsEx() 
-	{
-		PermissionBackend.registerBackendAlias("sql", SQLBackend.class);
-		PermissionBackend.registerBackendAlias("file", FileBackend.class);
+    protected File configFile;
 
-		logger.log(Level.INFO, "[PermissionsEx] PermissionEx plugin initialized.");
-	}
+    // protected BukkitPermissions superms;
 
-	@Mod.PreInit
-	public void onLoad(FMLPreInitializationEvent ev) {
-		configFile = ev.getSuggestedConfigurationFile();
-		this.config = new Configuration(configFile);
-		
-		this.commandsManager = new CommandsManager(this);
-		this.permissionsManager = new PermissionManager(this.config);
-		
-		this.config.save();
-	}
-	
-	@Mod.ServerStarted
-	public void modsLoaded(FMLServerStartedEvent var1)
-	{
-		ServerCommandManager mgr = (ServerCommandManager)MinecraftServer.getServer().getCommandManager();
-	    mgr.registerCommand(new CommandHandler());
-	    
-		onEnable();
-	}
-	
-	public void onEnable() {
-		if (this.permissionsManager == null) {
-			this.permissionsManager = new PermissionManager(this.config);
-			this.config.save();
-		}
+    public PermissionsEx() {
+        PermissionBackend.registerBackendAlias("sql", SQLBackend.class);
+        PermissionBackend.registerBackendAlias("file", FileBackend.class);
 
-		// Register commands
-		this.commandsManager.register(new UserCommands());
-		this.commandsManager.register(new GroupCommands());
-		this.commandsManager.register(new PromotionCommands());
-		this.commandsManager.register(new WorldCommands());
-		this.commandsManager.register(new UtilityCommands());
+        logger.log(Level.INFO,
+                "[PermissionsEx] PermissionEx plugin initialized.");
+    }
 
-		// Register Player permissions cleaner
-		PlayerEventsListener cleaner = new PlayerEventsListener();
-		cleaner.logLastPlayerLogin = this.config.get("permissions", "log-players", cleaner.logLastPlayerLogin).getBoolean(cleaner.logLastPlayerLogin);
-		GameRegistry.registerPlayerTracker(cleaner);
+    @Mod.PreInit
+    public void onLoad(FMLPreInitializationEvent ev) {
+        configFile = ev.getSuggestedConfigurationFile();
+        config = new Configuration(configFile);
 
-		//register service
-		//this.getServer().getServicesManager().register(PermissionManager.class, this.permissionsManager, this, ServicePriority.Normal);
+        commandsManager = new CommandsManager(this);
+        permissionsManager = new PermissionManager(config);
 
-		/*
-		ConfigurationSection dinnerpermsConfig = this.config.getConfigurationSection("permissions.superperms");
+        config.save();
+    }
 
-		if (dinnerpermsConfig == null) {
-			dinnerpermsConfig = this.config.createSection("permissions.superperms");
-		}
+    @Mod.ServerStarted
+    public void modsLoaded(FMLServerStartedEvent var1) {
+        ServerCommandManager mgr = (ServerCommandManager) MinecraftServer
+                .getServer().getCommandManager();
+        mgr.registerCommand(new CommandHandler());
 
-		this.superms = new BukkitPermissions(this, dinnerpermsConfig);
+        onEnable();
+    }
 
-		this.superms.updateAllPlayers();
-		 */
-		
-		this.config.save();
+    public void onEnable() {
+        if (permissionsManager == null) {
+            permissionsManager = new PermissionManager(config);
+            config.save();
+        }
 
-		// Start timed permissions cleaner timer
-		this.permissionsManager.initTimer();
+        // Register commands
+        commandsManager.register(new UserCommands());
+        commandsManager.register(new GroupCommands());
+        commandsManager.register(new PromotionCommands());
+        commandsManager.register(new WorldCommands());
+        commandsManager.register(new UtilityCommands());
 
-		logger.log(Level.INFO, "[PermissionsEx] enabled");
-	}
+        // Register Player permissions cleaner
+        PlayerEventsListener cleaner = new PlayerEventsListener();
+        cleaner.logLastPlayerLogin = config.get("permissions", "log-players",
+                cleaner.logLastPlayerLogin).getBoolean(
+                cleaner.logLastPlayerLogin);
+        GameRegistry.registerPlayerTracker(cleaner);
 
-	public void onDisable() {
-		if (this.permissionsManager != null) {
-			this.permissionsManager.end();
-		}
+        // register service
+        // this.getServer().getServicesManager().register(PermissionManager.class,
+        // this.permissionsManager, this, ServicePriority.Normal);
 
-		//this.getServer().getServicesManager().unregister(PermissionManager.class, this.permissionsManager);
+        /*
+         * ConfigurationSection dinnerpermsConfig =
+         * this.config.getConfigurationSection("permissions.superperms");
+         * 
+         * if (dinnerpermsConfig == null) { dinnerpermsConfig =
+         * this.config.createSection("permissions.superperms"); }
+         * 
+         * this.superms = new BukkitPermissions(this, dinnerpermsConfig);
+         * 
+         * this.superms.updateAllPlayers();
+         */
 
-		logger.log(Level.INFO, "[PermissionsEx] disabled successfully.");
-	}
+        config.save();
 
-	public boolean onCommand(ICommandSender sender, CommandBase command, String commandLabel, String[] args) 
-	{
-		if (args.length > 0) {
-			return this.commandsManager.execute(sender, command, args);
-		} else {
-			if (sender instanceof EntityPlayer) {
-				sender.sendChatToPlayer("[" + ChatColor.RED + "PermissionsEx" + ChatColor.WHITE + "]");
+        // Start timed permissions cleaner timer
+        permissionsManager.initTimer();
 
-				return !this.permissionsManager.has((EntityPlayer) sender, "permissions.manage");
-			} else {
-				sender.sendChatToPlayer("[PermissionsEx]");
+        logger.log(Level.INFO, "[PermissionsEx] enabled");
+    }
 
-				return false;
-			}
-		}
-	}
-	
-	public Configuration getConfig()
-	{
-		return config;
-	}
+    public void onDisable() {
+        if (permissionsManager != null) {
+            permissionsManager.end();
+        }
 
-	public static PermissionsEx getPlugin() {
-		return instance;
-	}
+        // this.getServer().getServicesManager().unregister(PermissionManager.class,
+        // this.permissionsManager);
 
-	public static boolean isAvailable() {
-		PermissionsEx plugin = getPlugin();
+        logger.log(Level.INFO, "[PermissionsEx] disabled successfully.");
+    }
 
-		return (plugin instanceof PermissionsEx) && ((PermissionsEx) plugin).permissionsManager != null;
-	}
+    public boolean onCommand(ICommandSender sender, CommandBase command,
+            String commandLabel, String[] args) {
+        if (args.length > 0) {
+            return commandsManager.execute(sender, command, args);
+        } else {
+            if (sender instanceof EntityPlayer) {
+                sender.sendChatToPlayer("[" + ChatColor.RED + "PermissionsEx"
+                        + ChatColor.WHITE + "]");
 
-	public static PermissionManager getPermissionManager() {
-		if (!isAvailable()) {
-			throw new PermissionsNotAvailable();
-		}
+                return !permissionsManager.has((EntityPlayer) sender,
+                        "permissions.manage");
+            } else {
+                sender.sendChatToPlayer("[PermissionsEx]");
 
-		return ((PermissionsEx) getPlugin()).permissionsManager;
-	}
+                return false;
+            }
+        }
+    }
 
-	public PermissionUser getUser(EntityPlayer player) {
-		return getPermissionManager().getUser(player);
-	}
+    public Configuration getConfig() {
+        return config;
+    }
 
-	public PermissionUser getUser(String name) {
-		return getPermissionManager().getUser(name);
-	}
-	
-	public PermissionGroup getGroup(String name) {
-		return getPermissionManager().getGroup(name);
-	}
+    public static PermissionsEx getPlugin() {
+        return instance;
+    }
 
-	public boolean has(EntityPlayer player, String permission) {
-		return this.permissionsManager.has(player, permission);
-	}
+    public static boolean isAvailable() {
+        PermissionsEx plugin = getPlugin();
 
-	public boolean has(EntityPlayer player, String permission, String world) {
-		return this.permissionsManager.has(player, permission, world);
-	}
-	
-	public boolean has(String player, String permission, String world) {
-		return this.permissionsManager.has(player, permission, world);
-	}
-	
-	public String prefix(String player, String world)
-	{
-		return this.permissionsManager.getUser(player).getPrefix(world);
-	}
-	
-	public String suffix(String player, String world)
-	{
-		return this.permissionsManager.getUser(player).getSuffix(world);
-	}
+        return plugin instanceof PermissionsEx
+                && plugin.permissionsManager != null;
+    }
 
-	public class PlayerEventsListener implements IPlayerTracker
-	{
-		protected boolean logLastPlayerLogin = false;
+    public static PermissionManager getPermissionManager() {
+        if (!isAvailable()) {
+            throw new PermissionsNotAvailable();
+        }
 
-		@Override
-		public void onPlayerLogin(EntityPlayer event) {
-			if (!logLastPlayerLogin) {
-				return;
-			}
+        return getPlugin().permissionsManager;
+    }
 
-			PermissionUser user = getPermissionManager().getUser(event);
-			user.setOption("last-login-time", Long.toString(System.currentTimeMillis() / 1000L));
-			// user.setOption("last-login-ip", event.getPlayer().getAddress().getAddress().getHostAddress()); // somehow this won't work
-		}
+    @Override
+    public PermissionUser getUser(EntityPlayer player) {
+        return getPermissionManager().getUser(player);
+    }
 
-		@Override
-		public void onPlayerLogout(EntityPlayer event)
-		{
-			if (logLastPlayerLogin) {
-				getPermissionManager().getUser(event).setOption("last-logout-time", Long.toString(System.currentTimeMillis() / 1000L));
-			}
+    @Override
+    public PermissionUser getUser(String name) {
+        return getPermissionManager().getUser(name);
+    }
 
-			getPermissionManager().resetUser(event.username);
-		}
+    @Override
+    public PermissionGroup getGroup(String name) {
+        return getPermissionManager().getGroup(name);
+    }
 
-		@Override
-		public void onPlayerChangedDimension(EntityPlayer player) {
-		}
+    @Override
+    public boolean has(EntityPlayer player, String permission) {
+        return permissionsManager.has(player, permission);
+    }
 
-		@Override
-		public void onPlayerRespawn(EntityPlayer player) {
-		}
-	}
+    @Override
+    public boolean has(EntityPlayer player, String permission, String world) {
+        return permissionsManager.has(player, permission, world);
+    }
+
+    @Override
+    public boolean has(String player, String permission, String world) {
+        return permissionsManager.has(player, permission, world);
+    }
+
+    @Override
+    public String prefix(String player, String world) {
+        return permissionsManager.getUser(player).getPrefix(world);
+    }
+
+    @Override
+    public String suffix(String player, String world) {
+        return permissionsManager.getUser(player).getSuffix(world);
+    }
+
+    public class PlayerEventsListener implements IPlayerTracker {
+        protected boolean logLastPlayerLogin = false;
+
+        @Override
+        public void onPlayerLogin(EntityPlayer event) {
+            if (!logLastPlayerLogin) {
+                return;
+            }
+
+            PermissionUser user = getPermissionManager().getUser(event);
+            user.setOption("last-login-time", Long.toString(System
+                    .currentTimeMillis() / 1000L));
+            // user.setOption("last-login-ip",
+            // event.getPlayer().getAddress().getAddress().getHostAddress()); //
+            // somehow this won't work
+        }
+
+        @Override
+        public void onPlayerLogout(EntityPlayer event) {
+            if (logLastPlayerLogin) {
+                getPermissionManager().getUser(event).setOption(
+                        "last-logout-time",
+                        Long.toString(System.currentTimeMillis() / 1000L));
+            }
+
+            getPermissionManager().resetUser(event.username);
+        }
+
+        @Override
+        public void onPlayerChangedDimension(EntityPlayer player) {}
+
+        @Override
+        public void onPlayerRespawn(EntityPlayer player) {}
+    }
 }

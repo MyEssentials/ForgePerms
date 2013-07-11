@@ -47,22 +47,22 @@ public class SafeConstructor extends BaseConstructor {
     public static final ConstructUndefined undefinedConstructor = new ConstructUndefined();
 
     public SafeConstructor() {
-        this.yamlConstructors.put(Tag.NULL, new ConstructYamlNull());
-        this.yamlConstructors.put(Tag.BOOL, new ConstructYamlBool());
-        this.yamlConstructors.put(Tag.INT, new ConstructYamlInt());
-        this.yamlConstructors.put(Tag.FLOAT, new ConstructYamlFloat());
-        this.yamlConstructors.put(Tag.BINARY, new ConstructYamlBinary());
-        this.yamlConstructors.put(Tag.TIMESTAMP, new ConstructYamlTimestamp());
-        this.yamlConstructors.put(Tag.OMAP, new ConstructYamlOmap());
-        this.yamlConstructors.put(Tag.PAIRS, new ConstructYamlPairs());
-        this.yamlConstructors.put(Tag.SET, new ConstructYamlSet());
-        this.yamlConstructors.put(Tag.STR, new ConstructYamlStr());
-        this.yamlConstructors.put(Tag.SEQ, new ConstructYamlSeq());
-        this.yamlConstructors.put(Tag.MAP, new ConstructYamlMap());
-        this.yamlConstructors.put(null, undefinedConstructor);
-        this.yamlClassConstructors.put(NodeId.scalar, undefinedConstructor);
-        this.yamlClassConstructors.put(NodeId.sequence, undefinedConstructor);
-        this.yamlClassConstructors.put(NodeId.mapping, undefinedConstructor);
+        yamlConstructors.put(Tag.NULL, new ConstructYamlNull());
+        yamlConstructors.put(Tag.BOOL, new ConstructYamlBool());
+        yamlConstructors.put(Tag.INT, new ConstructYamlInt());
+        yamlConstructors.put(Tag.FLOAT, new ConstructYamlFloat());
+        yamlConstructors.put(Tag.BINARY, new ConstructYamlBinary());
+        yamlConstructors.put(Tag.TIMESTAMP, new ConstructYamlTimestamp());
+        yamlConstructors.put(Tag.OMAP, new ConstructYamlOmap());
+        yamlConstructors.put(Tag.PAIRS, new ConstructYamlPairs());
+        yamlConstructors.put(Tag.SET, new ConstructYamlSet());
+        yamlConstructors.put(Tag.STR, new ConstructYamlStr());
+        yamlConstructors.put(Tag.SEQ, new ConstructYamlSeq());
+        yamlConstructors.put(Tag.MAP, new ConstructYamlMap());
+        yamlConstructors.put(null, undefinedConstructor);
+        yamlClassConstructors.put(NodeId.scalar, undefinedConstructor);
+        yamlClassConstructors.put(NodeId.sequence, undefinedConstructor);
+        yamlClassConstructors.put(NodeId.mapping, undefinedConstructor);
     }
 
     protected void flattenMapping(MappingNode node) {
@@ -99,29 +99,33 @@ public class SafeConstructor extends BaseConstructor {
             if (keyNode.getTag().equals(Tag.MERGE)) {
                 iter.remove();
                 switch (valueNode.getNodeId()) {
-                case mapping:
-                    MappingNode mn = (MappingNode) valueNode;
-                    mergeNode(mn, false, key2index, values);
-                    break;
-                case sequence:
-                    SequenceNode sn = (SequenceNode) valueNode;
-                    List<Node> vals = sn.getValue();
-                    for (Node subnode : vals) {
-                        if (!(subnode instanceof MappingNode)) {
-                            throw new ConstructorException("while constructing a mapping",
-                                    node.getStartMark(),
-                                    "expected a mapping for merging, but found "
-                                            + subnode.getNodeId(), subnode.getStartMark());
+                    case mapping:
+                        MappingNode mn = (MappingNode) valueNode;
+                        mergeNode(mn, false, key2index, values);
+                        break;
+                    case sequence:
+                        SequenceNode sn = (SequenceNode) valueNode;
+                        List<Node> vals = sn.getValue();
+                        for (Node subnode : vals) {
+                            if (!(subnode instanceof MappingNode)) {
+                                throw new ConstructorException(
+                                        "while constructing a mapping", node
+                                                .getStartMark(),
+                                        "expected a mapping for merging, but found "
+                                                + subnode.getNodeId(), subnode
+                                                .getStartMark());
+                            }
+                            MappingNode mnode = (MappingNode) subnode;
+                            mergeNode(mnode, false, key2index, values);
                         }
-                        MappingNode mnode = (MappingNode) subnode;
-                        mergeNode(mnode, false, key2index, values);
-                    }
-                    break;
-                default:
-                    throw new ConstructorException("while constructing a mapping",
-                            node.getStartMark(),
-                            "expected a mapping or list of mappings for merging, but found "
-                                    + valueNode.getNodeId(), valueNode.getStartMark());
+                        break;
+                    default:
+                        throw new ConstructorException(
+                                "while constructing a mapping", node
+                                        .getStartMark(),
+                                "expected a mapping or list of mappings for merging, but found "
+                                        + valueNode.getNodeId(), valueNode
+                                        .getStartMark());
                 }
             } else {
                 // we need to construct keys to avoid duplications
@@ -140,18 +144,22 @@ public class SafeConstructor extends BaseConstructor {
         return values;
     }
 
-    protected void constructMapping2ndStep(MappingNode node, Map<Object, Object> mapping) {
+    @Override
+    protected void constructMapping2ndStep(MappingNode node,
+            Map<Object, Object> mapping) {
         flattenMapping(node);
         super.constructMapping2ndStep(node, mapping);
     }
 
     @Override
-    protected void constructSet2ndStep(MappingNode node, java.util.Set<Object> set) {
+    protected void constructSet2ndStep(MappingNode node,
+            java.util.Set<Object> set) {
         flattenMapping(node);
         super.constructSet2ndStep(node, set);
     }
 
     public class ConstructYamlNull extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
             constructScalar((ScalarNode) node);
             return null;
@@ -169,6 +177,7 @@ public class SafeConstructor extends BaseConstructor {
     }
 
     public class ConstructYamlBool extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
             String val = (String) constructScalar((ScalarNode) node);
             return BOOL_VALUES.get(val.toLowerCase());
@@ -176,8 +185,10 @@ public class SafeConstructor extends BaseConstructor {
     }
 
     public class ConstructYamlInt extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
-            String value = constructScalar((ScalarNode) node).toString().replaceAll("_", "");
+            String value = constructScalar((ScalarNode) node).toString()
+                    .replaceAll("_", "");
             int sign = +1;
             char first = value.charAt(0);
             if (first == '-') {
@@ -203,7 +214,7 @@ public class SafeConstructor extends BaseConstructor {
                 int bes = 1;
                 int val = 0;
                 for (int i = 0, j = digits.length; i < j; i++) {
-                    val += (Long.parseLong(digits[(j - i) - 1]) * bes);
+                    val += Long.parseLong(digits[j - i - 1]) * bes;
                     bes *= 60;
                 }
                 return createNumber(sign, String.valueOf(val), 10);
@@ -232,8 +243,10 @@ public class SafeConstructor extends BaseConstructor {
     }
 
     public class ConstructYamlFloat extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
-            String value = constructScalar((ScalarNode) node).toString().replaceAll("_", "");
+            String value = constructScalar((ScalarNode) node).toString()
+                    .replaceAll("_", "");
             int sign = +1;
             char first = value.charAt(0);
             if (first == '-') {
@@ -244,7 +257,8 @@ public class SafeConstructor extends BaseConstructor {
             }
             String valLower = value.toLowerCase();
             if (".inf".equals(valLower)) {
-                return new Double(sign == -1 ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY);
+                return new Double(sign == -1 ? Double.NEGATIVE_INFINITY
+                        : Double.POSITIVE_INFINITY);
             } else if (".nan".equals(valLower)) {
                 return new Double(Double.NaN);
             } else if (value.indexOf(':') != -1) {
@@ -252,7 +266,7 @@ public class SafeConstructor extends BaseConstructor {
                 int bes = 1;
                 double val = 0.0;
                 for (int i = 0, j = digits.length; i < j; i++) {
-                    val += (Double.parseDouble(digits[(j - i) - 1]) * bes);
+                    val += Double.parseDouble(digits[j - i - 1]) * bes;
                     bes *= 60;
                 }
                 return new Double(sign * val);
@@ -264,9 +278,10 @@ public class SafeConstructor extends BaseConstructor {
     }
 
     public class ConstructYamlBinary extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
-            byte[] decoded = Base64Coder.decode(constructScalar((ScalarNode) node).toString()
-                    .toCharArray());
+            byte[] decoded = Base64Coder.decode(constructScalar(
+                    (ScalarNode) node).toString().toCharArray());
             return decoded;
         }
     }
@@ -283,6 +298,7 @@ public class SafeConstructor extends BaseConstructor {
             return calendar;
         }
 
+        @Override
         public Object construct(Node node) {
             ScalarNode scalar = (ScalarNode) node;
             String nodeValue = scalar.getValue();
@@ -301,7 +317,8 @@ public class SafeConstructor extends BaseConstructor {
             } else {
                 match = TIMESTAMP_REGEXP.matcher(nodeValue);
                 if (!match.matches()) {
-                    throw new YAMLException("Unexpected timestamp: " + nodeValue);
+                    throw new YAMLException("Unexpected timestamp: "
+                            + nodeValue);
                 }
                 String year_s = match.group(1);
                 String month_s = match.group(2);
@@ -316,13 +333,14 @@ public class SafeConstructor extends BaseConstructor {
                 }
                 double fractions = Double.parseDouble(seconds);
                 int sec_s = (int) Math.round(Math.floor(fractions));
-                int usec = (int) Math.round(((fractions - sec_s) * 1000));
+                int usec = (int) Math.round((fractions - sec_s) * 1000);
                 // timezone
                 String timezoneh_s = match.group(8);
                 String timezonem_s = match.group(9);
                 TimeZone timeZone;
                 if (timezoneh_s != null) {
-                    String time = timezonem_s != null ? ":" + timezonem_s : "00";
+                    String time = timezonem_s != null ? ":" + timezonem_s
+                            : "00";
                     timeZone = TimeZone.getTimeZone("GMT" + timezoneh_s + time);
                 } else {
                     // no time zone provided
@@ -343,27 +361,36 @@ public class SafeConstructor extends BaseConstructor {
     }
 
     public class ConstructYamlOmap extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
             // Note: we do not check for duplicate keys, because it's too
             // CPU-expensive.
             Map<Object, Object> omap = new LinkedHashMap<Object, Object>();
             if (!(node instanceof SequenceNode)) {
-                throw new ConstructorException("while constructing an ordered map",
-                        node.getStartMark(), "expected a sequence, but found " + node.getNodeId(),
+                throw new ConstructorException(
+                        "while constructing an ordered map", node
+                                .getStartMark(),
+                        "expected a sequence, but found " + node.getNodeId(),
                         node.getStartMark());
             }
             SequenceNode snode = (SequenceNode) node;
             for (Node subnode : snode.getValue()) {
                 if (!(subnode instanceof MappingNode)) {
-                    throw new ConstructorException("while constructing an ordered map",
-                            node.getStartMark(), "expected a mapping of length 1, but found "
-                                    + subnode.getNodeId(), subnode.getStartMark());
+                    throw new ConstructorException(
+                            "while constructing an ordered map", node
+                                    .getStartMark(),
+                            "expected a mapping of length 1, but found "
+                                    + subnode.getNodeId(), subnode
+                                    .getStartMark());
                 }
                 MappingNode mnode = (MappingNode) subnode;
                 if (mnode.getValue().size() != 1) {
-                    throw new ConstructorException("while constructing an ordered map",
-                            node.getStartMark(), "expected a single mapping item, but found "
-                                    + mnode.getValue().size() + " items", mnode.getStartMark());
+                    throw new ConstructorException(
+                            "while constructing an ordered map", node
+                                    .getStartMark(),
+                            "expected a single mapping item, but found "
+                                    + mnode.getValue().size() + " items", mnode
+                                    .getStartMark());
                 }
                 Node keyNode = mnode.getValue().get(0).getKeyNode();
                 Node valueNode = mnode.getValue().get(0).getValueNode();
@@ -377,26 +404,33 @@ public class SafeConstructor extends BaseConstructor {
 
     // Note: the same code as `construct_yaml_omap`.
     public class ConstructYamlPairs extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
             // Note: we do not check for duplicate keys, because it's too
             // CPU-expensive.
             if (!(node instanceof SequenceNode)) {
-                throw new ConstructorException("while constructing pairs", node.getStartMark(),
-                        "expected a sequence, but found " + node.getNodeId(), node.getStartMark());
+                throw new ConstructorException("while constructing pairs", node
+                        .getStartMark(), "expected a sequence, but found "
+                        + node.getNodeId(), node.getStartMark());
             }
             SequenceNode snode = (SequenceNode) node;
-            List<Object[]> pairs = new ArrayList<Object[]>(snode.getValue().size());
+            List<Object[]> pairs = new ArrayList<Object[]>(snode.getValue()
+                    .size());
             for (Node subnode : snode.getValue()) {
                 if (!(subnode instanceof MappingNode)) {
-                    throw new ConstructorException("while constructingpairs", node.getStartMark(),
-                            "expected a mapping of length 1, but found " + subnode.getNodeId(),
-                            subnode.getStartMark());
+                    throw new ConstructorException("while constructingpairs",
+                            node.getStartMark(),
+                            "expected a mapping of length 1, but found "
+                                    + subnode.getNodeId(), subnode
+                                    .getStartMark());
                 }
                 MappingNode mnode = (MappingNode) subnode;
                 if (mnode.getValue().size() != 1) {
-                    throw new ConstructorException("while constructing pairs", node.getStartMark(),
-                            "expected a single mapping item, but found " + mnode.getValue().size()
-                                    + " items", mnode.getStartMark());
+                    throw new ConstructorException("while constructing pairs",
+                            node.getStartMark(),
+                            "expected a single mapping item, but found "
+                                    + mnode.getValue().size() + " items", mnode
+                                    .getStartMark());
                 }
                 Node keyNode = mnode.getValue().get(0).getKeyNode();
                 Node valueNode = mnode.getValue().get(0).getValueNode();
@@ -409,6 +443,7 @@ public class SafeConstructor extends BaseConstructor {
     }
 
     public class ConstructYamlSet implements Construct {
+        @Override
         public Object construct(Node node) {
             if (node.isTwoStepsConstruction()) {
                 return createDefaultSet();
@@ -417,43 +452,51 @@ public class SafeConstructor extends BaseConstructor {
             }
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public void construct2ndStep(Node node, Object object) {
             if (node.isTwoStepsConstruction()) {
                 constructSet2ndStep((MappingNode) node, (Set<Object>) object);
             } else {
-                throw new YAMLException("Unexpected recursive set structure. Node: " + node);
+                throw new YAMLException(
+                        "Unexpected recursive set structure. Node: " + node);
             }
         }
     }
 
     public class ConstructYamlStr extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
             return constructScalar((ScalarNode) node);
         }
     }
 
     public class ConstructYamlSeq implements Construct {
+        @Override
         public Object construct(Node node) {
             SequenceNode seqNode = (SequenceNode) node;
             if (node.isTwoStepsConstruction()) {
-                return createDefaultList((seqNode.getValue()).size());
+                return createDefaultList(seqNode.getValue().size());
             } else {
                 return constructSequence(seqNode);
             }
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public void construct2ndStep(Node node, Object data) {
             if (node.isTwoStepsConstruction()) {
                 constructSequenceStep2((SequenceNode) node, (List<Object>) data);
             } else {
-                throw new YAMLException("Unexpected recursive sequence structure. Node: " + node);
+                throw new YAMLException(
+                        "Unexpected recursive sequence structure. Node: "
+                                + node);
             }
         }
     }
 
     public class ConstructYamlMap implements Construct {
+        @Override
         public Object construct(Node node) {
             if (node.isTwoStepsConstruction()) {
                 return createDefaultMap();
@@ -462,21 +505,25 @@ public class SafeConstructor extends BaseConstructor {
             }
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public void construct2ndStep(Node node, Object object) {
             if (node.isTwoStepsConstruction()) {
-                constructMapping2ndStep((MappingNode) node, (Map<Object, Object>) object);
+                constructMapping2ndStep((MappingNode) node,
+                        (Map<Object, Object>) object);
             } else {
-                throw new YAMLException("Unexpected recursive mapping structure. Node: " + node);
+                throw new YAMLException(
+                        "Unexpected recursive mapping structure. Node: " + node);
             }
         }
     }
 
     public static final class ConstructUndefined extends AbstractConstruct {
+        @Override
         public Object construct(Node node) {
             throw new ConstructorException(null, null,
-                    "could not determine a constructor for the tag " + node.getTag(),
-                    node.getStartMark());
+                    "could not determine a constructor for the tag "
+                            + node.getTag(), node.getStartMark());
         }
     }
 }

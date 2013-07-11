@@ -44,20 +44,20 @@ public class SafeRepresenter extends BaseRepresenter {
     protected TimeZone timeZone = null;
 
     public SafeRepresenter() {
-        this.nullRepresenter = new RepresentNull();
-        this.representers.put(String.class, new RepresentString());
-        this.representers.put(Boolean.class, new RepresentBoolean());
-        this.representers.put(Character.class, new RepresentString());
-        this.representers.put(byte[].class, new RepresentByteArray());
-        this.multiRepresenters.put(Number.class, new RepresentNumber());
-        this.multiRepresenters.put(List.class, new RepresentList());
-        this.multiRepresenters.put(Map.class, new RepresentMap());
-        this.multiRepresenters.put(Set.class, new RepresentSet());
-        this.multiRepresenters.put(Iterator.class, new RepresentIterator());
-        this.multiRepresenters.put(new Object[0].getClass(), new RepresentArray());
-        this.multiRepresenters.put(Date.class, new RepresentDate());
-        this.multiRepresenters.put(Enum.class, new RepresentEnum());
-        this.multiRepresenters.put(Calendar.class, new RepresentDate());
+        nullRepresenter = new RepresentNull();
+        representers.put(String.class, new RepresentString());
+        representers.put(Boolean.class, new RepresentBoolean());
+        representers.put(Character.class, new RepresentString());
+        representers.put(byte[].class, new RepresentByteArray());
+        multiRepresenters.put(Number.class, new RepresentNumber());
+        multiRepresenters.put(List.class, new RepresentList());
+        multiRepresenters.put(Map.class, new RepresentMap());
+        multiRepresenters.put(Set.class, new RepresentSet());
+        multiRepresenters.put(Iterator.class, new RepresentIterator());
+        multiRepresenters.put(new Object[0].getClass(), new RepresentArray());
+        multiRepresenters.put(Date.class, new RepresentDate());
+        multiRepresenters.put(Enum.class, new RepresentEnum());
+        multiRepresenters.put(Calendar.class, new RepresentDate());
         classTags = new HashMap<Class<? extends Object>, Tag>();
     }
 
@@ -80,6 +80,7 @@ public class SafeRepresenter extends BaseRepresenter {
      *            <code>Class</code>
      * @return the previous tag associated with the <code>Class</code>
      */
+    @Deprecated
     public Tag addClassTag(Class<? extends Object> clazz, String tag) {
         return addClassTag(clazz, new Tag(tag));
     }
@@ -102,14 +103,17 @@ public class SafeRepresenter extends BaseRepresenter {
     }
 
     protected class RepresentNull implements Represent {
+        @Override
         public Node representData(Object data) {
             return representScalar(Tag.NULL, "null");
         }
     }
 
-    public static Pattern MULTILINE_PATTERN = Pattern.compile("\n|\u0085|\u2028|\u2029");
+    public static Pattern MULTILINE_PATTERN = Pattern
+            .compile("\n|\u0085|\u2028|\u2029");
 
     protected class RepresentString implements Represent {
+        @Override
         public Node representData(Object data) {
             Tag tag = Tag.STR;
             Character style = null;
@@ -127,7 +131,8 @@ public class SafeRepresenter extends BaseRepresenter {
             }
             // if no other scalar style is explicitly set, use literal style for
             // multiline scalars
-            if (defaultScalarStyle == null && MULTILINE_PATTERN.matcher(value).find()) {
+            if (defaultScalarStyle == null
+                    && MULTILINE_PATTERN.matcher(value).find()) {
                 style = '|';
             }
             return representScalar(tag, value, style);
@@ -135,6 +140,7 @@ public class SafeRepresenter extends BaseRepresenter {
     }
 
     protected class RepresentBoolean implements Represent {
+        @Override
         public Node representData(Object data) {
             String value;
             if (Boolean.TRUE.equals(data)) {
@@ -147,11 +153,13 @@ public class SafeRepresenter extends BaseRepresenter {
     }
 
     protected class RepresentNumber implements Represent {
+        @Override
         public Node representData(Object data) {
             Tag tag;
             String value;
-            if (data instanceof Byte || data instanceof Short || data instanceof Integer
-                    || data instanceof Long || data instanceof BigInteger) {
+            if (data instanceof Byte || data instanceof Short
+                    || data instanceof Integer || data instanceof Long
+                    || data instanceof BigInteger) {
                 tag = Tag.INT;
                 value = data.toString();
             } else {
@@ -172,18 +180,21 @@ public class SafeRepresenter extends BaseRepresenter {
     }
 
     protected class RepresentList implements Represent {
+        @Override
         @SuppressWarnings("unchecked")
         public Node representData(Object data) {
-            return representSequence(getTag(data.getClass(), Tag.SEQ), (List<Object>) data, null);
+            return representSequence(getTag(data.getClass(), Tag.SEQ),
+                    (List<Object>) data, null);
         }
     }
 
     protected class RepresentIterator implements Represent {
+        @Override
         @SuppressWarnings("unchecked")
         public Node representData(Object data) {
             Iterator<Object> iter = (Iterator<Object>) data;
-            return representSequence(getTag(data.getClass(), Tag.SEQ), new IteratorWrapper(iter),
-                    null);
+            return representSequence(getTag(data.getClass(), Tag.SEQ),
+                    new IteratorWrapper(iter), null);
         }
     }
 
@@ -194,12 +205,14 @@ public class SafeRepresenter extends BaseRepresenter {
             this.iter = iter;
         }
 
+        @Override
         public Iterator<Object> iterator() {
             return iter;
         }
     }
 
     protected class RepresentArray implements Represent {
+        @Override
         public Node representData(Object data) {
             Object[] array = (Object[]) data;
             List<Object> list = Arrays.asList(array);
@@ -208,14 +221,16 @@ public class SafeRepresenter extends BaseRepresenter {
     }
 
     public class RepresentMap implements Represent {
+        @Override
         @SuppressWarnings("unchecked")
         public Node representData(Object data) {
-            return representMapping(getTag(data.getClass(), Tag.MAP), (Map<Object, Object>) data,
-                    null);
+            return representMapping(getTag(data.getClass(), Tag.MAP),
+                    (Map<Object, Object>) data, null);
         }
     }
 
     protected class RepresentSet implements Represent {
+        @Override
         @SuppressWarnings("unchecked")
         public Node representData(Object data) {
             Map<Object, Object> value = new LinkedHashMap<Object, Object>();
@@ -223,19 +238,22 @@ public class SafeRepresenter extends BaseRepresenter {
             for (Object key : set) {
                 value.put(key, null);
             }
-            return representMapping(getTag(data.getClass(), Tag.SET), value, null);
+            return representMapping(getTag(data.getClass(), Tag.SET), value,
+                    null);
         }
     }
 
     protected class RepresentDate implements Represent {
+        @Override
         public Node representData(Object data) {
             // because SimpleDateFormat ignores timezone we have to use Calendar
             Calendar calendar;
             if (data instanceof Calendar) {
                 calendar = (Calendar) data;
             } else {
-                calendar = Calendar.getInstance(getTimeZone() == null ? TimeZone.getTimeZone("UTC")
-                        : timeZone);
+                calendar = Calendar
+                        .getInstance(getTimeZone() == null ? TimeZone
+                                .getTimeZone("UTC") : timeZone);
                 calendar.setTime((Date) data);
             }
             int years = calendar.get(Calendar.YEAR);
@@ -289,9 +307,12 @@ public class SafeRepresenter extends BaseRepresenter {
                 buffer.append("Z");
             } else {
                 // Get the Offset from GMT taking DST into account
-                int gmtOffset = calendar.getTimeZone().getOffset(calendar.get(Calendar.ERA),
-                        calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                        calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.DAY_OF_WEEK),
+                int gmtOffset = calendar.getTimeZone().getOffset(
+                        calendar.get(Calendar.ERA),
+                        calendar.get(Calendar.YEAR),
+                        calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH),
+                        calendar.get(Calendar.DAY_OF_WEEK),
                         calendar.get(Calendar.MILLISECOND));
                 int minutesOffset = gmtOffset / (60 * 1000);
                 int hoursOffset = minutesOffset / 60;
@@ -299,18 +320,22 @@ public class SafeRepresenter extends BaseRepresenter {
                 buffer.append((hoursOffset > 0 ? "+" : "") + hoursOffset + ":"
                         + (partOfHour < 10 ? "0" + partOfHour : partOfHour));
             }
-            return representScalar(getTag(data.getClass(), Tag.TIMESTAMP), buffer.toString(), null);
+            return representScalar(getTag(data.getClass(), Tag.TIMESTAMP),
+                    buffer.toString(), null);
         }
     }
 
     protected class RepresentEnum implements Represent {
+        @Override
         public Node representData(Object data) {
             Tag tag = new Tag(data.getClass());
-            return representScalar(getTag(data.getClass(), tag), ((Enum<?>) data).name());
+            return representScalar(getTag(data.getClass(), tag),
+                    ((Enum<?>) data).name());
         }
     }
 
     protected class RepresentByteArray implements Represent {
+        @Override
         public Node representData(Object data) {
             char[] binary = Base64Coder.encode((byte[]) data);
             return representScalar(Tag.BINARY, String.valueOf(binary), '|');

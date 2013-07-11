@@ -33,11 +33,13 @@ abstract public class GenericProperty extends Property {
     private boolean actualClassesChecked;
     private Class<?>[] actualClasses;
 
+    @Override
     public Class<?>[] getActualTypeArguments() { // should we synchronize here ?
         if (!actualClassesChecked) {
             if (genType instanceof ParameterizedType) {
                 ParameterizedType parameterizedType = (ParameterizedType) genType;
-                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+                Type[] actualTypeArguments = parameterizedType
+                        .getActualTypeArguments();
                 if (actualTypeArguments.length > 0) {
                     actualClasses = new Class<?>[actualTypeArguments.length];
                     for (int i = 0; i < actualTypeArguments.length; i++) {
@@ -50,8 +52,8 @@ abstract public class GenericProperty extends Property {
                             Type componentType = ((GenericArrayType) actualTypeArguments[i])
                                     .getGenericComponentType();
                             if (componentType instanceof Class<?>) {
-                                actualClasses[i] = Array.newInstance((Class<?>) componentType, 0)
-                                        .getClass();
+                                actualClasses[i] = Array.newInstance(
+                                        (Class<?>) componentType, 0).getClass();
                             } else {
                                 actualClasses = null;
                                 break;
@@ -63,7 +65,8 @@ abstract public class GenericProperty extends Property {
                     }
                 }
             } else if (genType instanceof GenericArrayType) {
-                Type componentType = ((GenericArrayType) genType).getGenericComponentType();
+                Type componentType = ((GenericArrayType) genType)
+                        .getGenericComponentType();
                 if (componentType instanceof Class<?>) {
                     actualClasses = new Class<?>[] { (Class<?>) componentType };
                 }

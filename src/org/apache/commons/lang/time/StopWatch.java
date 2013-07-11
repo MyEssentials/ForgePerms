@@ -26,21 +26,26 @@ package org.apache.commons.lang.time;
  * To start the watch, call {@link #start()}. At this point you can:
  * </p>
  * <ul>
- * <li>{@link #split()} the watch to get the time whilst the watch continues in the background. {@link #unsplit()} will
- * remove the effect of the split. At this point, these three options are available again.</li>
- * <li>{@link #suspend()} the watch to pause it. {@link #resume()} allows the watch to continue. Any time between the
- * suspend and resume will not be counted in the total. At this point, these three options are available again.</li>
+ * <li>{@link #split()} the watch to get the time whilst the watch continues in
+ * the background. {@link #unsplit()} will remove the effect of the split. At
+ * this point, these three options are available again.</li>
+ * <li>{@link #suspend()} the watch to pause it. {@link #resume()} allows the
+ * watch to continue. Any time between the suspend and resume will not be
+ * counted in the total. At this point, these three options are available again.
+ * </li>
  * <li>{@link #stop()} the watch to complete the timing session.</li>
  * </ul>
  * 
  * <p>
- * It is intended that the output methods {@link #toString()} and {@link #getTime()} should only be called after stop,
- * split or suspend, however a suitable result will be returned at other points.
+ * It is intended that the output methods {@link #toString()} and
+ * {@link #getTime()} should only be called after stop, split or suspend,
+ * however a suitable result will be returned at other points.
  * </p>
  * 
  * <p>
- * NOTE: As from v2.1, the methods protect against inappropriate calls. Thus you cannot now call stop before start,
- * resume before suspend or unsplit before split.
+ * NOTE: As from v2.1, the methods protect against inappropriate calls. Thus you
+ * cannot now call stop before start, resume before suspend or unsplit before
+ * split.
  * </p>
  * 
  * <p>
@@ -50,7 +55,9 @@ package org.apache.commons.lang.time;
  * 4. start() cannot be called twice without calling reset()
  * </p>
  * 
- * <p>This class is not thread-safe</p>
+ * <p>
+ * This class is not thread-safe
+ * </p>
  * 
  * @author Apache Software Foundation
  * @since 2.0
@@ -114,15 +121,16 @@ public class StopWatch {
      *             if the StopWatch is already running.
      */
     public void start() {
-        if (this.runningState == STATE_STOPPED) {
-            throw new IllegalStateException("Stopwatch must be reset before being restarted. ");
+        if (runningState == STATE_STOPPED) {
+            throw new IllegalStateException(
+                    "Stopwatch must be reset before being restarted. ");
         }
-        if (this.runningState != STATE_UNSTARTED) {
+        if (runningState != STATE_UNSTARTED) {
             throw new IllegalStateException("Stopwatch already started. ");
         }
-        this.stopTime = -1;
-        this.startTime = System.currentTimeMillis();
-        this.runningState = STATE_RUNNING;
+        stopTime = -1;
+        startTime = System.currentTimeMillis();
+        runningState = STATE_RUNNING;
     }
 
     /**
@@ -138,13 +146,13 @@ public class StopWatch {
      *             if the StopWatch is not running.
      */
     public void stop() {
-        if (this.runningState != STATE_RUNNING && this.runningState != STATE_SUSPENDED) {
+        if (runningState != STATE_RUNNING && runningState != STATE_SUSPENDED) {
             throw new IllegalStateException("Stopwatch is not running. ");
         }
-        if (this.runningState == STATE_RUNNING) {
-            this.stopTime = System.currentTimeMillis();
+        if (runningState == STATE_RUNNING) {
+            stopTime = System.currentTimeMillis();
         }
-        this.runningState = STATE_STOPPED;
+        runningState = STATE_STOPPED;
     }
 
     /**
@@ -157,10 +165,10 @@ public class StopWatch {
      * </p>
      */
     public void reset() {
-        this.runningState = STATE_UNSTARTED;
-        this.splitState = STATE_UNSPLIT;
-        this.startTime = -1;
-        this.stopTime = -1;
+        runningState = STATE_UNSTARTED;
+        splitState = STATE_UNSPLIT;
+        startTime = -1;
+        stopTime = -1;
     }
 
     /**
@@ -169,19 +177,20 @@ public class StopWatch {
      * </p>
      * 
      * <p>
-     * This method sets the stop time of the watch to allow a time to be extracted. The start time is unaffected,
-     * enabling {@link #unsplit()} to continue the timing from the original start point.
+     * This method sets the stop time of the watch to allow a time to be
+     * extracted. The start time is unaffected, enabling {@link #unsplit()} to
+     * continue the timing from the original start point.
      * </p>
      * 
      * @throws IllegalStateException
      *             if the StopWatch is not running.
      */
     public void split() {
-        if (this.runningState != STATE_RUNNING) {
+        if (runningState != STATE_RUNNING) {
             throw new IllegalStateException("Stopwatch is not running. ");
         }
-        this.stopTime = System.currentTimeMillis();
-        this.splitState = STATE_SPLIT;
+        stopTime = System.currentTimeMillis();
+        splitState = STATE_SPLIT;
     }
 
     /**
@@ -190,19 +199,19 @@ public class StopWatch {
      * </p>
      * 
      * <p>
-     * This method clears the stop time. The start time is unaffected, enabling timing from the original start point to
-     * continue.
+     * This method clears the stop time. The start time is unaffected, enabling
+     * timing from the original start point to continue.
      * </p>
      * 
      * @throws IllegalStateException
      *             if the StopWatch has not been split.
      */
     public void unsplit() {
-        if (this.splitState != STATE_SPLIT) {
+        if (splitState != STATE_SPLIT) {
             throw new IllegalStateException("Stopwatch has not been split. ");
         }
-        this.stopTime = -1;
-        this.splitState = STATE_UNSPLIT;
+        stopTime = -1;
+        splitState = STATE_UNSPLIT;
     }
 
     /**
@@ -211,19 +220,20 @@ public class StopWatch {
      * </p>
      * 
      * <p>
-     * This method suspends the watch until it is resumed. The watch will not include time between the suspend and
-     * resume calls in the total time.
+     * This method suspends the watch until it is resumed. The watch will not
+     * include time between the suspend and resume calls in the total time.
      * </p>
      * 
      * @throws IllegalStateException
      *             if the StopWatch is not currently running.
      */
     public void suspend() {
-        if (this.runningState != STATE_RUNNING) {
-            throw new IllegalStateException("Stopwatch must be running to suspend. ");
+        if (runningState != STATE_RUNNING) {
+            throw new IllegalStateException(
+                    "Stopwatch must be running to suspend. ");
         }
-        this.stopTime = System.currentTimeMillis();
-        this.runningState = STATE_SUSPENDED;
+        stopTime = System.currentTimeMillis();
+        runningState = STATE_SUSPENDED;
     }
 
     /**
@@ -232,20 +242,21 @@ public class StopWatch {
      * </p>
      * 
      * <p>
-     * This method resumes the watch after it was suspended. The watch will not include time between the suspend and
-     * resume calls in the total time.
+     * This method resumes the watch after it was suspended. The watch will not
+     * include time between the suspend and resume calls in the total time.
      * </p>
      * 
      * @throws IllegalStateException
      *             if the StopWatch has not been suspended.
      */
     public void resume() {
-        if (this.runningState != STATE_SUSPENDED) {
-            throw new IllegalStateException("Stopwatch must be suspended to resume. ");
+        if (runningState != STATE_SUSPENDED) {
+            throw new IllegalStateException(
+                    "Stopwatch must be suspended to resume. ");
         }
-        this.startTime += (System.currentTimeMillis() - this.stopTime);
-        this.stopTime = -1;
-        this.runningState = STATE_RUNNING;
+        startTime += System.currentTimeMillis() - stopTime;
+        stopTime = -1;
+        runningState = STATE_RUNNING;
     }
 
     /**
@@ -254,19 +265,19 @@ public class StopWatch {
      * </p>
      * 
      * <p>
-     * This is either the time between the start and the moment this method is called, or the amount of time between
-     * start and stop.
+     * This is either the time between the start and the moment this method is
+     * called, or the amount of time between start and stop.
      * </p>
      * 
      * @return the time in milliseconds
      */
     public long getTime() {
-        if (this.runningState == STATE_STOPPED || this.runningState == STATE_SUSPENDED) {
-            return this.stopTime - this.startTime;
-        } else if (this.runningState == STATE_UNSTARTED) {
+        if (runningState == STATE_STOPPED || runningState == STATE_SUSPENDED) {
+            return stopTime - startTime;
+        } else if (runningState == STATE_UNSTARTED) {
             return 0;
-        } else if (this.runningState == STATE_RUNNING) {
-            return System.currentTimeMillis() - this.startTime;
+        } else if (runningState == STATE_RUNNING) {
+            return System.currentTimeMillis() - startTime;
         }
         throw new RuntimeException("Illegal running state has occured. ");
     }
@@ -287,10 +298,11 @@ public class StopWatch {
      * @since 2.1
      */
     public long getSplitTime() {
-        if (this.splitState != STATE_SPLIT) {
-            throw new IllegalStateException("Stopwatch must be split to get the split time. ");
+        if (splitState != STATE_SPLIT) {
+            throw new IllegalStateException(
+                    "Stopwatch must be split to get the split time. ");
         }
-        return this.stopTime - this.startTime;
+        return stopTime - startTime;
     }
 
     /**
@@ -302,10 +314,10 @@ public class StopWatch {
      * @since 2.4
      */
     public long getStartTime() {
-        if (this.runningState == STATE_UNSTARTED) {
+        if (runningState == STATE_UNSTARTED) {
             throw new IllegalStateException("Stopwatch has not been started");
         }
-        return this.startTime;
+        return startTime;
     }
 
     /**
@@ -314,11 +326,13 @@ public class StopWatch {
      * </p>
      * 
      * <p>
-     * The format used is ISO8601-like, <i>hours</i>:<i>minutes</i>:<i>seconds</i>.<i>milliseconds</i>.
+     * The format used is ISO8601-like,
+     * <i>hours</i>:<i>minutes</i>:<i>seconds</i>.<i>milliseconds</i>.
      * </p>
      * 
      * @return the time as a String
      */
+    @Override
     public String toString() {
         return DurationFormatUtils.formatDurationHMS(getTime());
     }
@@ -329,7 +343,8 @@ public class StopWatch {
      * </p>
      * 
      * <p>
-     * The format used is ISO8601-like, <i>hours</i>:<i>minutes</i>:<i>seconds</i>.<i>milliseconds</i>.
+     * The format used is ISO8601-like,
+     * <i>hours</i>:<i>minutes</i>:<i>seconds</i>.<i>milliseconds</i>.
      * </p>
      * 
      * @return the split time as a String

@@ -8,7 +8,7 @@ public interface PermissionsData {
 
     /**
      * Returns all permissions for specified world
-     *
+     * 
      * @param worldName
      * @return
      */
@@ -16,7 +16,7 @@ public interface PermissionsData {
 
     /**
      * Set permissions for specified world
-     *
+     * 
      * @param permissions
      * @param worldName
      */
@@ -24,21 +24,21 @@ public interface PermissionsData {
 
     /**
      * Returns ALL permissions for each world
-     *
+     * 
      * @return
      */
     public Map<String, List<String>> getPermissionsMap();
 
     /**
      * Returns worlds where entity has permissions/options
-     *
+     * 
      * @return
      */
     public Set<String> getWorlds();
 
     /**
      * Returns prefix in specified world
-     *
+     * 
      * @param worldName
      * @return
      */
@@ -47,7 +47,7 @@ public interface PermissionsData {
 
     /**
      * Sets prefix in specified world
-     *
+     * 
      * @param prefix
      * @param worldName
      */
@@ -56,7 +56,7 @@ public interface PermissionsData {
 
     /**
      * Returns suffix in specified world
-     *
+     * 
      * @param worldName
      * @return
      */
@@ -65,7 +65,7 @@ public interface PermissionsData {
 
     /**
      * Set suffix in specified world
-     *
+     * 
      * @param prefix
      * @param worldName
      */
@@ -73,9 +73,9 @@ public interface PermissionsData {
     public void setSuffix(String suffix, String worldName);
 
     /**
-     * Returns option value in specified worlds.
-     * null if option is not defined in that world
-     *
+     * Returns option value in specified worlds. null if option is not defined
+     * in that world
+     * 
      * @param option
      * @param worldName
      * @return
@@ -84,7 +84,7 @@ public interface PermissionsData {
 
     /**
      * Sets option value in specified world
-     *
+     * 
      * @param option
      * @param worldName
      * @param value
@@ -93,7 +93,7 @@ public interface PermissionsData {
 
     /**
      * Returns all options in specified world
-     *
+     * 
      * @param worldName
      * @return
      */
@@ -101,15 +101,14 @@ public interface PermissionsData {
 
     /**
      * Returns ALL options in each world
-     *
+     * 
      * @return
      */
     public Map<String, Map<String, String>> getOptionsMap();
 
-
     /**
      * Returns true if this User/Group exists only in server memory
-     *
+     * 
      * @return
      */
     public boolean isVirtual();

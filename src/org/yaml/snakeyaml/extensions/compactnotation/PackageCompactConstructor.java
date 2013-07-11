@@ -23,7 +23,8 @@ public class PackageCompactConstructor extends CompactConstructor {
     }
 
     @Override
-    protected Class<?> getClassForName(String name) throws ClassNotFoundException {
+    protected Class<?> getClassForName(String name)
+            throws ClassNotFoundException {
         if (name.indexOf('.') < 0) {
             try {
                 Class<?> clazz = Class.forName(packageName + "." + name);

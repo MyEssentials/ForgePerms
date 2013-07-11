@@ -3,6 +3,7 @@ package org.bukkit.util;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
+
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
@@ -14,8 +15,6 @@ import org.bukkit.configuration.serialization.SerializableAs;
  */
 @SerializableAs("Vector")
 public class Vector implements Cloneable, ConfigurationSerializable {
-    private static final long serialVersionUID = -2657651106777219169L;
-
     private static Random random = new Random();
 
     /**
@@ -31,17 +30,20 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * Construct the vector with all components as 0.
      */
     public Vector() {
-        this.x = 0;
-        this.y = 0;
-        this.z = 0;
+        x = 0;
+        y = 0;
+        z = 0;
     }
 
     /**
      * Construct the vector with provided integer components.
-     *
-     * @param x X component
-     * @param y Y component
-     * @param z Z component
+     * 
+     * @param x
+     *            X component
+     * @param y
+     *            Y component
+     * @param z
+     *            Z component
      */
     public Vector(int x, int y, int z) {
         this.x = x;
@@ -51,10 +53,13 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Construct the vector with provided double components.
-     *
-     * @param x X component
-     * @param y Y component
-     * @param z Z component
+     * 
+     * @param x
+     *            X component
+     * @param y
+     *            Y component
+     * @param z
+     *            Z component
      */
     public Vector(double x, double y, double z) {
         this.x = x;
@@ -64,10 +69,13 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Construct the vector with provided float components.
-     *
-     * @param x X component
-     * @param y Y component
-     * @param z Z component
+     * 
+     * @param x
+     *            X component
+     * @param y
+     *            Y component
+     * @param z
+     *            Z component
      */
     public Vector(float x, float y, float z) {
         this.x = x;
@@ -77,8 +85,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Adds a vector to this one
-     *
-     * @param vec The other vector
+     * 
+     * @param vec
+     *            The other vector
      * @return the same vector
      */
     public Vector add(Vector vec) {
@@ -90,8 +99,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Subtracts a vector from this one.
-     *
-     * @param vec The other vector
+     * 
+     * @param vec
+     *            The other vector
      * @return the same vector
      */
     public Vector subtract(Vector vec) {
@@ -103,8 +113,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Multiplies the vector by another.
-     *
-     * @param vec The other vector
+     * 
+     * @param vec
+     *            The other vector
      * @return the same vector
      */
     public Vector multiply(Vector vec) {
@@ -116,8 +127,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Divides the vector by another.
-     *
-     * @param vec The other vector
+     * 
+     * @param vec
+     *            The other vector
      * @return the same vector
      */
     public Vector divide(Vector vec) {
@@ -129,8 +141,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Copies another vector
-     *
-     * @param vec The other vector
+     * 
+     * @param vec
+     *            The other vector
      * @return the same vector
      */
     public Vector copy(Vector vec) {
@@ -146,7 +159,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * do not repeatedly call this method to get the vector's magnitude. NaN
      * will be returned if the inner result of the sqrt() function overflows,
      * which will be caused if the length is too long.
-     *
+     * 
      * @return the magnitude
      */
     public double length() {
@@ -155,7 +168,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Gets the magnitude of the vector squared.
-     *
+     * 
      * @return the magnitude
      */
     public double lengthSquared() {
@@ -163,33 +176,38 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Get the distance between this vector and another. The value
-     * of this method is not cached and uses a costly square-root function, so
-     * do not repeatedly call this method to get the vector's magnitude. NaN
-     * will be returned if the inner result of the sqrt() function overflows,
-     * which will be caused if the distance is too long.
-     *
-     * @param o The other vector
+     * Get the distance between this vector and another. The value of this
+     * method is not cached and uses a costly square-root function, so do not
+     * repeatedly call this method to get the vector's magnitude. NaN will be
+     * returned if the inner result of the sqrt() function overflows, which will
+     * be caused if the distance is too long.
+     * 
+     * @param o
+     *            The other vector
      * @return the distance
      */
     public double distance(Vector o) {
-        return Math.sqrt(Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2) + Math.pow(z - o.z, 2));
+        return Math.sqrt(Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2)
+                + Math.pow(z - o.z, 2));
     }
 
     /**
      * Get the squared distance between this vector and another.
-     *
-     * @param o The other vector
+     * 
+     * @param o
+     *            The other vector
      * @return the distance
      */
     public double distanceSquared(Vector o) {
-        return Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2) + Math.pow(z - o.z, 2);
+        return Math.pow(x - o.x, 2) + Math.pow(y - o.y, 2)
+                + Math.pow(z - o.z, 2);
     }
 
     /**
      * Gets the angle between this vector and another in radians.
-     *
-     * @param other The other vector
+     * 
+     * @param other
+     *            The other vector
      * @return angle in radians
      */
     public float angle(Vector other) {
@@ -200,8 +218,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Sets this vector to the midpoint between this vector and another.
-     *
-     * @param other The other vector
+     * 
+     * @param other
+     *            The other vector
      * @return this same vector (now a midpoint)
      */
     public Vector midpoint(Vector other) {
@@ -213,8 +232,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Gets a new midpoint vector between this vector and another.
-     *
-     * @param other The other vector
+     * 
+     * @param other
+     *            The other vector
      * @return a new midpoint vector
      */
     public Vector getMidpoint(Vector other) {
@@ -226,8 +246,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Performs scalar multiplication, multiplying all components with a scalar.
-     *
-     * @param m The factor
+     * 
+     * @param m
+     *            The factor
      * @return the same vector
      */
     public Vector multiply(int m) {
@@ -239,8 +260,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Performs scalar multiplication, multiplying all components with a scalar.
-     *
-     * @param m The factor
+     * 
+     * @param m
+     *            The factor
      * @return the same vector
      */
     public Vector multiply(double m) {
@@ -252,8 +274,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Performs scalar multiplication, multiplying all components with a scalar.
-     *
-     * @param m The factor
+     * 
+     * @param m
+     *            The factor
      * @return the same vector
      */
     public Vector multiply(float m) {
@@ -266,8 +289,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     /**
      * Calculates the dot product of this vector with another. The dot product
      * is defined as x1*x2+y1*y2+z1*z2. The returned value is a scalar.
-     *
-     * @param other The other vector
+     * 
+     * @param other
+     *            The other vector
      * @return dot product
      */
     public double dot(Vector other) {
@@ -281,8 +305,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
      * x = y1 * z2 - y2 * z1<br/>
      * y = z1 * x2 - z2 * x1<br/>
      * z = x1 * y2 - x2 * y1
-     *
-     * @param o The other vector
+     * 
+     * @param o
+     *            The other vector
      * @return the same vector
      */
     public Vector crossProduct(Vector o) {
@@ -298,7 +323,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Converts this vector to a unit vector (a vector with length of 1).
-     *
+     * 
      * @return the same vector
      */
     public Vector normalize() {
@@ -313,7 +338,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Zero this vector's components.
-     *
+     * 
      * @return the same vector
      */
     public Vector zero() {
@@ -324,32 +349,38 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Returns whether this vector is in an axis-aligned bounding box.
-     * The minimum and maximum vectors given must be truly the minimum and
-     * maximum X, Y and Z components.
-     *
-     * @param min Minimum vector
-     * @param max Maximum vector
+     * Returns whether this vector is in an axis-aligned bounding box. The
+     * minimum and maximum vectors given must be truly the minimum and maximum
+     * X, Y and Z components.
+     * 
+     * @param min
+     *            Minimum vector
+     * @param max
+     *            Maximum vector
      * @return whether this vector is in the AABB
      */
     public boolean isInAABB(Vector min, Vector max) {
-        return x >= min.x && x <= max.x && y >= min.y && y <= max.y && z >= min.z && z <= max.z;
+        return x >= min.x && x <= max.x && y >= min.y && y <= max.y
+                && z >= min.z && z <= max.z;
     }
 
     /**
      * Returns whether this vector is within a sphere.
-     *
-     * @param origin Sphere origin.
-     * @param radius Sphere radius
+     * 
+     * @param origin
+     *            Sphere origin.
+     * @param radius
+     *            Sphere radius
      * @return whether this vector is in the sphere
      */
     public boolean isInSphere(Vector origin, double radius) {
-        return (Math.pow(origin.x - x, 2) + Math.pow(origin.y - y, 2) + Math.pow(origin.z - z, 2)) <= Math.pow(radius, 2);
+        return Math.pow(origin.x - x, 2) + Math.pow(origin.y - y, 2)
+                + Math.pow(origin.z - z, 2) <= Math.pow(radius, 2);
     }
 
     /**
      * Gets the X component.
-     *
+     * 
      * @return The X component.
      */
     public double getX() {
@@ -357,9 +388,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the floored value of the X component, indicating the block that
-     * this vector is contained with.
-     *
+     * Gets the floored value of the X component, indicating the block that this
+     * vector is contained with.
+     * 
      * @return block X
      */
     public int getBlockX() {
@@ -368,7 +399,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Gets the Y component.
-     *
+     * 
      * @return The Y component.
      */
     public double getY() {
@@ -376,9 +407,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the floored value of the Y component, indicating the block that
-     * this vector is contained with.
-     *
+     * Gets the floored value of the Y component, indicating the block that this
+     * vector is contained with.
+     * 
      * @return block y
      */
     public int getBlockY() {
@@ -387,7 +418,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Gets the Z component.
-     *
+     * 
      * @return The Z component.
      */
     public double getZ() {
@@ -395,9 +426,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     }
 
     /**
-     * Gets the floored value of the Z component, indicating the block that
-     * this vector is contained with.
-     *
+     * Gets the floored value of the Z component, indicating the block that this
+     * vector is contained with.
+     * 
      * @return block z
      */
     public int getBlockZ() {
@@ -406,8 +437,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the X component.
-     *
-     * @param x The new X component.
+     * 
+     * @param x
+     *            The new X component.
      * @return This vector.
      */
     public Vector setX(int x) {
@@ -417,8 +449,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the X component.
-     *
-     * @param x The new X component.
+     * 
+     * @param x
+     *            The new X component.
      * @return This vector.
      */
     public Vector setX(double x) {
@@ -428,8 +461,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the X component.
-     *
-     * @param x The new X component.
+     * 
+     * @param x
+     *            The new X component.
      * @return This vector.
      */
     public Vector setX(float x) {
@@ -439,8 +473,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the Y component.
-     *
-     * @param y The new Y component.
+     * 
+     * @param y
+     *            The new Y component.
      * @return This vector.
      */
     public Vector setY(int y) {
@@ -450,8 +485,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the Y component.
-     *
-     * @param y The new Y component.
+     * 
+     * @param y
+     *            The new Y component.
      * @return This vector.
      */
     public Vector setY(double y) {
@@ -461,8 +497,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the Y component.
-     *
-     * @param y The new Y component.
+     * 
+     * @param y
+     *            The new Y component.
      * @return This vector.
      */
     public Vector setY(float y) {
@@ -472,8 +509,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the Z component.
-     *
-     * @param z The new Z component.
+     * 
+     * @param z
+     *            The new Z component.
      * @return This vector.
      */
     public Vector setZ(int z) {
@@ -483,8 +521,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the Z component.
-     *
-     * @param z The new Z component.
+     * 
+     * @param z
+     *            The new Z component.
      * @return This vector.
      */
     public Vector setZ(double z) {
@@ -494,8 +533,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Set the Z component.
-     *
-     * @param z The new Z component.
+     * 
+     * @param z
+     *            The new Z component.
      * @return This vector.
      */
     public Vector setZ(float z) {
@@ -506,9 +546,9 @@ public class Vector implements Cloneable, ConfigurationSerializable {
     /**
      * Checks to see if two objects are equal.
      * <p />
-     * Only two Vectors can ever return true. This method uses a fuzzy match
-     * to account for floating point errors. The epsilon can be retrieved
-     * with epsilon.
+     * Only two Vectors can ever return true. This method uses a fuzzy match to
+     * account for floating point errors. The epsilon can be retrieved with
+     * epsilon.
      */
     @Override
     public boolean equals(Object obj) {
@@ -518,27 +558,39 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
         Vector other = (Vector) obj;
 
-        return Math.abs(x - other.x) < epsilon && Math.abs(y - other.y) < epsilon && Math.abs(z - other.z) < epsilon && (this.getClass().equals(obj.getClass()));
+        return Math.abs(x - other.x) < epsilon
+                && Math.abs(y - other.y) < epsilon
+                && Math.abs(z - other.z) < epsilon
+                && this.getClass().equals(obj.getClass());
     }
 
     /**
      * Returns a hash code for this vector
-     *
+     * 
      * @return hash code
      */
     @Override
     public int hashCode() {
         int hash = 7;
 
-        hash = 79 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
-        hash = 79 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
-        hash = 79 * hash + (int) (Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
+        hash = 79
+                * hash
+                + (int) (Double.doubleToLongBits(x) ^ Double
+                        .doubleToLongBits(x) >>> 32);
+        hash = 79
+                * hash
+                + (int) (Double.doubleToLongBits(y) ^ Double
+                        .doubleToLongBits(y) >>> 32);
+        hash = 79
+                * hash
+                + (int) (Double.doubleToLongBits(z) ^ Double
+                        .doubleToLongBits(z) >>> 32);
         return hash;
     }
 
     /**
      * Get a new vector.
-     *
+     * 
      * @return vector
      */
     @Override
@@ -560,7 +612,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Get the block vector of this vector.
-     *
+     * 
      * @return A block vector.
      */
     public BlockVector toBlockVector() {
@@ -569,7 +621,7 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Get the threshold used for equals().
-     *
+     * 
      * @return The epsilon.
      */
     public static double getEpsilon() {
@@ -578,36 +630,44 @@ public class Vector implements Cloneable, ConfigurationSerializable {
 
     /**
      * Gets the minimum components of two vectors.
-     *
-     * @param v1 The first vector.
-     * @param v2 The second vector.
+     * 
+     * @param v1
+     *            The first vector.
+     * @param v2
+     *            The second vector.
      * @return minimum
      */
     public static Vector getMinimum(Vector v1, Vector v2) {
-        return new Vector(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y), Math.min(v1.z, v2.z));
+        return new Vector(Math.min(v1.x, v2.x), Math.min(v1.y, v2.y), Math.min(
+                v1.z, v2.z));
     }
 
     /**
      * Gets the maximum components of two vectors.
-     *
-     * @param v1 The first vector.
-     * @param v2 The second vector.
+     * 
+     * @param v1
+     *            The first vector.
+     * @param v2
+     *            The second vector.
      * @return maximum
      */
     public static Vector getMaximum(Vector v1, Vector v2) {
-        return new Vector(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y), Math.max(v1.z, v2.z));
+        return new Vector(Math.max(v1.x, v2.x), Math.max(v1.y, v2.y), Math.max(
+                v1.z, v2.z));
     }
 
     /**
-     * Gets a random vector with components having a random value between
-     * 0 and 1.
-     *
+     * Gets a random vector with components having a random value between 0 and
+     * 1.
+     * 
      * @return A random vector.
      */
     public static Vector getRandom() {
-        return new Vector(random.nextDouble(), random.nextDouble(), random.nextDouble());
+        return new Vector(random.nextDouble(), random.nextDouble(), random
+                .nextDouble());
     }
 
+    @Override
     public Map<String, Object> serialize() {
         Map<String, Object> result = new LinkedHashMap<String, Object>();
 

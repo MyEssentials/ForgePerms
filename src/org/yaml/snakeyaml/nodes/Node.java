@@ -46,10 +46,10 @@ public abstract class Node {
         setTag(tag);
         this.startMark = startMark;
         this.endMark = endMark;
-        this.type = Object.class;
-        this.twoStepsConstruction = false;
-        this.resolved = true;
-        this.useClassConstructor = null;
+        type = Object.class;
+        twoStepsConstruction = false;
+        resolved = true;
+        useClassConstructor = null;
     }
 
     /**
@@ -60,7 +60,7 @@ public abstract class Node {
      * @return Tag of this node.
      */
     public Tag getTag() {
-        return this.tag;
+        return tag;
     }
 
     public Mark getEndMark() {
@@ -136,7 +136,8 @@ public abstract class Node {
 
     public boolean useClassConstructor() {
         if (useClassConstructor == null) {
-            if (isResolved() && !Object.class.equals(type) && !tag.equals(Tag.NULL)) {
+            if (isResolved() && !Object.class.equals(type)
+                    && !tag.equals(Tag.NULL)) {
                 return true;
             } else if (tag.isCompatible(getType())) {
                 // the tag is compatible with the runtime class

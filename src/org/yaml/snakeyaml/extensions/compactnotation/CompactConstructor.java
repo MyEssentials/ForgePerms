@@ -40,7 +40,8 @@ import org.yaml.snakeyaml.nodes.SequenceNode;
 public class CompactConstructor extends Constructor {
     private static final Pattern GUESS_COMPACT = Pattern
             .compile("\\p{Alpha}.*\\s*\\((?:,?\\s*(?:(?:\\w*)|(?:\\p{Alpha}\\w*\\s*=.+))\\s*)+\\)");
-    private static final Pattern FIRST_PATTERN = Pattern.compile("(\\p{Alpha}.*)(\\s*)\\((.*?)\\)");
+    private static final Pattern FIRST_PATTERN = Pattern
+            .compile("(\\p{Alpha}.*)(\\s*)\\((.*?)\\)");
     private static final Pattern PROPERTY_NAME_PATTERN = Pattern
             .compile("\\s*(\\p{Alpha}\\w*)\\s*=(.+)");
     private Construct compactConstruct;
@@ -48,7 +49,8 @@ public class CompactConstructor extends Constructor {
     protected Object constructCompactFormat(ScalarNode node, CompactData data) {
         try {
             Object obj = createInstance(node, data);
-            Map<String, Object> properties = new HashMap<String, Object>(data.getProperties());
+            Map<String, Object> properties = new HashMap<String, Object>(data
+                    .getProperties());
             setProperties(obj, properties);
             return obj;
         } catch (Exception e) {
@@ -56,7 +58,8 @@ public class CompactConstructor extends Constructor {
         }
     }
 
-    protected Object createInstance(ScalarNode node, CompactData data) throws Exception {
+    protected Object createInstance(ScalarNode node, CompactData data)
+            throws Exception {
         Class<?> clazz = getClassForName(data.getPrefix());
         Class<?>[] args = new Class[data.getArguments().size()];
         for (int i = 0; i < args.length; i++) {
@@ -69,18 +72,22 @@ public class CompactConstructor extends Constructor {
 
     }
 
-    protected void setProperties(Object bean, Map<String, Object> data) throws Exception {
+    protected void setProperties(Object bean, Map<String, Object> data)
+            throws Exception {
         if (data == null) {
-            throw new NullPointerException("Data for Compact Object Notation cannot be null.");
+            throw new NullPointerException(
+                    "Data for Compact Object Notation cannot be null.");
         }
         for (Map.Entry<String, Object> entry : data.entrySet()) {
             String key = entry.getKey();
-            Property property = getPropertyUtils().getProperty(bean.getClass(), key);
+            Property property = getPropertyUtils().getProperty(bean.getClass(),
+                    key);
             try {
                 property.set(bean, entry.getValue());
             } catch (IllegalArgumentException e) {
-                throw new YAMLException("Cannot set property='" + key + "' with value='"
-                        + data.get(key) + "' (" + data.get(key).getClass() + ") in " + bean);
+                throw new YAMLException("Cannot set property='" + key
+                        + "' with value='" + data.get(key) + "' ("
+                        + data.get(key).getClass() + ") in " + bean);
             }
         }
     }
@@ -97,8 +104,9 @@ public class CompactConstructor extends Constructor {
             String tag = m.group(1).trim();
             String content = m.group(3);
             CompactData data = new CompactData(tag);
-            if (content.length() == 0)
+            if (content.length() == 0) {
                 return data;
+            }
             String[] names = content.split("\\s*,\\s*");
             for (int i = 0; i < names.length; i++) {
                 String section = names[i];
@@ -170,7 +178,8 @@ public class CompactConstructor extends Constructor {
                 constructJavaBean2ndStep((MappingNode) valueNode, object);
             } else {
                 // value is a list
-                applySequence(object, constructSequence((SequenceNode) valueNode));
+                applySequence(object,
+                        constructSequence((SequenceNode) valueNode));
             }
         }
 
@@ -178,6 +187,7 @@ public class CompactConstructor extends Constructor {
          * MappingNode and ScalarNode end up here only they assumed to be a
          * compact object's representation (@see getConstructor(Node) above)
          */
+        @Override
         public Object construct(Node node) {
             ScalarNode tmpNode = null;
             if (node instanceof MappingNode) {
@@ -215,9 +225,11 @@ public class CompactConstructor extends Constructor {
      * 
      * @throws IntrospectionException
      */
-    protected String getSequencePropertyName(Class<?> bean) throws IntrospectionException {
+    protected String getSequencePropertyName(Class<?> bean)
+            throws IntrospectionException {
         Set<Property> properties = getPropertyUtils().getProperties(bean);
-        for (Iterator<Property> iterator = properties.iterator(); iterator.hasNext();) {
+        for (Iterator<Property> iterator = properties.iterator(); iterator
+                .hasNext();) {
             Property property = iterator.next();
             if (!List.class.isAssignableFrom(property.getType())) {
                 iterator.remove();

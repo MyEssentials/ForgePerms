@@ -41,7 +41,8 @@ public class Resolver {
     public static final Pattern INT = Pattern
             .compile("^(?:[-+]?0b[0-1_]+|[-+]?0[0-7_]+|[-+]?(?:0|[1-9][0-9_]*)|[-+]?0x[0-9a-fA-F_]+|[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+)$");
     public static final Pattern MERGE = Pattern.compile("^(?:<<)$");
-    public static final Pattern NULL = Pattern.compile("^(?:~|null|Null|NULL| )$");
+    public static final Pattern NULL = Pattern
+            .compile("^(?:~|null|Null|NULL| )$");
     public static final Pattern EMPTY = Pattern.compile("^$");
     public static final Pattern TIMESTAMP = Pattern
             .compile("^(?:[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]|[0-9][0-9][0-9][0-9]-[0-9][0-9]?-[0-9][0-9]?(?:[Tt]|[ \t]+)[0-9][0-9]?:[0-9][0-9]:[0-9][0-9](?:\\.[0-9]*)?(?:[ \t]*(?:Z|[-+][0-9][0-9]?(?::[0-9][0-9])?))?)$");
@@ -57,6 +58,7 @@ public class Resolver {
      *            false to parse/dump scalars as plain Strings
      * @deprecated override addImplicitResolvers instead
      */
+    @Deprecated
     public Resolver(boolean respectDefaultImplicitScalars) {
         if (respectDefaultImplicitScalars) {
             addImplicitResolvers();
@@ -142,12 +144,12 @@ public class Resolver {
             }
         }
         switch (kind) {
-        case scalar:
-            return Tag.STR;
-        case sequence:
-            return Tag.SEQ;
-        default:
-            return Tag.MAP;
+            case scalar:
+                return Tag.STR;
+            case sequence:
+                return Tag.SEQ;
+            default:
+                return Tag.MAP;
         }
     }
 }

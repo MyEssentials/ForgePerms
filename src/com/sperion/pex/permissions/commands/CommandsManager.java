@@ -20,7 +20,11 @@ package com.sperion.pex.permissions.commands;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -38,221 +42,252 @@ import com.sperion.pex.permissions.commands.exceptions.AutoCompleteChoicesExcept
 import com.sperion.pex.utils.StringUtils;
 
 /**
- *
+ * 
  * @author code
  */
 public class CommandsManager {
 
-	protected static final Logger logger = Logger.getLogger("Minecraft");
-	protected Map<String, Map<CommandSyntax, CommandBinding>> listeners = new LinkedHashMap<String, Map<CommandSyntax, CommandBinding>>();
-	protected Object plugin;
-	protected List<Object> helpObjects = new LinkedList<Object>();
+    protected static final Logger logger = Logger.getLogger("Minecraft");
+    protected Map<String, Map<CommandSyntax, CommandBinding>> listeners = new LinkedHashMap<String, Map<CommandSyntax, CommandBinding>>();
+    protected Object plugin;
+    protected List<Object> helpObjects = new LinkedList<Object>();
 
-	public CommandsManager(Object plugin) {
-		this.plugin = plugin;
-	}
+    public CommandsManager(Object plugin) {
+        this.plugin = plugin;
+    }
 
-	public void register(CommandListener listener) {
-		for (Method method : listener.getClass().getMethods()) {
-			if (!method.isAnnotationPresent(Command.class)) {
-				continue;
-			}
+    public void register(CommandListener listener) {
+        for (Method method : listener.getClass().getMethods()) {
+            if (!method.isAnnotationPresent(Command.class)) {
+                continue;
+            }
 
-			Command cmdAnnotation = method.getAnnotation(Command.class);
+            Command cmdAnnotation = method.getAnnotation(Command.class);
 
-			Map<CommandSyntax, CommandBinding> commandListeners = listeners.get(cmdAnnotation.name());
-			if (commandListeners == null) {
-				commandListeners = new LinkedHashMap<CommandSyntax, CommandBinding>();
-				listeners.put(cmdAnnotation.name(), commandListeners);
-			}
+            Map<CommandSyntax, CommandBinding> commandListeners = listeners
+                    .get(cmdAnnotation.name());
+            if (commandListeners == null) {
+                commandListeners = new LinkedHashMap<CommandSyntax, CommandBinding>();
+                listeners.put(cmdAnnotation.name(), commandListeners);
+            }
 
-			commandListeners.put(new CommandSyntax(cmdAnnotation.syntax()), new CommandBinding(listener, method));
-		}
-		
-		listener.onRegistered(this);
-	}
+            commandListeners.put(new CommandSyntax(cmdAnnotation.syntax()),
+                    new CommandBinding(listener, method));
+        }
 
-	public boolean execute(ICommandSender sender, CommandBase command, String[] args) {
-		Map<CommandSyntax, CommandBinding> callMap = this.listeners.get(command.getCommandName());
+        listener.onRegistered(this);
+    }
 
-		if (callMap == null) { // No commands registered
-			return false;
-		}
+    public boolean execute(ICommandSender sender, CommandBase command,
+            String[] args) {
+        Map<CommandSyntax, CommandBinding> callMap = listeners.get(command
+                .getCommandName());
 
-		CommandBinding selectedBinding = null;
-		int argumentsLength = 0;
-		String arguments = StringUtils.implode(args, " ");
+        if (callMap == null) { // No commands registered
+            return false;
+        }
 
-		for (Entry<CommandSyntax, CommandBinding> entry : callMap.entrySet()) {
-			CommandSyntax syntax = entry.getKey();
-			if (!syntax.isMatch(arguments)) {
-				continue;
-			}
-			if (selectedBinding != null && syntax.getRegexp().length() < argumentsLength) { // match, but there already more fitted variant
-				continue;
-			}
+        CommandBinding selectedBinding = null;
+        int argumentsLength = 0;
+        String arguments = StringUtils.implode(args, " ");
 
-			CommandBinding binding = entry.getValue();
-			binding.setParams(syntax.getMatchedArguments(arguments));
-			selectedBinding = binding;
-		}
+        for (Entry<CommandSyntax, CommandBinding> entry : callMap.entrySet()) {
+            CommandSyntax syntax = entry.getKey();
+            if (!syntax.isMatch(arguments)) {
+                continue;
+            }
+            if (selectedBinding != null
+                    && syntax.getRegexp().length() < argumentsLength) { // match,
+                                                                        // but
+                                                                        // there
+                                                                        // already
+                                                                        // more
+                                                                        // fitted
+                                                                        // variant
+                continue;
+            }
 
-		if (selectedBinding == null) { // there is fitting handler
-			sender.sendChatToPlayer(ChatColor.RED + "Error in command syntax. Check command help.");
-			return true;
-		}
+            CommandBinding binding = entry.getValue();
+            binding.setParams(syntax.getMatchedArguments(arguments));
+            selectedBinding = binding;
+        }
 
-		// Check permission
-		if (sender instanceof EntityPlayer) { // this method are not public and required permission
-			if (!selectedBinding.checkPermissions((EntityPlayer) sender)) {
-				logger.warning("User " + ((EntityPlayer) sender).username + " tried to access chat command \"" 
-							+ command.getCommandName() + " " + arguments
-							+ "\", but doesn't have permission to do this.");
-				sender.sendChatToPlayer(ChatColor.RED + "Sorry, you don't have enough permissions.");
-				return true;
-			}
-		}
+        if (selectedBinding == null) { // there is fitting handler
+            sender.sendChatToPlayer(ChatColor.RED
+                    + "Error in command syntax. Check command help.");
+            return true;
+        }
 
-		try {
-			selectedBinding.call(this.plugin, sender, selectedBinding.getParams());
-		} catch (InvocationTargetException e) {
-			if (e.getTargetException() instanceof AutoCompleteChoicesException) {
-				AutoCompleteChoicesException autocomplete = (AutoCompleteChoicesException) e.getTargetException();
-				sender.sendChatToPlayer("Autocomplete for <" + autocomplete.getArgName() + ">:");
-				sender.sendChatToPlayer("    " + StringUtils.implode(autocomplete.getChoices(), "   "));
-			} else {
-				throw new RuntimeException(e.getTargetException());
-			}
-		} catch (Exception e) {
-			logger.severe("There is bogus command handler for " + command.getCommandName() + " command. (Is appropriate plugin is update?)");
-			if (e.getCause() != null) {
-				e.getCause().printStackTrace();
-			} else {
-				e.printStackTrace();
-			}
-		}
+        // Check permission
+        if (sender instanceof EntityPlayer) { // this method are not public and
+                                              // required permission
+            if (!selectedBinding.checkPermissions((EntityPlayer) sender)) {
+                logger.warning("User " + ((EntityPlayer) sender).username
+                        + " tried to access chat command \""
+                        + command.getCommandName() + " " + arguments
+                        + "\", but doesn't have permission to do this.");
+                sender.sendChatToPlayer(ChatColor.RED
+                        + "Sorry, you don't have enough permissions.");
+                return true;
+            }
+        }
 
-		return true;
-	}
-	
-	public List<CommandBinding> getCommands() {
-		List<CommandBinding> commands = new LinkedList<CommandBinding>();
-		
-		for (Map<CommandSyntax, CommandBinding> map : this.listeners.values()) {
-			commands.addAll(map.values());
-		}
- 		
-		return commands;
-	}
+        try {
+            selectedBinding.call(plugin, sender, selectedBinding.getParams());
+        } catch (InvocationTargetException e) {
+            if (e.getTargetException() instanceof AutoCompleteChoicesException) {
+                AutoCompleteChoicesException autocomplete = (AutoCompleteChoicesException) e
+                        .getTargetException();
+                sender.sendChatToPlayer("Autocomplete for <"
+                        + autocomplete.getArgName() + ">:");
+                sender.sendChatToPlayer("    "
+                        + StringUtils.implode(autocomplete.getChoices(), "   "));
+            } else {
+                throw new RuntimeException(e.getTargetException());
+            }
+        } catch (Exception e) {
+            logger.severe("There is bogus command handler for "
+                    + command.getCommandName()
+                    + " command. (Is appropriate plugin is update?)");
+            if (e.getCause() != null) {
+                e.getCause().printStackTrace();
+            } else {
+                e.printStackTrace();
+            }
+        }
 
-	protected class CommandSyntax {
+        return true;
+    }
 
-		protected String originalSyntax;
-		protected String regexp;
-		protected List<String> arguments = new LinkedList<String>();
+    public List<CommandBinding> getCommands() {
+        List<CommandBinding> commands = new LinkedList<CommandBinding>();
 
-		public CommandSyntax(String syntax) {
-			this.originalSyntax = syntax;
+        for (Map<CommandSyntax, CommandBinding> map : listeners.values()) {
+            commands.addAll(map.values());
+        }
 
-			this.regexp = this.prepareSyntaxRegexp(syntax);
-		}
+        return commands;
+    }
 
-		public String getRegexp() {
-			return regexp;
-		}
+    protected class CommandSyntax {
 
-		private String prepareSyntaxRegexp(String syntax) {
-			String expression = syntax;
+        protected String originalSyntax;
+        protected String regexp;
+        protected List<String> arguments = new LinkedList<String>();
 
-			Matcher argMatcher = Pattern.compile("(?:[\\s]+)((\\<|\\[)([^\\>\\]]+)(?:\\>|\\]))").matcher(expression);
-			//Matcher argMatcher = Pattern.compile("(\\<|\\[)([^\\>\\]]+)(?:\\>|\\])").matcher(expression);
+        public CommandSyntax(String syntax) {
+            originalSyntax = syntax;
 
-			int index = 0;
-			while (argMatcher.find()) {
-				if (argMatcher.group(2).equals("[")) {
-					expression = expression.replace(argMatcher.group(0), "(?:(?:[\\s]+)(\"[^\"]+\"|[^\\s]+))?");
-				} else {
-					expression = expression.replace(argMatcher.group(1), "(\"[^\"]+\"|[\\S]+)");
-				}
+            regexp = this.prepareSyntaxRegexp(syntax);
+        }
 
-				arguments.add(index++, argMatcher.group(3));
-			}
+        public String getRegexp() {
+            return regexp;
+        }
 
-			return expression;
-		}
+        private String prepareSyntaxRegexp(String syntax) {
+            String expression = syntax;
 
-		public boolean isMatch(String str) {
-			return str.matches(this.regexp);
-		}
+            Matcher argMatcher = Pattern.compile(
+                    "(?:[\\s]+)((\\<|\\[)([^\\>\\]]+)(?:\\>|\\]))").matcher(
+                    expression);
+            // Matcher argMatcher =
+            // Pattern.compile("(\\<|\\[)([^\\>\\]]+)(?:\\>|\\])").matcher(expression);
 
-		public Map<String, String> getMatchedArguments(String str) {
-			Map<String, String> matchedArguments = new HashMap<String, String>(this.arguments.size());
+            int index = 0;
+            while (argMatcher.find()) {
+                if (argMatcher.group(2).equals("[")) {
+                    expression = expression.replace(argMatcher.group(0),
+                            "(?:(?:[\\s]+)(\"[^\"]+\"|[^\\s]+))?");
+                } else {
+                    expression = expression.replace(argMatcher.group(1),
+                            "(\"[^\"]+\"|[\\S]+)");
+                }
 
-			if (this.arguments.size() > 0) {
-				Matcher argMatcher = Pattern.compile(this.regexp).matcher(str);
+                arguments.add(index++, argMatcher.group(3));
+            }
 
-				if (argMatcher.find()) {
-					for (int index = 1; index <= argMatcher.groupCount(); index++) {
-						String argumentValue = argMatcher.group(index);
-						if (argumentValue == null || argumentValue.isEmpty()) {
-							continue;
-						}
+            return expression;
+        }
 
-						if (argumentValue.startsWith("\"") && argumentValue.endsWith("\"")) { // Trim boundary colons
-							argumentValue = argumentValue.substring(1, argumentValue.length() - 1);
-						}
+        public boolean isMatch(String str) {
+            return str.matches(regexp);
+        }
 
-						matchedArguments.put(this.arguments.get(index - 1), argumentValue);
-					}
-				}
-			}
-			return matchedArguments;
-		}
-	}
+        public Map<String, String> getMatchedArguments(String str) {
+            Map<String, String> matchedArguments = new HashMap<String, String>(
+                    arguments.size());
 
-	public class CommandBinding {
+            if (arguments.size() > 0) {
+                Matcher argMatcher = Pattern.compile(regexp).matcher(str);
 
-		protected Object object;
-		protected Method method;
-		protected Map<String, String> params = new HashMap<String, String>();
+                if (argMatcher.find()) {
+                    for (int index = 1; index <= argMatcher.groupCount(); index++) {
+                        String argumentValue = argMatcher.group(index);
+                        if (argumentValue == null || argumentValue.isEmpty()) {
+                            continue;
+                        }
 
-		public CommandBinding(Object object, Method method) {
-			this.object = object;
-			this.method = method;
-		}
+                        if (argumentValue.startsWith("\"")
+                                && argumentValue.endsWith("\"")) { // Trim
+                                                                   // boundary
+                                                                   // colons
+                            argumentValue = argumentValue.substring(1,
+                                    argumentValue.length() - 1);
+                        }
 
-		public Command getMethodAnnotation() {
-			return this.method.getAnnotation(Command.class);
-		}
+                        matchedArguments.put(arguments.get(index - 1),
+                                argumentValue);
+                    }
+                }
+            }
+            return matchedArguments;
+        }
+    }
 
-		public Map<String, String> getParams() {
-			return params;
-		}
+    public class CommandBinding {
 
-		public void setParams(Map<String, String> params) {
-			this.params = params;
-		}
+        protected Object object;
+        protected Method method;
+        protected Map<String, String> params = new HashMap<String, String>();
 
-		public boolean checkPermissions(EntityPlayer player) {
-			PermissionManager manager = PermissionsEx.getPermissionManager();
+        public CommandBinding(Object object, Method method) {
+            this.object = object;
+            this.method = method;
+        }
 
-			String permission = this.getMethodAnnotation().permission();
+        public Command getMethodAnnotation() {
+            return method.getAnnotation(Command.class);
+        }
 
+        public Map<String, String> getParams() {
+            return params;
+        }
 
-			if (permission.contains("<")) {
-				for (Entry<String, String> entry : this.getParams().entrySet()) {
-					if (entry.getValue() != null) {
-						permission = permission.replace("<" + entry.getKey() + ">", entry.getValue().toLowerCase());
-					}
-				}
-			}
+        public void setParams(Map<String, String> params) {
+            this.params = params;
+        }
 
-			return manager.has(player, permission);
+        public boolean checkPermissions(EntityPlayer player) {
+            PermissionManager manager = PermissionsEx.getPermissionManager();
 
-		}
+            String permission = this.getMethodAnnotation().permission();
 
-		public void call(Object... args) throws Exception {
-			this.method.invoke(object, args);
-		}
-	}
+            if (permission.contains("<")) {
+                for (Entry<String, String> entry : this.getParams().entrySet()) {
+                    if (entry.getValue() != null) {
+                        permission = permission.replace("<" + entry.getKey()
+                                + ">", entry.getValue().toLowerCase());
+                    }
+                }
+            }
+
+            return manager.has(player, permission);
+
+        }
+
+        public void call(Object... args) throws Exception {
+            method.invoke(object, args);
+        }
+    }
 }

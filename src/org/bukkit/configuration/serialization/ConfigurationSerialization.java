@@ -27,7 +27,8 @@ public class ConfigurationSerialization {
         registerClass(BlockVector.class);
     }
 
-    protected ConfigurationSerialization(Class<? extends ConfigurationSerializable> clazz) {
+    protected ConfigurationSerialization(
+            Class<? extends ConfigurationSerializable> clazz) {
         this.clazz = clazz;
     }
 
@@ -35,7 +36,8 @@ public class ConfigurationSerialization {
         try {
             Method method = clazz.getDeclaredMethod(name, Map.class);
 
-            if (!ConfigurationSerializable.class.isAssignableFrom(method.getReturnType())) {
+            if (!ConfigurationSerializable.class.isAssignableFrom(method
+                    .getReturnType())) {
                 return null;
             }
             if (Modifier.isStatic(method.getModifiers()) != isStatic) {
@@ -60,33 +62,47 @@ public class ConfigurationSerialization {
         }
     }
 
-    protected ConfigurationSerializable deserializeViaMethod(Method method, Map<String, Object> args) {
+    protected ConfigurationSerializable deserializeViaMethod(Method method,
+            Map<String, Object> args) {
         try {
-            ConfigurationSerializable result = (ConfigurationSerializable) method.invoke(null, args);
+            ConfigurationSerializable result = (ConfigurationSerializable) method
+                    .invoke(null, args);
 
             if (result == null) {
-                Logger.getLogger(ConfigurationSerialization.class.getName()).log(Level.SEVERE, "Could not call method '" + method.toString() + "' of " + clazz + " for deserialization: method returned null");
+                Logger.getLogger(ConfigurationSerialization.class.getName())
+                        .log(Level.SEVERE,
+                                "Could not call method '"
+                                        + method.toString()
+                                        + "' of "
+                                        + clazz
+                                        + " for deserialization: method returned null");
             } else {
                 return result;
             }
         } catch (Throwable ex) {
             Logger.getLogger(ConfigurationSerialization.class.getName()).log(
                     Level.SEVERE,
-                    "Could not call method '" + method.toString() + "' of " + clazz + " for deserialization",
-                    ex instanceof InvocationTargetException ? ex.getCause() : ex);
+                    "Could not call method '" + method.toString() + "' of "
+                            + clazz + " for deserialization",
+                    ex instanceof InvocationTargetException ? ex.getCause()
+                            : ex);
         }
 
         return null;
     }
 
-    protected ConfigurationSerializable deserializeViaCtor(Constructor<? extends ConfigurationSerializable> ctor, Map<String, Object> args) {
+    protected ConfigurationSerializable deserializeViaCtor(
+            Constructor<? extends ConfigurationSerializable> ctor,
+            Map<String, Object> args) {
         try {
             return ctor.newInstance(args);
         } catch (Throwable ex) {
             Logger.getLogger(ConfigurationSerialization.class.getName()).log(
                     Level.SEVERE,
-                    "Could not call constructor '" + ctor.toString() + "' of " + clazz + " for deserialization",
-                    ex instanceof InvocationTargetException ? ex.getCause() : ex);
+                    "Could not call constructor '" + ctor.toString() + "' of "
+                            + clazz + " for deserialization",
+                    ex instanceof InvocationTargetException ? ex.getCause()
+                            : ex);
         }
 
         return null;
@@ -126,35 +142,43 @@ public class ConfigurationSerialization {
     }
 
     /**
-     * Attempts to deserialize the given arguments into a new instance of the given class.
+     * Attempts to deserialize the given arguments into a new instance of the
+     * given class.
      * <p />
-     * The class must implement {@link ConfigurationSerializable}, including the extra methods
-     * as specified in the javadoc of ConfigurationSerializable.
+     * The class must implement {@link ConfigurationSerializable}, including the
+     * extra methods as specified in the javadoc of ConfigurationSerializable.
      * <p />
-     * If a new instance could not be made, an example being the class not fully implementing
-     * the interface, null will be returned.
-     *
-     * @param args Arguments for deserialization
-     * @param clazz Class to deserialize into
+     * If a new instance could not be made, an example being the class not fully
+     * implementing the interface, null will be returned.
+     * 
+     * @param args
+     *            Arguments for deserialization
+     * @param clazz
+     *            Class to deserialize into
      * @return New instance of the specified class
      */
-    public static ConfigurationSerializable deserializeObject(Map<String, Object> args, Class<? extends ConfigurationSerializable> clazz) {
+    public static ConfigurationSerializable deserializeObject(
+            Map<String, Object> args,
+            Class<? extends ConfigurationSerializable> clazz) {
         return new ConfigurationSerialization(clazz).deserialize(args);
     }
 
     /**
-     * Attempts to deserialize the given arguments into a new instance of the given class.
+     * Attempts to deserialize the given arguments into a new instance of the
+     * given class.
      * <p />
-     * The class must implement {@link ConfigurationSerializable}, including the extra methods
-     * as specified in the javadoc of ConfigurationSerializable.
+     * The class must implement {@link ConfigurationSerializable}, including the
+     * extra methods as specified in the javadoc of ConfigurationSerializable.
      * <p />
-     * If a new instance could not be made, an example being the class not fully implementing
-     * the interface, null will be returned.
-     *
-     * @param args Arguments for deserialization
+     * If a new instance could not be made, an example being the class not fully
+     * implementing the interface, null will be returned.
+     * 
+     * @param args
+     *            Arguments for deserialization
      * @return New instance of the specified class
      */
-    public static ConfigurationSerializable deserializeObject(Map<String, Object> args) {
+    public static ConfigurationSerializable deserializeObject(
+            Map<String, Object> args) {
         Class<? extends ConfigurationSerializable> clazz = null;
 
         if (args.containsKey(SERIALIZED_TYPE_KEY)) {
@@ -166,14 +190,17 @@ public class ConfigurationSerialization {
                 }
                 clazz = getClassByAlias(alias);
                 if (clazz == null) {
-                    throw new IllegalArgumentException("Specified class does not exist ('" + alias + "')");
+                    throw new IllegalArgumentException(
+                            "Specified class does not exist ('" + alias + "')");
                 }
             } catch (ClassCastException ex) {
                 ex.fillInStackTrace();
                 throw ex;
             }
         } else {
-            throw new IllegalArgumentException("Args doesn't contain type key ('" + SERIALIZED_TYPE_KEY + "')");
+            throw new IllegalArgumentException(
+                    "Args doesn't contain type key ('" + SERIALIZED_TYPE_KEY
+                            + "')");
         }
 
         return new ConfigurationSerialization(clazz).deserialize(args);
@@ -181,11 +208,14 @@ public class ConfigurationSerialization {
 
     /**
      * Registers the given {@link ConfigurationSerializable} class by its alias
-     *
-     * @param clazz Class to register
+     * 
+     * @param clazz
+     *            Class to register
      */
-    public static void registerClass(Class<? extends ConfigurationSerializable> clazz) {
-        DelegateDeserialization delegate = clazz.getAnnotation(DelegateDeserialization.class);
+    public static void registerClass(
+            Class<? extends ConfigurationSerializable> clazz) {
+        DelegateDeserialization delegate = clazz
+                .getAnnotation(DelegateDeserialization.class);
 
         if (delegate == null) {
             registerClass(clazz, getAlias(clazz));
@@ -194,57 +224,72 @@ public class ConfigurationSerialization {
     }
 
     /**
-     * Registers the given alias to the specified {@link ConfigurationSerializable} class
-     *
-     * @param clazz Class to register
-     * @param alias Alias to register as
+     * Registers the given alias to the specified
+     * {@link ConfigurationSerializable} class
+     * 
+     * @param clazz
+     *            Class to register
+     * @param alias
+     *            Alias to register as
      * @see SerializableAs
      */
-    public static void registerClass(Class<? extends ConfigurationSerializable> clazz, String alias) {
+    public static void registerClass(
+            Class<? extends ConfigurationSerializable> clazz, String alias) {
         aliases.put(alias, clazz);
     }
 
     /**
      * Unregisters the specified alias to a {@link ConfigurationSerializable}
-     *
-     * @param alias Alias to unregister
+     * 
+     * @param alias
+     *            Alias to unregister
      */
     public static void unregisterClass(String alias) {
         aliases.remove(alias);
     }
 
     /**
-     * Unregisters any aliases for the specified {@link ConfigurationSerializable} class
-     *
-     * @param clazz Class to unregister
+     * Unregisters any aliases for the specified
+     * {@link ConfigurationSerializable} class
+     * 
+     * @param clazz
+     *            Class to unregister
      */
-    public static void unregisterClass(Class<? extends ConfigurationSerializable> clazz) {
+    public static void unregisterClass(
+            Class<? extends ConfigurationSerializable> clazz) {
         while (aliases.values().remove(clazz)) {
             ;
         }
     }
 
     /**
-     * Attempts to get a registered {@link ConfigurationSerializable} class by its alias
-     *
-     * @param alias Alias of the serializable
+     * Attempts to get a registered {@link ConfigurationSerializable} class by
+     * its alias
+     * 
+     * @param alias
+     *            Alias of the serializable
      * @return Registered class, or null if not found
      */
-    public static Class<? extends ConfigurationSerializable> getClassByAlias(String alias) {
+    public static Class<? extends ConfigurationSerializable> getClassByAlias(
+            String alias) {
         return aliases.get(alias);
     }
 
     /**
-     * Gets the correct alias for the given {@link ConfigurationSerializable} class
-     *
-     * @param clazz Class to get alias for
+     * Gets the correct alias for the given {@link ConfigurationSerializable}
+     * class
+     * 
+     * @param clazz
+     *            Class to get alias for
      * @return Alias to use for the class
      */
-    public static String getAlias(Class<? extends ConfigurationSerializable> clazz) {
-        DelegateDeserialization delegate = clazz.getAnnotation(DelegateDeserialization.class);
+    public static String getAlias(
+            Class<? extends ConfigurationSerializable> clazz) {
+        DelegateDeserialization delegate = clazz
+                .getAnnotation(DelegateDeserialization.class);
 
         if (delegate != null) {
-            if ((delegate.value() == null) || (delegate.value() == clazz)) {
+            if (delegate.value() == null || delegate.value() == clazz) {
                 delegate = null;
             } else {
                 return getAlias(delegate.value());
@@ -254,7 +299,7 @@ public class ConfigurationSerialization {
         if (delegate == null) {
             SerializableAs alias = clazz.getAnnotation(SerializableAs.class);
 
-            if ((alias != null) && (alias.value() != null)) {
+            if (alias != null && alias.value() != null) {
                 return alias.value();
             }
         }

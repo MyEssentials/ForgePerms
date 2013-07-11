@@ -1,8 +1,5 @@
 package org.bukkit.event;
 
-import org.bukkit.event.Event;
-import org.bukkit.event.EventException;
-import org.bukkit.event.Listener;
 
 /**
  * Interface which defines the class for event call backs to plugins

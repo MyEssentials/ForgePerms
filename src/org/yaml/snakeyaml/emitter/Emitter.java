@@ -156,16 +156,16 @@ public final class Emitter implements Emitable {
         this.stream = stream;
         // Emitter is a state machine with a stack of states to handle nested
         // structures.
-        this.states = new ArrayStack<EmitterState>(100);
-        this.state = new ExpectStreamStart();
+        states = new ArrayStack<EmitterState>(100);
+        state = new ExpectStreamStart();
         // Current event and the event queue.
-        this.events = new ArrayBlockingQueue<Event>(100);
-        this.event = null;
+        events = new ArrayBlockingQueue<Event>(100);
+        event = null;
         // The current indentation level and the stack of previous indents.
-        this.indents = new ArrayStack<Integer>(10);
-        this.indent = null;
+        indents = new ArrayStack<Integer>(10);
+        indent = null;
         // Flow level.
-        this.flowLevel = 0;
+        flowLevel = 0;
         // Contexts.
         mappingContext = false;
         simpleKeyContext = false;
@@ -184,37 +184,38 @@ public final class Emitter implements Emitable {
         openEnded = false;
 
         // Formatting details.
-        this.canonical = opts.isCanonical();
-        this.prettyFlow = opts.isPrettyFlow();
-        this.allowUnicode = opts.isAllowUnicode();
-        this.bestIndent = 2;
-        if ((opts.getIndent() > MIN_INDENT) && (opts.getIndent() < MAX_INDENT)) {
-            this.bestIndent = opts.getIndent();
+        canonical = opts.isCanonical();
+        prettyFlow = opts.isPrettyFlow();
+        allowUnicode = opts.isAllowUnicode();
+        bestIndent = 2;
+        if (opts.getIndent() > MIN_INDENT && opts.getIndent() < MAX_INDENT) {
+            bestIndent = opts.getIndent();
         }
-        this.bestWidth = 80;
-        if (opts.getWidth() > this.bestIndent * 2) {
-            this.bestWidth = opts.getWidth();
+        bestWidth = 80;
+        if (opts.getWidth() > bestIndent * 2) {
+            bestWidth = opts.getWidth();
         }
-        this.bestLineBreak = opts.getLineBreak().getString().toCharArray();
+        bestLineBreak = opts.getLineBreak().getString().toCharArray();
 
         // Tag prefixes.
-        this.tagPrefixes = new LinkedHashMap<String, String>();
+        tagPrefixes = new LinkedHashMap<String, String>();
 
         // Prepared anchor and tag.
-        this.preparedAnchor = null;
-        this.preparedTag = null;
+        preparedAnchor = null;
+        preparedTag = null;
 
         // Scalar analysis and style.
-        this.analysis = null;
-        this.style = null;
-        this.options = opts;
+        analysis = null;
+        style = null;
+        options = opts;
     }
 
+    @Override
     public void emit(Event event) throws IOException {
-        this.events.add(event);
+        events.add(event);
         while (!needMoreEvents()) {
-            this.event = this.events.poll();
-            this.state.expect();
+            this.event = events.poll();
+            state.expect();
             this.event = null;
         }
     }
@@ -243,9 +244,11 @@ public final class Emitter implements Emitable {
         iter.next();
         while (iter.hasNext()) {
             Event event = iter.next();
-            if (event instanceof DocumentStartEvent || event instanceof CollectionStartEvent) {
+            if (event instanceof DocumentStartEvent
+                    || event instanceof CollectionStartEvent) {
                 level++;
-            } else if (event instanceof DocumentEndEvent || event instanceof CollectionEndEvent) {
+            } else if (event instanceof DocumentEndEvent
+                    || event instanceof CollectionEndEvent) {
                 level--;
             } else if (event instanceof StreamEndEvent) {
                 level = -1;
@@ -266,7 +269,7 @@ public final class Emitter implements Emitable {
                 indent = 0;
             }
         } else if (!indentless) {
-            this.indent += bestIndent;
+            indent += bestIndent;
         }
     }
 
@@ -275,17 +278,20 @@ public final class Emitter implements Emitable {
     // Stream handlers.
 
     private class ExpectStreamStart implements EmitterState {
+        @Override
         public void expect() throws IOException {
             if (event instanceof StreamStartEvent) {
                 writeStreamStart();
                 state = new ExpectFirstDocumentStart();
             } else {
-                throw new EmitterException("expected StreamStartEvent, but got " + event);
+                throw new EmitterException(
+                        "expected StreamStartEvent, but got " + event);
             }
         }
     }
 
     private class ExpectNothing implements EmitterState {
+        @Override
         public void expect() throws IOException {
             throw new EmitterException("expecting nothing, but got " + event);
         }
@@ -294,6 +300,7 @@ public final class Emitter implements Emitable {
     // Document handlers.
 
     private class ExpectFirstDocumentStart implements EmitterState {
+        @Override
         public void expect() throws IOException {
             new ExpectDocumentStart(true).expect();
         }
@@ -306,10 +313,12 @@ public final class Emitter implements Emitable {
             this.first = first;
         }
 
+        @Override
         public void expect() throws IOException {
             if (event instanceof DocumentStartEvent) {
                 DocumentStartEvent ev = (DocumentStartEvent) event;
-                if ((ev.getVersion() != null || ev.getTags() != null) && openEnded) {
+                if ((ev.getVersion() != null || ev.getTags() != null)
+                        && openEnded) {
                     writeIndicator("...", true, false, false);
                     writeIndent();
                 }
@@ -317,9 +326,11 @@ public final class Emitter implements Emitable {
                     String versionText = prepareVersion(ev.getVersion());
                     writeVersionDirective(versionText);
                 }
-                tagPrefixes = new LinkedHashMap<String, String>(DEFAULT_TAG_PREFIXES);
+                tagPrefixes = new LinkedHashMap<String, String>(
+                        DEFAULT_TAG_PREFIXES);
                 if (ev.getTags() != null) {
-                    Set<String> handles = new TreeSet<String>(ev.getTags().keySet());
+                    Set<String> handles = new TreeSet<String>(ev.getTags()
+                            .keySet());
                     for (String handle : handles) {
                         String prefix = ev.getTags().get(handle);
                         tagPrefixes.put(prefix, handle);
@@ -349,12 +360,14 @@ public final class Emitter implements Emitable {
                 writeStreamEnd();
                 state = new ExpectNothing();
             } else {
-                throw new EmitterException("expected DocumentStartEvent, but got " + event);
+                throw new EmitterException(
+                        "expected DocumentStartEvent, but got " + event);
             }
         }
     }
 
     private class ExpectDocumentEnd implements EmitterState {
+        @Override
         public void expect() throws IOException {
             if (event instanceof DocumentEndEvent) {
                 writeIndent();
@@ -365,12 +378,14 @@ public final class Emitter implements Emitable {
                 flushStream();
                 state = new ExpectDocumentStart(false);
             } else {
-                throw new EmitterException("expected DocumentEndEvent, but got " + event);
+                throw new EmitterException(
+                        "expected DocumentEndEvent, but got " + event);
             }
         }
     }
 
     private class ExpectDocumentRoot implements EmitterState {
+        @Override
         public void expect() throws IOException {
             states.push(new ExpectDocumentEnd());
             expectNode(true, false, false);
@@ -379,26 +394,30 @@ public final class Emitter implements Emitable {
 
     // Node handlers.
 
-    private void expectNode(boolean root, boolean mapping, boolean simpleKey) throws IOException {
+    private void expectNode(boolean root, boolean mapping, boolean simpleKey)
+            throws IOException {
         rootContext = root;
         mappingContext = mapping;
         simpleKeyContext = simpleKey;
         if (event instanceof AliasEvent) {
             expectAlias();
-        } else if (event instanceof ScalarEvent || event instanceof CollectionStartEvent) {
+        } else if (event instanceof ScalarEvent
+                || event instanceof CollectionStartEvent) {
             processAnchor("&");
             processTag();
             if (event instanceof ScalarEvent) {
                 expectScalar();
             } else if (event instanceof SequenceStartEvent) {
-                if (flowLevel != 0 || canonical || ((SequenceStartEvent) event).getFlowStyle()
+                if (flowLevel != 0 || canonical
+                        || ((SequenceStartEvent) event).getFlowStyle()
                         || checkEmptySequence()) {
                     expectFlowSequence();
                 } else {
                     expectBlockSequence();
                 }
             } else {// MappingStartEvent
-                if (flowLevel != 0 || canonical || ((MappingStartEvent) event).getFlowStyle()
+                if (flowLevel != 0 || canonical
+                        || ((MappingStartEvent) event).getFlowStyle()
                         || checkEmptyMapping()) {
                     expectFlowMapping();
                 } else {
@@ -438,6 +457,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectFirstFlowSequenceItem implements EmitterState {
+        @Override
         public void expect() throws IOException {
             if (event instanceof SequenceEndEvent) {
                 indent = indents.pop();
@@ -455,6 +475,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectFlowSequenceItem implements EmitterState {
+        @Override
         public void expect() throws IOException {
             if (event instanceof SequenceEndEvent) {
                 indent = indents.pop();
@@ -492,6 +513,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectFirstFlowMappingKey implements EmitterState {
+        @Override
         public void expect() throws IOException {
             if (event instanceof MappingEndEvent) {
                 indent = indents.pop();
@@ -515,6 +537,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectFlowMappingKey implements EmitterState {
+        @Override
         public void expect() throws IOException {
             if (event instanceof MappingEndEvent) {
                 indent = indents.pop();
@@ -546,6 +569,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectFlowMappingSimpleValue implements EmitterState {
+        @Override
         public void expect() throws IOException {
             writeIndicator(":", false, false, false);
             states.push(new ExpectFlowMappingKey());
@@ -554,6 +578,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectFlowMappingValue implements EmitterState {
+        @Override
         public void expect() throws IOException {
             if (canonical || column > bestWidth || prettyFlow) {
                 writeIndent();
@@ -567,12 +592,13 @@ public final class Emitter implements Emitable {
     // Block sequence handlers.
 
     private void expectBlockSequence() throws IOException {
-        boolean indentless = (mappingContext && !indention);
+        boolean indentless = mappingContext && !indention;
         increaseIndent(false, indentless);
         state = new ExpectFirstBlockSequenceItem();
     }
 
     private class ExpectFirstBlockSequenceItem implements EmitterState {
+        @Override
         public void expect() throws IOException {
             new ExpectBlockSequenceItem(true).expect();
         }
@@ -585,8 +611,9 @@ public final class Emitter implements Emitable {
             this.first = first;
         }
 
+        @Override
         public void expect() throws IOException {
-            if (!this.first && event instanceof SequenceEndEvent) {
+            if (!first && event instanceof SequenceEndEvent) {
                 indent = indents.pop();
                 state = states.pop();
             } else {
@@ -605,6 +632,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectFirstBlockMappingKey implements EmitterState {
+        @Override
         public void expect() throws IOException {
             new ExpectBlockMappingKey(true).expect();
         }
@@ -617,8 +645,9 @@ public final class Emitter implements Emitable {
             this.first = first;
         }
 
+        @Override
         public void expect() throws IOException {
-            if (!this.first && event instanceof MappingEndEvent) {
+            if (!first && event instanceof MappingEndEvent) {
                 indent = indents.pop();
                 state = states.pop();
             } else {
@@ -636,6 +665,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectBlockMappingSimpleValue implements EmitterState {
+        @Override
         public void expect() throws IOException {
             writeIndicator(":", false, false, false);
             states.push(new ExpectBlockMappingKey(false));
@@ -644,6 +674,7 @@ public final class Emitter implements Emitable {
     }
 
     private class ExpectBlockMappingValue implements EmitterState {
+        @Override
         public void expect() throws IOException {
             writeIndent();
             writeIndicator(":", true, false, true);
@@ -655,11 +686,13 @@ public final class Emitter implements Emitable {
     // Checkers.
 
     private boolean checkEmptySequence() {
-        return (event instanceof SequenceStartEvent && !events.isEmpty() && events.peek() instanceof SequenceEndEvent);
+        return event instanceof SequenceStartEvent && !events.isEmpty()
+                && events.peek() instanceof SequenceEndEvent;
     }
 
     private boolean checkEmptyMapping() {
-        return (event instanceof MappingStartEvent && !events.isEmpty() && events.peek() instanceof MappingEndEvent);
+        return event instanceof MappingStartEvent && !events.isEmpty()
+                && events.peek() instanceof MappingEndEvent;
     }
 
     private boolean checkEmptyDocument() {
@@ -669,15 +702,16 @@ public final class Emitter implements Emitable {
         Event event = events.peek();
         if (event instanceof ScalarEvent) {
             ScalarEvent e = (ScalarEvent) event;
-            return (e.getAnchor() == null && e.getTag() == null && e.getImplicit() != null && e
-                    .getValue().length() == 0);
+            return e.getAnchor() == null && e.getTag() == null
+                    && e.getImplicit() != null && e.getValue().length() == 0;
         }
         return false;
     }
 
     private boolean checkSimpleKey() {
         int length = 0;
-        if (event instanceof NodeEvent && ((NodeEvent) event).getAnchor() != null) {
+        if (event instanceof NodeEvent
+                && ((NodeEvent) event).getAnchor() != null) {
             if (preparedAnchor == null) {
                 preparedAnchor = prepareAnchor(((NodeEvent) event).getAnchor());
             }
@@ -701,9 +735,10 @@ public final class Emitter implements Emitable {
             }
             length += analysis.scalar.length();
         }
-        return (length < 128 && (event instanceof AliasEvent
-                || (event instanceof ScalarEvent && !analysis.empty && !analysis.multiline)
-                || checkEmptySequence() || checkEmptyMapping()));
+        return length < 128
+                && (event instanceof AliasEvent || event instanceof ScalarEvent
+                        && !analysis.empty && !analysis.multiline
+                        || checkEmptySequence() || checkEmptyMapping());
     }
 
     // Anchor, Tag, and Scalar processors.
@@ -729,9 +764,10 @@ public final class Emitter implements Emitable {
             if (style == null) {
                 style = chooseScalarStyle();
             }
-            if (((!canonical || tag == null) && ((style == null && ev.getImplicit()
-                    .canOmitTagInPlainScalar()) || (style != null && ev.getImplicit()
-                    .canOmitTagInNonPlainScalar())))) {
+            if ((!canonical || tag == null)
+                    && (style == null
+                            && ev.getImplicit().canOmitTagInPlainScalar() || style != null
+                            && ev.getImplicit().canOmitTagInNonPlainScalar())) {
                 preparedTag = null;
                 return;
             }
@@ -762,22 +798,25 @@ public final class Emitter implements Emitable {
         if (analysis == null) {
             analysis = analyzeScalar(ev.getValue());
         }
-        if (ev.getStyle() != null && ev.getStyle() == '"' || this.canonical) {
+        if (ev.getStyle() != null && ev.getStyle() == '"' || canonical) {
             return '"';
         }
         if (ev.getStyle() == null && ev.getImplicit().canOmitTagInPlainScalar()) {
             if (!(simpleKeyContext && (analysis.empty || analysis.multiline))
-                    && ((flowLevel != 0 && analysis.allowFlowPlain) || (flowLevel == 0 && analysis.allowBlockPlain))) {
+                    && (flowLevel != 0 && analysis.allowFlowPlain || flowLevel == 0
+                            && analysis.allowBlockPlain)) {
                 return null;
             }
         }
-        if (ev.getStyle() != null && (ev.getStyle() == '|' || ev.getStyle() == '>')) {
+        if (ev.getStyle() != null
+                && (ev.getStyle() == '|' || ev.getStyle() == '>')) {
             if (flowLevel == 0 && !simpleKeyContext && analysis.allowBlock) {
                 return ev.getStyle();
             }
         }
         if (ev.getStyle() == null || ev.getStyle() == '\'') {
-            if (analysis.allowSingleQuoted && !(simpleKeyContext && analysis.multiline)) {
+            if (analysis.allowSingleQuoted
+                    && !(simpleKeyContext && analysis.multiline)) {
                 return '\'';
             }
         }
@@ -794,26 +833,27 @@ public final class Emitter implements Emitable {
             style = chooseScalarStyle();
         }
         // TODO the next line should be removed
-        style = options.calculateScalarStyle(analysis, ScalarStyle.createStyle(style)).getChar();
+        style = options.calculateScalarStyle(analysis,
+                ScalarStyle.createStyle(style)).getChar();
         boolean split = !simpleKeyContext;
         if (style == null) {
             writePlain(analysis.scalar, split);
         } else {
             switch (style) {
-            case '"':
-                writeDoubleQuoted(analysis.scalar, split);
-                break;
-            case '\'':
-                writeSingleQuoted(analysis.scalar, split);
-                break;
-            case '>':
-                writeFolded(analysis.scalar);
-                break;
-            case '|':
-                writeLiteral(analysis.scalar);
-                break;
-            default:
-                throw new YAMLException("Unexpected style: " + style);
+                case '"':
+                    writeDoubleQuoted(analysis.scalar, split);
+                    break;
+                case '\'':
+                    writeSingleQuoted(analysis.scalar, split);
+                    break;
+                case '>':
+                    writeFolded(analysis.scalar);
+                    break;
+                case '|':
+                    writeLiteral(analysis.scalar);
+                    break;
+                default:
+                    throw new YAMLException("Unexpected style: " + style);
             }
         }
         analysis = null;
@@ -829,15 +869,20 @@ public final class Emitter implements Emitable {
         return version.getRepresentation();
     }
 
-    private final static Pattern HANDLE_FORMAT = Pattern.compile("^![-_\\w]*!$");
+    private final static Pattern HANDLE_FORMAT = Pattern
+            .compile("^![-_\\w]*!$");
 
     private String prepareTagHandle(String handle) {
         if (handle.length() == 0) {
             throw new EmitterException("tag handle must not be empty");
-        } else if (handle.charAt(0) != '!' || handle.charAt(handle.length() - 1) != '!') {
-            throw new EmitterException("tag handle must start and end with '!': " + handle);
-        } else if (!"!".equals(handle) && !HANDLE_FORMAT.matcher(handle).matches()) {
-            throw new EmitterException("invalid character in the tag handle: " + handle);
+        } else if (handle.charAt(0) != '!'
+                || handle.charAt(handle.length() - 1) != '!') {
+            throw new EmitterException(
+                    "tag handle must start and end with '!': " + handle);
+        } else if (!"!".equals(handle)
+                && !HANDLE_FORMAT.matcher(handle).matches()) {
+            throw new EmitterException("invalid character in the tag handle: "
+                    + handle);
         }
         return handle;
     }
@@ -872,7 +917,8 @@ public final class Emitter implements Emitable {
         String suffix = tag;
         // shall the tag prefixes be sorted as in PyYAML?
         for (String prefix : tagPrefixes.keySet()) {
-            if (tag.startsWith(prefix) && ("!".equals(prefix) || prefix.length() < tag.length())) {
+            if (tag.startsWith(prefix)
+                    && ("!".equals(prefix) || prefix.length() < tag.length())) {
                 handle = prefix;
             }
         }
@@ -897,7 +943,8 @@ public final class Emitter implements Emitable {
             throw new EmitterException("anchor must not be empty");
         }
         if (!ANCHOR_FORMAT.matcher(anchor).matches()) {
-            throw new EmitterException("invalid character in the anchor: " + anchor);
+            throw new EmitterException("invalid character in the anchor: "
+                    + anchor);
         }
         return anchor;
     }
@@ -905,7 +952,8 @@ public final class Emitter implements Emitable {
     private ScalarAnalysis analyzeScalar(String scalar) {
         // Empty scalar is a special case.
         if (scalar.length() == 0) {
-            return new ScalarAnalysis(scalar, true, false, false, true, true, false);
+            return new ScalarAnalysis(scalar, true, false, false, true, true,
+                    false);
         }
         // Indicators and special characters.
         boolean blockIndicators = false;
@@ -928,8 +976,8 @@ public final class Emitter implements Emitable {
         }
         // First character or preceded by a whitespace.
         boolean preceededByWhitespace = true;
-        boolean followedByWhitespace = (scalar.length() == 1 || Constant.NULL_BL_T_LINEBR
-                .has(scalar.charAt(1)));
+        boolean followedByWhitespace = scalar.length() == 1
+                || Constant.NULL_BL_T_LINEBR.has(scalar.charAt(1));
         // The previous character is a space.
         boolean previousSpace = false;
 
@@ -978,11 +1026,12 @@ public final class Emitter implements Emitable {
             if (isLineBreak) {
                 lineBreaks = true;
             }
-            if (!(ch == '\n' || ('\u0020' <= ch && ch <= '\u007E'))) {
-                if ((ch == '\u0085' || ('\u00A0' <= ch && ch <= '\uD7FF') || ('\uE000' <= ch && ch <= '\uFFFD'))
-                        && (ch != '\uFEFF')) {
+            if (!(ch == '\n' || '\u0020' <= ch && ch <= '\u007E')) {
+                if ((ch == '\u0085' || '\u00A0' <= ch && ch <= '\uD7FF' || '\uE000' <= ch
+                        && ch <= '\uFFFD')
+                        && ch != '\uFEFF') {
                     // unicode is used
-                    if (!this.allowUnicode) {
+                    if (!allowUnicode) {
                         specialCharacters = true;
                     }
                 } else {
@@ -1022,8 +1071,9 @@ public final class Emitter implements Emitable {
             // Prepare for the next character.
             index++;
             preceededByWhitespace = Constant.NULL_BL_T.has(ch) || isLineBreak;
-            followedByWhitespace = (index + 1 >= scalar.length()
-                    || (Constant.NULL_BL_T.has(scalar.charAt(index + 1))) || isLineBreak);
+            followedByWhitespace = index + 1 >= scalar.length()
+                    || Constant.NULL_BL_T.has(scalar.charAt(index + 1))
+                    || isLineBreak;
         }
         // Let's decide what styles are allowed.
         boolean allowFlowPlain = true;
@@ -1062,8 +1112,8 @@ public final class Emitter implements Emitable {
             allowBlockPlain = false;
         }
 
-        return new ScalarAnalysis(scalar, false, lineBreaks, allowFlowPlain, allowBlockPlain,
-                allowSingleQuoted, allowBlock);
+        return new ScalarAnalysis(scalar, false, lineBreaks, allowFlowPlain,
+                allowBlockPlain, allowSingleQuoted, allowBlock);
     }
 
     // Writers.
@@ -1080,15 +1130,15 @@ public final class Emitter implements Emitable {
         flushStream();
     }
 
-    void writeIndicator(String indicator, boolean needWhitespace, boolean whitespace,
-            boolean indentation) throws IOException {
+    void writeIndicator(String indicator, boolean needWhitespace,
+            boolean whitespace, boolean indentation) throws IOException {
         if (!this.whitespace && needWhitespace) {
-            this.column++;
+            column++;
             stream.write(SPACE);
         }
         this.whitespace = whitespace;
-        this.indention = this.indention && indentation;
-        this.column += indicator.length();
+        indention = indention && indentation;
+        column += indicator.length();
         openEnded = false;
         stream.write(indicator);
     }
@@ -1101,27 +1151,27 @@ public final class Emitter implements Emitable {
             indent = 0;
         }
 
-        if (!this.indention || this.column > indent || (this.column == indent && !this.whitespace)) {
+        if (!indention || column > indent || column == indent && !whitespace) {
             writeLineBreak(null);
         }
 
-        if (this.column < indent) {
-            this.whitespace = true;
-            char[] data = new char[indent - this.column];
+        if (column < indent) {
+            whitespace = true;
+            char[] data = new char[indent - column];
             for (int i = 0; i < data.length; i++) {
                 data[i] = ' ';
             }
-            this.column = indent;
+            column = indent;
             stream.write(data);
         }
     }
 
     private void writeLineBreak(String data) throws IOException {
-        this.whitespace = true;
-        this.indention = true;
-        this.column = 0;
+        whitespace = true;
+        indention = true;
+        column = 0;
         if (data == null) {
-            stream.write(this.bestLineBreak);
+            stream.write(bestLineBreak);
         } else {
             stream.write(data);
         }
@@ -1133,7 +1183,8 @@ public final class Emitter implements Emitable {
         writeLineBreak(null);
     }
 
-    void writeTagDirective(String handleText, String prefixText) throws IOException {
+    void writeTagDirective(String handleText, String prefixText)
+            throws IOException {
         // XXX: not sure 4 invocations better then StringBuilders created by str
         // + str
         stream.write("%TAG ");
@@ -1144,7 +1195,8 @@ public final class Emitter implements Emitable {
     }
 
     // Scalar streams.
-    private void writeSingleQuoted(String text, boolean split) throws IOException {
+    private void writeSingleQuoted(String text, boolean split)
+            throws IOException {
         writeIndicator("'", true, false, false);
         boolean spaces = false;
         boolean breaks = false;
@@ -1157,12 +1209,12 @@ public final class Emitter implements Emitable {
             }
             if (spaces) {
                 if (ch == 0 || ch != ' ') {
-                    if (start + 1 == end && this.column > this.bestWidth && split && start != 0
-                            && end != text.length()) {
+                    if (start + 1 == end && column > bestWidth && split
+                            && start != 0 && end != text.length()) {
                         writeIndent();
                     } else {
                         int len = end - start;
-                        this.column += len;
+                        column += len;
                         stream.write(text, start, len);
                     }
                     start = end;
@@ -1187,14 +1239,14 @@ public final class Emitter implements Emitable {
                 if (Constant.LINEBR.has(ch, "\0 \'")) {
                     if (start < end) {
                         int len = end - start;
-                        this.column += len;
+                        column += len;
                         stream.write(text, start, len);
                         start = end;
                     }
                 }
             }
             if (ch == '\'') {
-                this.column += 2;
+                column += 2;
                 stream.write("''");
                 start = end + 1;
             }
@@ -1207,7 +1259,8 @@ public final class Emitter implements Emitable {
         writeIndicator("'", false, false, false);
     }
 
-    private void writeDoubleQuoted(String text, boolean split) throws IOException {
+    private void writeDoubleQuoted(String text, boolean split)
+            throws IOException {
         writeIndicator("\"", true, false, false);
         int start = 0;
         int end = 0;
@@ -1220,7 +1273,7 @@ public final class Emitter implements Emitable {
                     || !('\u0020' <= ch && ch <= '\u007E')) {
                 if (start < end) {
                     int len = end - start;
-                    this.column += len;
+                    column += len;
                     stream.write(text, start, len);
                     start = end;
                 }
@@ -1228,7 +1281,7 @@ public final class Emitter implements Emitable {
                     String data;
                     if (ESCAPE_REPLACEMENTS.containsKey(ch)) {
                         data = "\\" + ESCAPE_REPLACEMENTS.get(ch);
-                    } else if (!this.allowUnicode || !StreamReader.isPrintable(ch)) {
+                    } else if (!allowUnicode || !StreamReader.isPrintable(ch)) {
                         // if !allowUnicode or the character is not printable,
                         // we must encode it
                         if (ch <= '\u00FF') {
@@ -1237,7 +1290,9 @@ public final class Emitter implements Emitable {
                         } else if (ch >= '\uD800' && ch <= '\uDBFF') {
                             if (end + 1 < text.length()) {
                                 Character ch2 = text.charAt(++end);
-                                String s = "000" + Long.toHexString(Character.toCodePoint(ch, ch2));
+                                String s = "000"
+                                        + Long.toHexString(Character
+                                                .toCodePoint(ch, ch2));
                                 data = "\\U" + s.substring(s.length() - 8);
                             } else {
                                 String s = "000" + Integer.toString(ch, 16);
@@ -1250,13 +1305,14 @@ public final class Emitter implements Emitable {
                     } else {
                         data = String.valueOf(ch);
                     }
-                    this.column += data.length();
+                    column += data.length();
                     stream.write(data);
                     start = end + 1;
                 }
             }
-            if ((0 < end && end < (text.length() - 1)) && (ch == ' ' || start >= end)
-                    && (this.column + (end - start)) > this.bestWidth && split) {
+            if (0 < end && end < text.length() - 1
+                    && (ch == ' ' || start >= end)
+                    && column + end - start > bestWidth && split) {
                 String data;
                 if (start >= end) {
                     data = "\\";
@@ -1266,14 +1322,14 @@ public final class Emitter implements Emitable {
                 if (start < end) {
                     start = end;
                 }
-                this.column += data.length();
+                column += data.length();
                 stream.write(data);
                 writeIndent();
-                this.whitespace = false;
-                this.indention = false;
+                whitespace = false;
+                indention = false;
                 if (text.charAt(start) == ' ') {
                     data = "\\";
-                    this.column += data.length();
+                    column += data.length();
                     stream.write(data);
                 }
             }
@@ -1290,7 +1346,8 @@ public final class Emitter implements Emitable {
         char ch1 = text.charAt(text.length() - 1);
         if (Constant.LINEBR.hasNo(ch1)) {
             hints.append("-");
-        } else if (text.length() == 1 || Constant.LINEBR.has(text.charAt(text.length() - 2))) {
+        } else if (text.length() == 1
+                || Constant.LINEBR.has(text.charAt(text.length() - 2))) {
             hints.append("+");
         }
         return hints.toString();
@@ -1299,7 +1356,7 @@ public final class Emitter implements Emitable {
     void writeFolded(String text) throws IOException {
         String hints = determineBlockHints(text);
         writeIndicator(">" + hints, true, false, false);
-        if (hints.length() > 0 && (hints.charAt(hints.length() - 1) == '+')) {
+        if (hints.length() > 0 && hints.charAt(hints.length() - 1) == '+') {
             openEnded = true;
         }
         writeLineBreak(null);
@@ -1314,10 +1371,11 @@ public final class Emitter implements Emitable {
             }
             if (breaks) {
                 if (ch == 0 || Constant.LINEBR.hasNo(ch)) {
-                    if (!leadingSpace && ch != 0 && ch != ' ' && text.charAt(start) == '\n') {
+                    if (!leadingSpace && ch != 0 && ch != ' '
+                            && text.charAt(start) == '\n') {
                         writeLineBreak(null);
                     }
-                    leadingSpace = (ch == ' ');
+                    leadingSpace = ch == ' ';
                     String data = text.substring(start, end);
                     for (char br : data.toCharArray()) {
                         if (br == '\n') {
@@ -1333,11 +1391,11 @@ public final class Emitter implements Emitable {
                 }
             } else if (spaces) {
                 if (ch != ' ') {
-                    if (start + 1 == end && this.column > this.bestWidth) {
+                    if (start + 1 == end && column > bestWidth) {
                         writeIndent();
                     } else {
                         int len = end - start;
-                        this.column += len;
+                        column += len;
                         stream.write(text, start, len);
                     }
                     start = end;
@@ -1345,7 +1403,7 @@ public final class Emitter implements Emitable {
             } else {
                 if (Constant.LINEBR.has(ch, "\0 ")) {
                     int len = end - start;
-                    this.column += len;
+                    column += len;
                     stream.write(text, start, len);
                     if (ch == 0) {
                         writeLineBreak(null);
@@ -1355,7 +1413,7 @@ public final class Emitter implements Emitable {
             }
             if (ch != 0) {
                 breaks = Constant.LINEBR.has(ch);
-                spaces = (ch == ' ');
+                spaces = ch == ' ';
             }
             end++;
         }
@@ -1364,7 +1422,7 @@ public final class Emitter implements Emitable {
     void writeLiteral(String text) throws IOException {
         String hints = determineBlockHints(text);
         writeIndicator("|" + hints, true, false, false);
-        if (hints.length() > 0 && (hints.charAt(hints.length() - 1)) == '+') {
+        if (hints.length() > 0 && hints.charAt(hints.length() - 1) == '+') {
             openEnded = true;
         }
         writeLineBreak(null);
@@ -1400,7 +1458,7 @@ public final class Emitter implements Emitable {
                 }
             }
             if (ch != 0) {
-                breaks = (Constant.LINEBR.has(ch));
+                breaks = Constant.LINEBR.has(ch);
             }
             end++;
         }
@@ -1413,12 +1471,12 @@ public final class Emitter implements Emitable {
         if (text.length() == 0) {
             return;
         }
-        if (!this.whitespace) {
-            this.column++;
+        if (!whitespace) {
+            column++;
             stream.write(SPACE);
         }
-        this.whitespace = false;
-        this.indention = false;
+        whitespace = false;
+        indention = false;
         boolean spaces = false;
         boolean breaks = false;
         int start = 0, end = 0;
@@ -1429,13 +1487,13 @@ public final class Emitter implements Emitable {
             }
             if (spaces) {
                 if (ch != ' ') {
-                    if (start + 1 == end && this.column > this.bestWidth && split) {
+                    if (start + 1 == end && column > bestWidth && split) {
                         writeIndent();
-                        this.whitespace = false;
-                        this.indention = false;
+                        whitespace = false;
+                        indention = false;
                     } else {
                         int len = end - start;
-                        this.column += len;
+                        column += len;
                         stream.write(text, start, len);
                     }
                     start = end;
@@ -1454,21 +1512,21 @@ public final class Emitter implements Emitable {
                         }
                     }
                     writeIndent();
-                    this.whitespace = false;
-                    this.indention = false;
+                    whitespace = false;
+                    indention = false;
                     start = end;
                 }
             } else {
                 if (ch == 0 || Constant.LINEBR.has(ch)) {
                     int len = end - start;
-                    this.column += len;
+                    column += len;
                     stream.write(text, start, len);
                     start = end;
                 }
             }
             if (ch != 0) {
-                spaces = (ch == ' ');
-                breaks = (Constant.LINEBR.has(ch));
+                spaces = ch == ' ';
+                breaks = Constant.LINEBR.has(ch);
             }
             end++;
         }

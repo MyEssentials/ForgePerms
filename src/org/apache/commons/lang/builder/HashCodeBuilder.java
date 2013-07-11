@@ -32,22 +32,26 @@ import org.apache.commons.lang.ArrayUtils;
  * </p>
  * 
  * <p>
- * This class enables a good <code>hashCode</code> method to be built for any class. It follows the rules laid out in
- * the book <a href="http://java.sun.com/docs/books/effective/index.html">Effective Java</a> by Joshua Bloch. Writing a
- * good <code>hashCode</code> method is actually quite difficult. This class aims to simplify the process.
+ * This class enables a good <code>hashCode</code> method to be built for any
+ * class. It follows the rules laid out in the book <a
+ * href="http://java.sun.com/docs/books/effective/index.html">Effective Java</a>
+ * by Joshua Bloch. Writing a good <code>hashCode</code> method is actually
+ * quite difficult. This class aims to simplify the process.
  * </p>
  * 
  * <p>
- * The following is the approach taken. When appending a data field, the current total is multiplied by the 
- * multiplier then a relevant value 
- * for that data type is added. For example, if the current hashCode is 17, and the multiplier is 37, then 
- * appending the integer 45 will create a hashcode of 674, namely 17 * 37 + 45. 
+ * The following is the approach taken. When appending a data field, the current
+ * total is multiplied by the multiplier then a relevant value for that data
+ * type is added. For example, if the current hashCode is 17, and the multiplier
+ * is 37, then appending the integer 45 will create a hashcode of 674, namely 17
+ * * 37 + 45.
  * </p>
  * 
  * <p>
- * All relevant fields from the object should be included in the <code>hashCode</code> method. Derived fields may be
- * excluded. In general, any field used in the <code>equals</code> method must be used in the <code>hashCode</code>
- * method.
+ * All relevant fields from the object should be included in the
+ * <code>hashCode</code> method. Derived fields may be excluded. In general, any
+ * field used in the <code>equals</code> method must be used in the
+ * <code>hashCode</code> method.
  * </p>
  * 
  * <p>
@@ -60,7 +64,7 @@ import org.apache.commons.lang.ArrayUtils;
  *   int age;
  *   boolean smoker;
  *   ...
- *
+ * 
  *   public int hashCode() {
  *     // you pick a hard-coded, randomly chosen, non-zero, odd number
  *     // ideally different for each class
@@ -74,14 +78,17 @@ import org.apache.commons.lang.ArrayUtils;
  * </pre>
  * 
  * <p>
- * If required, the superclass <code>hashCode()</code> can be added using {@link #appendSuper}.
+ * If required, the superclass <code>hashCode()</code> can be added using
+ * {@link #appendSuper}.
  * </p>
  * 
  * <p>
- * Alternatively, there is a method that uses reflection to determine the fields to test. Because these fields are
- * usually private, the method, <code>reflectionHashCode</code>, uses <code>AccessibleObject.setAccessible</code>
- * to change the visibility of the fields. This will fail under a security manager, unless the appropriate permissions
- * are set up correctly. It is also slower than testing explicitly.
+ * Alternatively, there is a method that uses reflection to determine the fields
+ * to test. Because these fields are usually private, the method,
+ * <code>reflectionHashCode</code>, uses
+ * <code>AccessibleObject.setAccessible</code> to change the visibility of the
+ * fields. This will fail under a security manager, unless the appropriate
+ * permissions are set up correctly. It is also slower than testing explicitly.
  * </p>
  * 
  * <p>
@@ -90,7 +97,7 @@ import org.apache.commons.lang.ArrayUtils;
  * 
  * <pre>
  * public int hashCode() {
- *   return HashCodeBuilder.reflectionHashCode(this);
+ *     return HashCodeBuilder.reflectionHashCode(this);
  * }
  * </pre>
  * 
@@ -103,7 +110,8 @@ import org.apache.commons.lang.ArrayUtils;
 public class HashCodeBuilder {
     /**
      * <p>
-     * A registry of objects used by reflection methods to detect cyclical object references and avoid infinite loops.
+     * A registry of objects used by reflection methods to detect cyclical
+     * object references and avoid infinite loops.
      * </p>
      * 
      * @since 2.3
@@ -111,25 +119,28 @@ public class HashCodeBuilder {
     private static final ThreadLocal REGISTRY = new ThreadLocal();
 
     /*
-     * N.B. we cannot store the actual objects in a HashSet, as that would use the very hashCode()
-     * we are in the process of calculating.
+     * N.B. we cannot store the actual objects in a HashSet, as that would use
+     * the very hashCode() we are in the process of calculating.
      * 
-     * So we generate a one-to-one mapping from the original object to a new object.
+     * So we generate a one-to-one mapping from the original object to a new
+     * object.
      * 
-     * Now HashSet uses equals() to determine if two elements with the same hashcode really
-     * are equal, so we also need to ensure that the replacement objects are only equal
-     * if the original objects are identical.
+     * Now HashSet uses equals() to determine if two elements with the same
+     * hashcode really are equal, so we also need to ensure that the replacement
+     * objects are only equal if the original objects are identical.
      * 
-     * The original implementation (2.4 and before) used the System.indentityHashCode()
-     * method - however this is not guaranteed to generate unique ids (e.g. LANG-459)
-     *  
-     * We now use the IDKey helper class (adapted from org.apache.axis.utils.IDKey)
-     * to disambiguate the duplicate ids.
+     * The original implementation (2.4 and before) used the
+     * System.indentityHashCode() method - however this is not guaranteed to
+     * generate unique ids (e.g. LANG-459)
+     * 
+     * We now use the IDKey helper class (adapted from
+     * org.apache.axis.utils.IDKey) to disambiguate the duplicate ids.
      */
-    
+
     /**
      * <p>
-     * Returns the registry of objects being traversed by the reflection methods in the current thread.
+     * Returns the registry of objects being traversed by the reflection methods
+     * in the current thread.
      * </p>
      * 
      * @return Set the registry of objects being traversed
@@ -141,13 +152,14 @@ public class HashCodeBuilder {
 
     /**
      * <p>
-     * Returns <code>true</code> if the registry contains the given object. Used by the reflection methods to avoid
-     * infinite loops.
+     * Returns <code>true</code> if the registry contains the given object. Used
+     * by the reflection methods to avoid infinite loops.
      * </p>
      * 
      * @param value
      *            The object to lookup in the registry.
-     * @return boolean <code>true</code> if the registry contains the given object.
+     * @return boolean <code>true</code> if the registry contains the given
+     *         object.
      * @since 2.3
      */
     static boolean isRegistered(Object value) {
@@ -157,7 +169,8 @@ public class HashCodeBuilder {
 
     /**
      * <p>
-     * Appends the fields and values defined by the given object of the given <code>Class</code>.
+     * Appends the fields and values defined by the given object of the given
+     * <code>Class</code>.
      * </p>
      * 
      * @param object
@@ -169,9 +182,11 @@ public class HashCodeBuilder {
      * @param useTransients
      *            whether to use transient fields
      * @param excludeFields
-     *            Collection of String field names to exclude from use in calculation of hash code
+     *            Collection of String field names to exclude from use in
+     *            calculation of hash code
      */
-    private static void reflectionAppend(Object object, Class clazz, HashCodeBuilder builder, boolean useTransients,
+    private static void reflectionAppend(Object object, Class clazz,
+            HashCodeBuilder builder, boolean useTransients,
             String[] excludeFields) {
         if (isRegistered(object)) {
             return;
@@ -183,16 +198,20 @@ public class HashCodeBuilder {
             for (int i = 0; i < fields.length; i++) {
                 Field field = fields[i];
                 if (!ArrayUtils.contains(excludeFields, field.getName())
-                    && (field.getName().indexOf('$') == -1)
-                    && (useTransients || !Modifier.isTransient(field.getModifiers()))
-                    && (!Modifier.isStatic(field.getModifiers()))) {
+                        && field.getName().indexOf('$') == -1
+                        && (useTransients || !Modifier.isTransient(field
+                                .getModifiers()))
+                        && !Modifier.isStatic(field.getModifiers())) {
                     try {
                         Object fieldValue = field.get(object);
                         builder.append(fieldValue);
                     } catch (IllegalAccessException e) {
-                        // this can't happen. Would get a Security exception instead
-                        // throw a runtime exception in case the impossible happens.
-                        throw new InternalError("Unexpected IllegalAccessException");
+                        // this can't happen. Would get a Security exception
+                        // instead
+                        // throw a runtime exception in case the impossible
+                        // happens.
+                        throw new InternalError(
+                                "Unexpected IllegalAccessException");
                     }
                 }
             }
@@ -207,14 +226,15 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * It uses <code>AccessibleObject.setAccessible</code> to gain access to private fields. This means that it will
-     * throw a security exception if run under a security manager, if the permissions are not set up correctly. It is
-     * also not as efficient as testing explicitly.
+     * It uses <code>AccessibleObject.setAccessible</code> to gain access to
+     * private fields. This means that it will throw a security exception if run
+     * under a security manager, if the permissions are not set up correctly. It
+     * is also not as efficient as testing explicitly.
      * </p>
      * 
      * <p>
-     * Transient members will be not be used, as they are likely derived fields, and not part of the value of the
-     * <code>Object</code>.
+     * Transient members will be not be used, as they are likely derived fields,
+     * and not part of the value of the <code>Object</code>.
      * </p>
      * 
      * <p>
@@ -222,8 +242,9 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally these should be different for each class,
-     * however this is not vital. Prime numbers are preferred, especially for the multiplier.
+     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally
+     * these should be different for each class, however this is not vital.
+     * Prime numbers are preferred, especially for the multiplier.
      * </p>
      * 
      * @param initialNonZeroOddNumber
@@ -238,8 +259,10 @@ public class HashCodeBuilder {
      * @throws IllegalArgumentException
      *             if the number is zero or even
      */
-    public static int reflectionHashCode(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber, Object object) {
-        return reflectionHashCode(initialNonZeroOddNumber, multiplierNonZeroOddNumber, object, false, null, null);
+    public static int reflectionHashCode(int initialNonZeroOddNumber,
+            int multiplierNonZeroOddNumber, Object object) {
+        return reflectionHashCode(initialNonZeroOddNumber,
+                multiplierNonZeroOddNumber, object, false, null, null);
     }
 
     /**
@@ -248,14 +271,16 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * It uses <code>AccessibleObject.setAccessible</code> to gain access to private fields. This means that it will
-     * throw a security exception if run under a security manager, if the permissions are not set up correctly. It is
-     * also not as efficient as testing explicitly.
+     * It uses <code>AccessibleObject.setAccessible</code> to gain access to
+     * private fields. This means that it will throw a security exception if run
+     * under a security manager, if the permissions are not set up correctly. It
+     * is also not as efficient as testing explicitly.
      * </p>
      * 
      * <p>
-     * If the TestTransients parameter is set to <code>true</code>, transient members will be tested, otherwise they
-     * are ignored, as they are likely derived fields, and not part of the value of the <code>Object</code>.
+     * If the TestTransients parameter is set to <code>true</code>, transient
+     * members will be tested, otherwise they are ignored, as they are likely
+     * derived fields, and not part of the value of the <code>Object</code>.
      * </p>
      * 
      * <p>
@@ -263,8 +288,9 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally these should be different for each class,
-     * however this is not vital. Prime numbers are preferred, especially for the multiplier.
+     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally
+     * these should be different for each class, however this is not vital.
+     * Prime numbers are preferred, especially for the multiplier.
      * </p>
      * 
      * @param initialNonZeroOddNumber
@@ -281,15 +307,17 @@ public class HashCodeBuilder {
      * @throws IllegalArgumentException
      *             if the number is zero or even
      */
-    public static int reflectionHashCode(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber, Object object,
+    public static int reflectionHashCode(int initialNonZeroOddNumber,
+            int multiplierNonZeroOddNumber, Object object,
             boolean testTransients) {
-        return reflectionHashCode(initialNonZeroOddNumber, multiplierNonZeroOddNumber, object, testTransients, null,
-                null);
+        return reflectionHashCode(initialNonZeroOddNumber,
+                multiplierNonZeroOddNumber, object, testTransients, null, null);
     }
 
     /**
-     * Calls {@link #reflectionHashCode(int, int, Object, boolean, Class, String[])} with excludeFields set to
-     * <code>null</code>.
+     * Calls
+     * {@link #reflectionHashCode(int, int, Object, boolean, Class, String[])}
+     * with excludeFields set to <code>null</code>.
      * 
      * @param initialNonZeroOddNumber
      *            a non-zero, odd number used as the initial value
@@ -300,12 +328,15 @@ public class HashCodeBuilder {
      * @param testTransients
      *            whether to include transient fields
      * @param reflectUpToClass
-     *            the superclass to reflect up to (inclusive), may be <code>null</code>
+     *            the superclass to reflect up to (inclusive), may be
+     *            <code>null</code>
      * @return int hash code
      */
-    public static int reflectionHashCode(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber, Object object,
+    public static int reflectionHashCode(int initialNonZeroOddNumber,
+            int multiplierNonZeroOddNumber, Object object,
             boolean testTransients, Class reflectUpToClass) {
-        return reflectionHashCode(initialNonZeroOddNumber, multiplierNonZeroOddNumber, object, testTransients,
+        return reflectionHashCode(initialNonZeroOddNumber,
+                multiplierNonZeroOddNumber, object, testTransients,
                 reflectUpToClass, null);
     }
 
@@ -315,24 +346,28 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * It uses <code>AccessibleObject.setAccessible</code> to gain access to private fields. This means that it will
-     * throw a security exception if run under a security manager, if the permissions are not set up correctly. It is
-     * also not as efficient as testing explicitly.
+     * It uses <code>AccessibleObject.setAccessible</code> to gain access to
+     * private fields. This means that it will throw a security exception if run
+     * under a security manager, if the permissions are not set up correctly. It
+     * is also not as efficient as testing explicitly.
      * </p>
      * 
      * <p>
-     * If the TestTransients parameter is set to <code>true</code>, transient members will be tested, otherwise they
-     * are ignored, as they are likely derived fields, and not part of the value of the <code>Object</code>.
+     * If the TestTransients parameter is set to <code>true</code>, transient
+     * members will be tested, otherwise they are ignored, as they are likely
+     * derived fields, and not part of the value of the <code>Object</code>.
      * </p>
      * 
      * <p>
-     * Static fields will not be included. Superclass fields will be included up to and including the specified
-     * superclass. A null superclass is treated as java.lang.Object.
+     * Static fields will not be included. Superclass fields will be included up
+     * to and including the specified superclass. A null superclass is treated
+     * as java.lang.Object.
      * </p>
      * 
      * <p>
-     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally these should be different for each class,
-     * however this is not vital. Prime numbers are preferred, especially for the multiplier.
+     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally
+     * these should be different for each class, however this is not vital.
+     * Prime numbers are preferred, especially for the multiplier.
      * </p>
      * 
      * @param initialNonZeroOddNumber
@@ -344,9 +379,11 @@ public class HashCodeBuilder {
      * @param testTransients
      *            whether to include transient fields
      * @param reflectUpToClass
-     *            the superclass to reflect up to (inclusive), may be <code>null</code>
+     *            the superclass to reflect up to (inclusive), may be
+     *            <code>null</code>
      * @param excludeFields
-     *            array of field names to exclude from use in calculation of hash code
+     *            array of field names to exclude from use in calculation of
+     *            hash code
      * @return int hash code
      * @throws IllegalArgumentException
      *             if the Object is <code>null</code>
@@ -354,18 +391,23 @@ public class HashCodeBuilder {
      *             if the number is zero or even
      * @since 2.0
      */
-    public static int reflectionHashCode(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber, Object object,
-            boolean testTransients, Class reflectUpToClass, String[] excludeFields) {
+    public static int reflectionHashCode(int initialNonZeroOddNumber,
+            int multiplierNonZeroOddNumber, Object object,
+            boolean testTransients, Class reflectUpToClass,
+            String[] excludeFields) {
 
         if (object == null) {
-            throw new IllegalArgumentException("The object to build a hash code for must not be null");
+            throw new IllegalArgumentException(
+                    "The object to build a hash code for must not be null");
         }
-        HashCodeBuilder builder = new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
+        HashCodeBuilder builder = new HashCodeBuilder(initialNonZeroOddNumber,
+                multiplierNonZeroOddNumber);
         Class clazz = object.getClass();
         reflectionAppend(object, clazz, builder, testTransients, excludeFields);
         while (clazz.getSuperclass() != null && clazz != reflectUpToClass) {
             clazz = clazz.getSuperclass();
-            reflectionAppend(object, clazz, builder, testTransients, excludeFields);
+            reflectionAppend(object, clazz, builder, testTransients,
+                    excludeFields);
         }
         return builder.toHashCode();
     }
@@ -376,18 +418,20 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * This constructor uses two hard coded choices for the constants needed to build a hash code.
+     * This constructor uses two hard coded choices for the constants needed to
+     * build a hash code.
      * </p>
      * 
      * <p>
-     * It uses <code>AccessibleObject.setAccessible</code> to gain access to private fields. This means that it will
-     * throw a security exception if run under a security manager, if the permissions are not set up correctly. It is
-     * also not as efficient as testing explicitly.
+     * It uses <code>AccessibleObject.setAccessible</code> to gain access to
+     * private fields. This means that it will throw a security exception if run
+     * under a security manager, if the permissions are not set up correctly. It
+     * is also not as efficient as testing explicitly.
      * </p>
      * 
      * <p>
-     * Transient members will be not be used, as they are likely derived fields, and not part of the value of the
-     * <code>Object</code>.
+     * Transient members will be not be used, as they are likely derived fields,
+     * and not part of the value of the <code>Object</code>.
      * </p>
      * 
      * <p>
@@ -410,18 +454,21 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * This constructor uses two hard coded choices for the constants needed to build a hash code.
+     * This constructor uses two hard coded choices for the constants needed to
+     * build a hash code.
      * </p>
      * 
      * <p>
-     * It uses <code>AccessibleObject.setAccessible</code> to gain access to private fields. This means that it will
-     * throw a security exception if run under a security manager, if the permissions are not set up correctly. It is
-     * also not as efficient as testing explicitly.
+     * It uses <code>AccessibleObject.setAccessible</code> to gain access to
+     * private fields. This means that it will throw a security exception if run
+     * under a security manager, if the permissions are not set up correctly. It
+     * is also not as efficient as testing explicitly.
      * </p>
      * 
      * <P>
-     * If the TestTransients parameter is set to <code>true</code>, transient members will be tested, otherwise they
-     * are ignored, as they are likely derived fields, and not part of the value of the <code>Object</code>.
+     * If the TestTransients parameter is set to <code>true</code>, transient
+     * members will be tested, otherwise they are ignored, as they are likely
+     * derived fields, and not part of the value of the <code>Object</code>.
      * </p>
      * 
      * <p>
@@ -446,18 +493,20 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * This constructor uses two hard coded choices for the constants needed to build a hash code.
+     * This constructor uses two hard coded choices for the constants needed to
+     * build a hash code.
      * </p>
      * 
      * <p>
-     * It uses <code>AccessibleObject.setAccessible</code> to gain access to private fields. This means that it will
-     * throw a security exception if run under a security manager, if the permissions are not set up correctly. It is
-     * also not as efficient as testing explicitly.
+     * It uses <code>AccessibleObject.setAccessible</code> to gain access to
+     * private fields. This means that it will throw a security exception if run
+     * under a security manager, if the permissions are not set up correctly. It
+     * is also not as efficient as testing explicitly.
      * </p>
      * 
      * <p>
-     * Transient members will be not be used, as they are likely derived fields, and not part of the value of the
-     * <code>Object</code>.
+     * Transient members will be not be used, as they are likely derived fields,
+     * and not part of the value of the <code>Object</code>.
      * </p>
      * 
      * <p>
@@ -467,13 +516,16 @@ public class HashCodeBuilder {
      * @param object
      *            the Object to create a <code>hashCode</code> for
      * @param excludeFields
-     *            Collection of String field names to exclude from use in calculation of hash code
+     *            Collection of String field names to exclude from use in
+     *            calculation of hash code
      * @return int hash code
      * @throws IllegalArgumentException
      *             if the object is <code>null</code>
      */
-    public static int reflectionHashCode(Object object, Collection /* String */excludeFields) {
-        return reflectionHashCode(object, ReflectionToStringBuilder.toNoNullStringArray(excludeFields));
+    public static int reflectionHashCode(Object object,
+            Collection /* String */excludeFields) {
+        return reflectionHashCode(object, ReflectionToStringBuilder
+                .toNoNullStringArray(excludeFields));
     }
 
     // -------------------------------------------------------------------------
@@ -484,18 +536,20 @@ public class HashCodeBuilder {
      * </p>
      * 
      * <p>
-     * This constructor uses two hard coded choices for the constants needed to build a hash code.
+     * This constructor uses two hard coded choices for the constants needed to
+     * build a hash code.
      * </p>
      * 
      * <p>
-     * It uses <code>AccessibleObject.setAccessible</code> to gain access to private fields. This means that it will
-     * throw a security exception if run under a security manager, if the permissions are not set up correctly. It is
-     * also not as efficient as testing explicitly.
+     * It uses <code>AccessibleObject.setAccessible</code> to gain access to
+     * private fields. This means that it will throw a security exception if run
+     * under a security manager, if the permissions are not set up correctly. It
+     * is also not as efficient as testing explicitly.
      * </p>
      * 
      * <p>
-     * Transient members will be not be used, as they are likely derived fields, and not part of the value of the
-     * <code>Object</code>.
+     * Transient members will be not be used, as they are likely derived fields,
+     * and not part of the value of the <code>Object</code>.
      * </p>
      * 
      * <p>
@@ -505,7 +559,8 @@ public class HashCodeBuilder {
      * @param object
      *            the Object to create a <code>hashCode</code> for
      * @param excludeFields
-     *            array of field names to exclude from use in calculation of hash code
+     *            array of field names to exclude from use in calculation of
+     *            hash code
      * @return int hash code
      * @throws IllegalArgumentException
      *             if the object is <code>null</code>
@@ -516,7 +571,8 @@ public class HashCodeBuilder {
 
     /**
      * <p>
-     * Registers the given object. Used by the reflection methods to avoid infinite loops.
+     * Registers the given object. Used by the reflection methods to avoid
+     * infinite loops.
      * </p>
      * 
      * @param value
@@ -548,7 +604,7 @@ public class HashCodeBuilder {
         if (registry != null) {
             registry.remove(new IDKey(value));
             synchronized (HashCodeBuilder.class) {
-                //read again
+                // read again
                 registry = getRegistry();
                 if (registry != null && registry.isEmpty()) {
                     REGISTRY.set(null);
@@ -569,7 +625,8 @@ public class HashCodeBuilder {
 
     /**
      * <p>
-     * Uses two hard coded choices for the constants needed to build a <code>hashCode</code>.
+     * Uses two hard coded choices for the constants needed to build a
+     * <code>hashCode</code>.
      * </p>
      */
     public HashCodeBuilder() {
@@ -579,8 +636,8 @@ public class HashCodeBuilder {
 
     /**
      * <p>
-     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally these should be different for each class,
-     * however this is not vital.
+     * Two randomly chosen, non-zero, odd numbers must be passed in. Ideally
+     * these should be different for each class, however this is not vital.
      * </p>
      * 
      * <p>
@@ -594,18 +651,23 @@ public class HashCodeBuilder {
      * @throws IllegalArgumentException
      *             if the number is zero or even
      */
-    public HashCodeBuilder(int initialNonZeroOddNumber, int multiplierNonZeroOddNumber) {
+    public HashCodeBuilder(int initialNonZeroOddNumber,
+            int multiplierNonZeroOddNumber) {
         if (initialNonZeroOddNumber == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires a non zero initial value");
+            throw new IllegalArgumentException(
+                    "HashCodeBuilder requires a non zero initial value");
         }
         if (initialNonZeroOddNumber % 2 == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires an odd initial value");
+            throw new IllegalArgumentException(
+                    "HashCodeBuilder requires an odd initial value");
         }
         if (multiplierNonZeroOddNumber == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires a non zero multiplier");
+            throw new IllegalArgumentException(
+                    "HashCodeBuilder requires a non zero multiplier");
         }
         if (multiplierNonZeroOddNumber % 2 == 0) {
-            throw new IllegalArgumentException("HashCodeBuilder requires an odd multiplier");
+            throw new IllegalArgumentException(
+                    "HashCodeBuilder requires an odd multiplier");
         }
         iConstant = multiplierNonZeroOddNumber;
         iTotal = initialNonZeroOddNumber;
@@ -616,13 +678,16 @@ public class HashCodeBuilder {
      * Append a <code>hashCode</code> for a <code>boolean</code>.
      * </p>
      * <p>
-     * This adds <code>1</code> when true, and <code>0</code> when false to the <code>hashCode</code>.
+     * This adds <code>1</code> when true, and <code>0</code> when false to the
+     * <code>hashCode</code>.
      * </p>
      * <p>
-     * This is in contrast to the standard <code>java.lang.Boolean.hashCode</code> handling, which computes
-     * a <code>hashCode</code> value of <code>1231</code> for <code>java.lang.Boolean</code> instances
-     * that represent <code>true</code> or <code>1237</code> for <code>java.lang.Boolean</code> instances
-     * that represent <code>false</code>.
+     * This is in contrast to the standard
+     * <code>java.lang.Boolean.hashCode</code> handling, which computes a
+     * <code>hashCode</code> value of <code>1231</code> for
+     * <code>java.lang.Boolean</code> instances that represent <code>true</code>
+     * or <code>1237</code> for <code>java.lang.Boolean</code> instances that
+     * represent <code>false</code>.
      * </p>
      * <p>
      * This is in accordance with the <quote>Effective Java</quote> design.
@@ -839,12 +904,12 @@ public class HashCodeBuilder {
      *            the long to add to the <code>hashCode</code>
      * @return this
      */
-    // NOTE: This method uses >> and not >>> as Effective Java and 
-    //       Long.hashCode do. Ideally we should switch to >>> at 
-    //       some stage. There are backwards compat issues, so 
-    //       that will have to wait for the time being. cf LANG-342.
+    // NOTE: This method uses >> and not >>> as Effective Java and
+    // Long.hashCode do. Ideally we should switch to >>> at
+    // some stage. There are backwards compat issues, so
+    // that will have to wait for the time being. cf LANG-342.
     public HashCodeBuilder append(long value) {
-        iTotal = iTotal * iConstant + ((int) (value ^ (value >> 32)));
+        iTotal = iTotal * iConstant + (int) (value ^ value >> 32);
         return this;
     }
 
@@ -882,7 +947,7 @@ public class HashCodeBuilder {
             iTotal = iTotal * iConstant;
 
         } else {
-            if(object.getClass().isArray()) {
+            if (object.getClass().isArray()) {
                 // 'Switch' on type of array, to dispatch to the correct handler
                 // This handles multi dimensional arrays
                 if (object instanceof long[]) {
@@ -994,13 +1059,14 @@ public class HashCodeBuilder {
 
     /**
      * <p>
-     * The computed <code>hashCode</code> from toHashCode() is returned due to the likelyhood 
-     * of bugs in mis-calling toHashCode() and the unlikelyness of it mattering what the hashCode for 
-     * HashCodeBuilder itself is.
+     * The computed <code>hashCode</code> from toHashCode() is returned due to
+     * the likelyhood of bugs in mis-calling toHashCode() and the unlikelyness
+     * of it mattering what the hashCode for HashCodeBuilder itself is.
      * 
      * @return <code>hashCode</code> based on the fields appended
      * @since 2.5
      */
+    @Override
     public int hashCode() {
         return toHashCode();
     }

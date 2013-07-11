@@ -28,7 +28,7 @@ public class ImplicitTuple {
 
     public ImplicitTuple(boolean plain, boolean nonplain) {
         this.plain = plain;
-        this.nonPlain = nonplain;
+        nonPlain = nonplain;
     }
 
     /**

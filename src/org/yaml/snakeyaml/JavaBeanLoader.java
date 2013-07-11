@@ -35,6 +35,7 @@ import org.yaml.snakeyaml.resolver.Resolver;
  *      href="http://www.artima.com/weblogs/viewpost.jsp?thread=208860">Reflecting
  *      generics</a>
  */
+@Deprecated
 public class JavaBeanLoader<T> {
     private Yaml loader;
 
@@ -53,9 +54,10 @@ public class JavaBeanLoader<T> {
         if (options.getRootTypeDescription() == null) {
             throw new NullPointerException("TypeDescription must be provided.");
         }
-        Constructor constructor = new Constructor(options.getRootTypeDescription());
-        loader = new Yaml(constructor, options, new Representer(), new DumperOptions(),
-                new Resolver());
+        Constructor constructor = new Constructor(options
+                .getRootTypeDescription());
+        loader = new Yaml(constructor, options, new Representer(),
+                new DumperOptions(), new Resolver());
         loader.setBeanAccess(beanAccess);
     }
 

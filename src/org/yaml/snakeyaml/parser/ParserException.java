@@ -38,7 +38,8 @@ public class ParserException extends MarkedYAMLException {
      * @param problemMark
      *            Position of the <code>problem</code>. within the document.
      */
-    public ParserException(String context, Mark contextMark, String problem, Mark problemMark) {
+    public ParserException(String context, Mark contextMark, String problem,
+            Mark problemMark) {
         super(context, contextMark, problem, problemMark, null, null);
     }
 }

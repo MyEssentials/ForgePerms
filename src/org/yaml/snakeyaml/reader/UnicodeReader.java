@@ -81,21 +81,23 @@ public class UnicodeReader extends Reader {
      * back to the stream, only BOM bytes are skipped.
      */
     protected void init() throws IOException {
-        if (internalIn2 != null)
+        if (internalIn2 != null) {
             return;
+        }
 
         Charset encoding;
         byte bom[] = new byte[BOM_SIZE];
         int n, unread;
         n = internalIn.read(bom, 0, bom.length);
 
-        if ((bom[0] == (byte) 0xEF) && (bom[1] == (byte) 0xBB) && (bom[2] == (byte) 0xBF)) {
+        if (bom[0] == (byte) 0xEF && bom[1] == (byte) 0xBB
+                && bom[2] == (byte) 0xBF) {
             encoding = UTF8;
             unread = n - 3;
-        } else if ((bom[0] == (byte) 0xFE) && (bom[1] == (byte) 0xFF)) {
+        } else if (bom[0] == (byte) 0xFE && bom[1] == (byte) 0xFF) {
             encoding = UTF16BE;
             unread = n - 2;
-        } else if ((bom[0] == (byte) 0xFF) && (bom[1] == (byte) 0xFE)) {
+        } else if (bom[0] == (byte) 0xFF && bom[1] == (byte) 0xFE) {
             encoding = UTF16LE;
             unread = n - 2;
         } else {
@@ -104,8 +106,9 @@ public class UnicodeReader extends Reader {
             unread = n;
         }
 
-        if (unread > 0)
-            internalIn.unread(bom, (n - unread), unread);
+        if (unread > 0) {
+            internalIn.unread(bom, n - unread, unread);
+        }
 
         // Use given encoding
         CharsetDecoder decoder = encoding.newDecoder().onUnmappableCharacter(
@@ -113,11 +116,13 @@ public class UnicodeReader extends Reader {
         internalIn2 = new InputStreamReader(internalIn, decoder);
     }
 
+    @Override
     public void close() throws IOException {
         init();
         internalIn2.close();
     }
 
+    @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
         init();
         return internalIn2.read(cbuf, off, len);

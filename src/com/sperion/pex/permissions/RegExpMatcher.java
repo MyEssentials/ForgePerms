@@ -14,14 +14,16 @@ public class RegExpMatcher implements PermissionMatcher {
         Pattern permissionMatcher = patternCache.get(expression);
 
         if (permissionMatcher == null) {
-            patternCache.put(expression, permissionMatcher = createPattern(expression));
+            patternCache.put(expression,
+                    permissionMatcher = createPattern(expression));
         }
 
         return permissionMatcher.matcher(permission).matches();
     }
-    
+
     protected Pattern createPattern(String expression) {
-        return Pattern.compile(prepareRegexp(expression), Pattern.CASE_INSENSITIVE);
+        return Pattern.compile(prepareRegexp(expression),
+                Pattern.CASE_INSENSITIVE);
     }
 
     public static String prepareRegexp(String expression) {
@@ -59,11 +61,11 @@ public class RegExpMatcher implements PermissionMatcher {
 
                 range.append(")");
 
-                regexp = regexp.replace(rangeMatcher.group(0), range.toString());
+                regexp = regexp
+                        .replace(rangeMatcher.group(0), range.toString());
             }
-        } catch (Throwable e) {
-        }
-        
+        } catch (Throwable e) {}
+
         return regexp;
     }
 }

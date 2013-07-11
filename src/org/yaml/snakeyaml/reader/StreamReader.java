@@ -42,28 +42,28 @@ public class StreamReader {
     private char[] data;
 
     public StreamReader(String stream) {
-        this.name = "'string'";
-        this.buffer = ""; // to set length to 0
+        name = "'string'";
+        buffer = ""; // to set length to 0
         checkPrintable(stream);
-        this.buffer = stream + "\0";
+        buffer = stream + "\0";
         this.stream = null;
-        this.eof = true;
-        this.data = null;
+        eof = true;
+        data = null;
     }
 
     public StreamReader(Reader reader) {
-        this.name = "'reader'";
-        this.buffer = "";
-        this.stream = reader;
-        this.eof = false;
-        this.data = new char[1024];
+        name = "'reader'";
+        buffer = "";
+        stream = reader;
+        eof = false;
+        data = new char[1024];
         this.update();
     }
 
     void checkPrintable(CharSequence data) {
         Matcher em = NON_PRINTABLE.matcher(data);
         if (em.find()) {
-            int position = this.index + this.buffer.length() - this.pointer + em.start();
+            int position = index + buffer.length() - pointer + em.start();
             throw new ReaderException(name, position, em.group().charAt(0),
                     "special characters are not allowed");
         }
@@ -89,19 +89,20 @@ public class StreamReader {
                 continue;
             }
 
-            int position = this.index + this.buffer.length() - this.pointer + i;
-            throw new ReaderException(name, position, c, "special characters are not allowed");
+            int position = index + buffer.length() - pointer + i;
+            throw new ReaderException(name, position, c,
+                    "special characters are not allowed");
         }
     }
 
     public static boolean isPrintable(final char c) {
-        return (c >= '\u0020' && c <= '\u007E') || c == '\n' || c == '\r' || c == '\t'
-                || c == '\u0085' || (c >= '\u00A0' && c <= '\uD7FF')
-                || (c >= '\uE000' && c <= '\uFFFD');
+        return c >= '\u0020' && c <= '\u007E' || c == '\n' || c == '\r'
+                || c == '\t' || c == '\u0085' || c >= '\u00A0' && c <= '\uD7FF'
+                || c >= '\uE000' && c <= '\uFFFD';
     }
 
     public Mark getMark() {
-        return new Mark(name, this.index, this.line, this.column, this.buffer, this.pointer);
+        return new Mark(name, index, line, column, buffer, pointer);
     }
 
     public void forward() {
@@ -114,25 +115,26 @@ public class StreamReader {
      * @param length
      */
     public void forward(int length) {
-        if (this.pointer + length + 1 >= this.buffer.length()) {
+        if (pointer + length + 1 >= buffer.length()) {
             update();
         }
         char ch = 0;
         for (int i = 0; i < length; i++) {
-            ch = this.buffer.charAt(this.pointer);
-            this.pointer++;
-            this.index++;
-            if (Constant.LINEBR.has(ch) || (ch == '\r' && buffer.charAt(pointer) != '\n')) {
-                this.line++;
-                this.column = 0;
+            ch = buffer.charAt(pointer);
+            pointer++;
+            index++;
+            if (Constant.LINEBR.has(ch) || ch == '\r'
+                    && buffer.charAt(pointer) != '\n') {
+                line++;
+                column = 0;
             } else if (ch != '\uFEFF') {
-                this.column++;
+                column++;
             }
         }
     }
 
     public char peek() {
-        return this.buffer.charAt(this.pointer);
+        return buffer.charAt(pointer);
     }
 
     /**
@@ -142,10 +144,10 @@ public class StreamReader {
      * @return the next index-th character
      */
     public char peek(int index) {
-        if (this.pointer + index + 1 > this.buffer.length()) {
+        if (pointer + index + 1 > buffer.length()) {
             update();
         }
-        return this.buffer.charAt(this.pointer + index);
+        return buffer.charAt(pointer + index);
     }
 
     /**
@@ -155,13 +157,13 @@ public class StreamReader {
      * @return the next length characters
      */
     public String prefix(int length) {
-        if (this.pointer + length >= this.buffer.length()) {
+        if (pointer + length >= buffer.length()) {
             update();
         }
-        if (this.pointer + length > this.buffer.length()) {
-            return this.buffer.substring(this.pointer);
+        if (pointer + length > buffer.length()) {
+            return buffer.substring(pointer);
         }
-        return this.buffer.substring(this.pointer, this.pointer + length);
+        return buffer.substring(pointer, pointer + length);
     }
 
     /**
@@ -169,19 +171,19 @@ public class StreamReader {
      */
     public String prefixForward(int length) {
         final String prefix = prefix(length);
-        this.pointer += length;
-        this.index += length;
+        pointer += length;
+        index += length;
         // prefix never contains new line characters
-        this.column += length;
+        column += length;
         return prefix;
     }
 
     private void update() {
-        if (!this.eof) {
-            this.buffer = buffer.substring(this.pointer);
-            this.pointer = 0;
+        if (!eof) {
+            buffer = buffer.substring(pointer);
+            pointer = 0;
             try {
-                int converted = this.stream.read(data);
+                int converted = stream.read(data);
                 if (converted > 0) {
                     /*
                      * Let's create StringBuilder manually. Anyway str1 + str2
@@ -190,11 +192,12 @@ public class StreamReader {
                      * unnecessary operations in appends.
                      */
                     checkPrintable(data, 0, converted);
-                    this.buffer = new StringBuilder(buffer.length() + converted).append(buffer)
-                            .append(data, 0, converted).toString();
+                    buffer = new StringBuilder(buffer.length() + converted)
+                            .append(buffer).append(data, 0, converted)
+                            .toString();
                 } else {
-                    this.eof = true;
-                    this.buffer += "\0";
+                    eof = true;
+                    buffer += "\0";
                 }
             } catch (IOException ioe) {
                 throw new YAMLException(ioe);
@@ -207,7 +210,7 @@ public class StreamReader {
     }
 
     public Charset getEncoding() {
-        return Charset.forName(((UnicodeReader) this.stream).getEncoding());
+        return Charset.forName(((UnicodeReader) stream).getEncoding());
     }
 
     public int getIndex() {

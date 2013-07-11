@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
-import net.minecraft.command.ICommandSender;
 
 import org.bukkit.ChatColor;
 
@@ -35,89 +35,88 @@ import com.sperion.pex.utils.StringUtils;
 
 public class WorldCommands extends PermissionsCommand {
 
-	@Command(name = "pex",
-	syntax = "worlds",
-	description = "Print loaded worlds",
-	isPrimary = true,
-	permission = "permissions.manage.worlds")
-	public void worldsTree(Object plugin, ICommandSender sender, Map<String, String> args) {
-		WorldServer[] worlds = MinecraftServer.getServer().worldServers;
+    @Command(name = "pex", syntax = "worlds", description = "Print loaded worlds", isPrimary = true, permission = "permissions.manage.worlds")
+    public void worldsTree(Object plugin, ICommandSender sender,
+            Map<String, String> args) {
+        WorldServer[] worlds = MinecraftServer.getServer().worldServers;
 
-		PermissionManager manager = PermissionsEx.getPermissionManager();
+        PermissionManager manager = PermissionsEx.getPermissionManager();
 
-		sender.sendChatToPlayer("Worlds on server: ");
-		for (WorldServer world : worlds) {
-			String[] parentWorlds = manager.getWorldInheritance(String.valueOf(world.provider.dimensionId));
-			String output = "  " + String.valueOf(world.provider.dimensionId);
-			if (parentWorlds.length > 0) {
-				output += ChatColor.GREEN + " [" + ChatColor.WHITE + StringUtils.implode(parentWorlds, ", ") + ChatColor.GREEN + "]";
-			}
+        sender.sendChatToPlayer("Worlds on server: ");
+        for (WorldServer world : worlds) {
+            String[] parentWorlds = manager.getWorldInheritance(String
+                    .valueOf(world.provider.dimensionId));
+            String output = "  " + String.valueOf(world.provider.dimensionId);
+            if (parentWorlds.length > 0) {
+                output += ChatColor.GREEN + " [" + ChatColor.WHITE
+                        + StringUtils.implode(parentWorlds, ", ")
+                        + ChatColor.GREEN + "]";
+            }
 
-			sender.sendChatToPlayer(output);
-		}
-	}
+            sender.sendChatToPlayer(output);
+        }
+    }
 
-	@Command(name = "pex",
-	syntax = "world <world>",
-	description = "Print <world> inheritance info",
-	permission = "permissions.manage.worlds")
-	public void worldPrintInheritance(Object plugin, ICommandSender sender, Map<String, String> args) {
-		String worldName = this.autoCompleteWorldName(args.get("world"));
-		PermissionManager manager = PermissionsEx.getPermissionManager();
-		
-		/*
-		if (Bukkit.getServer().getWorld(worldName) == null) {
-			sender.sendChatToPlayer("Specified world \"" + args.get("world") + "\" not found.");
-			return;
-		}*/
+    @Command(name = "pex", syntax = "world <world>", description = "Print <world> inheritance info", permission = "permissions.manage.worlds")
+    public void worldPrintInheritance(Object plugin, ICommandSender sender,
+            Map<String, String> args) {
+        String worldName = this.autoCompleteWorldName(args.get("world"));
+        PermissionManager manager = PermissionsEx.getPermissionManager();
 
-		String[] parentWorlds = manager.getWorldInheritance(worldName);
+        /*
+         * if (Bukkit.getServer().getWorld(worldName) == null) {
+         * sender.sendChatToPlayer("Specified world \"" + args.get("world") +
+         * "\" not found."); return; }
+         */
 
-		sender.sendChatToPlayer("World " + worldName + " inherit:");
-		if (parentWorlds.length == 0) {
-			sender.sendChatToPlayer("nothing :3");
-			return;
-		}
+        String[] parentWorlds = manager.getWorldInheritance(worldName);
 
-		for (String parentWorld : parentWorlds) {
-			//String[] parents = manager.getWorldInheritance(parentWorld);
-			String output = "  " + parentWorld;
-			if (parentWorlds.length > 0) {
-				output += ChatColor.GREEN + " [" + ChatColor.WHITE + StringUtils.implode(parentWorlds, ", ") + ChatColor.GREEN + "]";
-			}
+        sender.sendChatToPlayer("World " + worldName + " inherit:");
+        if (parentWorlds.length == 0) {
+            sender.sendChatToPlayer("nothing :3");
+            return;
+        }
 
-			sender.sendChatToPlayer(output);
-		}
-	}
+        for (String parentWorld : parentWorlds) {
+            // String[] parents = manager.getWorldInheritance(parentWorld);
+            String output = "  " + parentWorld;
+            if (parentWorlds.length > 0) {
+                output += ChatColor.GREEN + " [" + ChatColor.WHITE
+                        + StringUtils.implode(parentWorlds, ", ")
+                        + ChatColor.GREEN + "]";
+            }
 
-	@Command(name = "pex",
-	syntax = "world <world> inherit <parentWorlds>",
-	description = "Set <parentWorlds> for <world>",
-	permission = "permissions.manage.worlds.inheritance")
-	public void worldSetInheritance(Object plugin, ICommandSender sender, Map<String, String> args) {
-		String worldName = this.autoCompleteWorldName(args.get("world"));
-		PermissionManager manager = PermissionsEx.getPermissionManager();
-		/*
-		if (Bukkit.getServer().getWorld(worldName) == null) {
-			sender.sendChatToPlayer("Specified world \"" + args.get("world") + "\" not found.");
-			return;
-		}*/
+            sender.sendChatToPlayer(output);
+        }
+    }
 
-		List<String> parents = new ArrayList<String>();
-		String parentWorlds = args.get("parentWorlds");
-		if (parentWorlds.contains(",")) {
-			for (String world : parentWorlds.split(",")) {
-				world = this.autoCompleteWorldName(world, "parentWorlds");
-				if (!parents.contains(world)) {
-					parents.add(world.trim());
-				}
-			}
-		} else {
-			parents.add(parentWorlds.trim());
-		}
+    @Command(name = "pex", syntax = "world <world> inherit <parentWorlds>", description = "Set <parentWorlds> for <world>", permission = "permissions.manage.worlds.inheritance")
+    public void worldSetInheritance(Object plugin, ICommandSender sender,
+            Map<String, String> args) {
+        String worldName = this.autoCompleteWorldName(args.get("world"));
+        PermissionManager manager = PermissionsEx.getPermissionManager();
+        /*
+         * if (Bukkit.getServer().getWorld(worldName) == null) {
+         * sender.sendChatToPlayer("Specified world \"" + args.get("world") +
+         * "\" not found."); return; }
+         */
 
-		manager.setWorldInheritance(worldName, parents.toArray(new String[0]));
+        List<String> parents = new ArrayList<String>();
+        String parentWorlds = args.get("parentWorlds");
+        if (parentWorlds.contains(",")) {
+            for (String world : parentWorlds.split(",")) {
+                world = this.autoCompleteWorldName(world, "parentWorlds");
+                if (!parents.contains(world)) {
+                    parents.add(world.trim());
+                }
+            }
+        } else {
+            parents.add(parentWorlds.trim());
+        }
 
-		sender.sendChatToPlayer("World " + worldName + " inherits " + StringUtils.implode(parents, ", "));
-	}
+        manager.setWorldInheritance(worldName, parents.toArray(new String[0]));
+
+        sender.sendChatToPlayer("World " + worldName + " inherits "
+                + StringUtils.implode(parents, ", "));
+    }
 }

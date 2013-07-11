@@ -39,7 +39,7 @@ public abstract class NodeEvent extends Event {
      * @return Anchor of this node or <code>null</code> if no anchor is defined.
      */
     public String getAnchor() {
-        return this.anchor;
+        return anchor;
     }
 
     @Override

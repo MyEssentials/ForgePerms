@@ -18,7 +18,8 @@
  */
 package com.sperion.pex.permissions.backends.file;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -28,40 +29,42 @@ import com.sperion.pex.permissions.backends.FileBackend;
 import com.sperion.pex.permissions.events.PermissionEntityEvent;
 
 /**
- *
+ * 
  * @author code
  */
 public class FileGroup extends ProxyPermissionGroup {
 
-	protected ConfigurationSection node;
+    protected ConfigurationSection node;
 
-	public FileGroup(String name, PermissionManager manager, FileBackend backend) {
-		super(new FileEntity(name, manager, backend, "groups"));
+    public FileGroup(String name, PermissionManager manager, FileBackend backend) {
+        super(new FileEntity(name, manager, backend, "groups"));
 
-		this.node = ((FileEntity) this.backendEntity).getConfigNode();
-	}
+        node = ((FileEntity) backendEntity).getConfigNode();
+    }
 
-	@Override
-	public String[] getParentGroupsNamesImpl(String worldName) {
-		List<String> parents = this.node.getStringList(FileEntity.formatPath(worldName, "inheritance"));
+    @Override
+    public String[] getParentGroupsNamesImpl(String worldName) {
+        List<String> parents = node.getStringList(FileEntity.formatPath(
+                worldName, "inheritance"));
 
-		if (parents.isEmpty()) {
-			return new String[0];
-		}
+        if (parents.isEmpty()) {
+            return new String[0];
+        }
 
-		return parents.toArray(new String[parents.size()]);
-	}
+        return parents.toArray(new String[parents.size()]);
+    }
 
-	@Override
-	public void setParentGroups(String[] parentGroups, String worldName) {
-		if (parentGroups == null) {
-			return;
-		}
+    @Override
+    public void setParentGroups(String[] parentGroups, String worldName) {
+        if (parentGroups == null) {
+            return;
+        }
 
-		this.node.set(FileEntity.formatPath(worldName, "inheritance"), Arrays.asList(parentGroups));
+        node.set(FileEntity.formatPath(worldName, "inheritance"), Arrays
+                .asList(parentGroups));
 
-		this.save();
+        this.save();
 
-		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
-	}
+        this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
+    }
 }

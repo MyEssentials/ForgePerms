@@ -33,16 +33,16 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 
         this.setName(backendEntity.getName());
 
-        this.virtual = backendEntity.isVirtual();
-		
-		this.backendEntity.initialize();
+        virtual = backendEntity.isVirtual();
+
+        this.backendEntity.initialize();
     }
 
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.backendEntity.initialize();
-	}	
+    @Override
+    public void initialize() {
+        super.initialize();
+        backendEntity.initialize();
+    }
 
     @Override
     public String[] getWorlds() {
@@ -61,8 +61,8 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 
     @Override
     public void setPrefix(String prefix, String worldName) {
-        this.backendEntity.setPrefix(prefix, worldName);
-        
+        backendEntity.setPrefix(prefix, worldName);
+
         this.clearMembersCache();
 
         this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
@@ -70,8 +70,8 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 
     @Override
     public void setSuffix(String suffix, String worldName) {
-        this.backendEntity.setSuffix(suffix, worldName);
-        
+        backendEntity.setSuffix(suffix, worldName);
+
         this.clearMembersCache();
 
         this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
@@ -84,55 +84,55 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 
     @Override
     public Map<String, Map<String, String>> getAllOptions() {
-        return this.backendEntity.getAllOptions();
+        return backendEntity.getAllOptions();
     }
 
     @Override
     public Map<String, String[]> getAllPermissions() {
-        return this.backendEntity.getAllPermissions();
+        return backendEntity.getAllPermissions();
     }
 
     @Override
     public String[] getOwnPermissions(String world) {
-        return this.backendEntity.getPermissions(world);
+        return backendEntity.getPermissions(world);
     }
 
     @Override
     public String getOwnOption(String option, String world, String defaultValue) {
-        return this.backendEntity.getOption(option, world, defaultValue);
+        return backendEntity.getOption(option, world, defaultValue);
     }
 
     @Override
     public Map<String, String> getOptions(String world) {
-        return this.backendEntity.getOptions(world);
+        return backendEntity.getOptions(world);
     }
 
     @Override
     public void save() {
-        this.backendEntity.save();
+        backendEntity.save();
         this.callEvent(PermissionEntityEvent.Action.SAVED);
     }
 
     @Override
     protected void removeGroup() {
-        this.backendEntity.remove();
+        backendEntity.remove();
     }
 
     @Override
     public void setOption(String permission, String value, String world) {
-        this.backendEntity.setOption(permission, value, world);
-        
+        backendEntity.setOption(permission, value, world);
+
         this.clearMembersCache();
-        
+
         this.callEvent(PermissionEntityEvent.Action.OPTIONS_CHANGED);
     }
 
     @Override
     public void setPermissions(String[] permissions, String world) {
-        this.backendEntity.setPermissions(permissions, world);
-        
+        backendEntity.setPermissions(permissions, world);
+
         this.clearMembersCache();
-        
+
         this.callEvent(PermissionEntityEvent.Action.PERMISSIONS_CHANGED);
     }
 }

@@ -8,12 +8,14 @@ public final class NumberConversions {
 
     public static int floor(double num) {
         final int floor = (int) num;
-        return floor == num ? floor : floor - (int) (Double.doubleToRawLongBits(num) >>> 63);
+        return floor == num ? floor : floor
+                - (int) (Double.doubleToRawLongBits(num) >>> 63);
     }
 
     public static int ceil(final double num) {
         final int floor = (int) num;
-        return floor == num ? floor : floor + (int) (~Double.doubleToRawLongBits(num) >>> 63);
+        return floor == num ? floor : floor
+                + (int) (~Double.doubleToRawLongBits(num) >>> 63);
     }
 
     public static int round(double num) {
@@ -27,9 +29,7 @@ public final class NumberConversions {
 
         try {
             return Integer.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
-        }
+        } catch (NumberFormatException e) {} catch (NullPointerException e) {}
         return 0;
     }
 
@@ -40,9 +40,7 @@ public final class NumberConversions {
 
         try {
             return Float.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
-        }
+        } catch (NumberFormatException e) {} catch (NullPointerException e) {}
         return 0;
     }
 
@@ -53,9 +51,7 @@ public final class NumberConversions {
 
         try {
             return Double.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
-        }
+        } catch (NumberFormatException e) {} catch (NullPointerException e) {}
         return 0;
     }
 
@@ -66,9 +62,7 @@ public final class NumberConversions {
 
         try {
             return Long.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
-        }
+        } catch (NumberFormatException e) {} catch (NullPointerException e) {}
         return 0;
     }
 
@@ -79,9 +73,7 @@ public final class NumberConversions {
 
         try {
             return Short.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
-        }
+        } catch (NumberFormatException e) {} catch (NullPointerException e) {}
         return 0;
     }
 
@@ -92,9 +84,7 @@ public final class NumberConversions {
 
         try {
             return Byte.valueOf(object.toString());
-        } catch (NumberFormatException e) {
-        } catch (NullPointerException e) {
-        }
+        } catch (NumberFormatException e) {} catch (NullPointerException e) {}
         return 0;
     }
 }

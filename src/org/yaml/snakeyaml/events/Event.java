@@ -34,6 +34,7 @@ public abstract class Event {
         this.endMark = endMark;
     }
 
+    @Override
     public String toString() {
         return "<" + this.getClass().getName() + "(" + getArguments() + ")>";
     }

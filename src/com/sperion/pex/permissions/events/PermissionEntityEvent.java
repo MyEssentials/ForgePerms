@@ -23,50 +23,41 @@ import org.bukkit.event.HandlerList;
 import com.sperion.pex.permissions.IPermissionEntity;
 
 /**
- *
+ * 
  * @author t3hk0d3
  */
 public class PermissionEntityEvent extends PermissionEvent {
 
-	private static final HandlerList handlers = new HandlerList();
-	protected IPermissionEntity entity;
-	protected Action action;
+    private static final HandlerList handlers = new HandlerList();
+    protected IPermissionEntity entity;
+    protected Action action;
 
-	public PermissionEntityEvent(IPermissionEntity entity, Action action) {
-		super(action.toString());
+    public PermissionEntityEvent(IPermissionEntity entity, Action action) {
+        super(action.toString());
 
-		this.entity = entity;
-		this.action = action;
-	}
+        this.entity = entity;
+        this.action = action;
+    }
 
-	public Action getAction() {
-		return this.action;
-	}
+    public Action getAction() {
+        return action;
+    }
 
-	public IPermissionEntity getEntity() {
-		return entity;
-	}
+    public IPermissionEntity getEntity() {
+        return entity;
+    }
 
-	public enum Action {
+    public enum Action {
 
-		PERMISSIONS_CHANGED,
-		OPTIONS_CHANGED,
-		INHERITANCE_CHANGED,
-		INFO_CHANGED,
-		TIMEDPERMISSION_EXPIRED,
-		RANK_CHANGED,
-		DEFAULTGROUP_CHANGED,
-		WEIGHT_CHANGED,
-		SAVED,
-		REMOVED,
-	}
+        PERMISSIONS_CHANGED, OPTIONS_CHANGED, INHERITANCE_CHANGED, INFO_CHANGED, TIMEDPERMISSION_EXPIRED, RANK_CHANGED, DEFAULTGROUP_CHANGED, WEIGHT_CHANGED, SAVED, REMOVED,
+    }
 
-	@Override
-	public HandlerList getHandlers() {
-		return handlers;
-	}
+    @Override
+    public HandlerList getHandlers() {
+        return handlers;
+    }
 
-	public static HandlerList getHandlerList() {
-		return handlers;
-	}
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 }

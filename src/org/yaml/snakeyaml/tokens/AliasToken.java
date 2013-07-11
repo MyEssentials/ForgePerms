@@ -26,7 +26,7 @@ public final class AliasToken extends Token {
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     @Override

@@ -89,7 +89,8 @@ public class PercentEscaper extends UnicodeEscaper {
     // In some uri escapers spaces are escaped to '+'
     private static final char[] URI_ESCAPED_SPACE = { '+' };
 
-    private static final char[] UPPER_HEX_DIGITS = "0123456789ABCDEF".toCharArray();
+    private static final char[] UPPER_HEX_DIGITS = "0123456789ABCDEF"
+            .toCharArray();
 
     /**
      * If true we should convert space to the {@code +} character.
@@ -131,10 +132,11 @@ public class PercentEscaper extends UnicodeEscaper {
                     "plusForSpace cannot be specified when space is a 'safe' character");
         }
         if (safeChars.contains("%")) {
-            throw new IllegalArgumentException("The '%' character cannot be specified as 'safe'");
+            throw new IllegalArgumentException(
+                    "The '%' character cannot be specified as 'safe'");
         }
         this.plusForSpace = plusForSpace;
-        this.safeOctets = createSafeOctets(safeChars);
+        safeOctets = createSafeOctets(safeChars);
     }
 
     /**
@@ -225,7 +227,7 @@ public class PercentEscaper extends UnicodeEscaper {
             dest[3] = '%';
             dest[5] = UPPER_HEX_DIGITS[cp & 0xF];
             cp >>>= 4;
-            dest[4] = UPPER_HEX_DIGITS[0x8 | (cp & 0x3)];
+            dest[4] = UPPER_HEX_DIGITS[0x8 | cp & 0x3];
             cp >>>= 2;
             dest[2] = UPPER_HEX_DIGITS[cp & 0xF];
             cp >>>= 4;
@@ -241,11 +243,11 @@ public class PercentEscaper extends UnicodeEscaper {
             dest[6] = '%';
             dest[8] = UPPER_HEX_DIGITS[cp & 0xF];
             cp >>>= 4;
-            dest[7] = UPPER_HEX_DIGITS[0x8 | (cp & 0x3)];
+            dest[7] = UPPER_HEX_DIGITS[0x8 | cp & 0x3];
             cp >>>= 2;
             dest[5] = UPPER_HEX_DIGITS[cp & 0xF];
             cp >>>= 4;
-            dest[4] = UPPER_HEX_DIGITS[0x8 | (cp & 0x3)];
+            dest[4] = UPPER_HEX_DIGITS[0x8 | cp & 0x3];
             cp >>>= 2;
             dest[2] = UPPER_HEX_DIGITS[cp];
             return dest;
@@ -260,22 +262,23 @@ public class PercentEscaper extends UnicodeEscaper {
             dest[9] = '%';
             dest[11] = UPPER_HEX_DIGITS[cp & 0xF];
             cp >>>= 4;
-            dest[10] = UPPER_HEX_DIGITS[0x8 | (cp & 0x3)];
+            dest[10] = UPPER_HEX_DIGITS[0x8 | cp & 0x3];
             cp >>>= 2;
             dest[8] = UPPER_HEX_DIGITS[cp & 0xF];
             cp >>>= 4;
-            dest[7] = UPPER_HEX_DIGITS[0x8 | (cp & 0x3)];
+            dest[7] = UPPER_HEX_DIGITS[0x8 | cp & 0x3];
             cp >>>= 2;
             dest[5] = UPPER_HEX_DIGITS[cp & 0xF];
             cp >>>= 4;
-            dest[4] = UPPER_HEX_DIGITS[0x8 | (cp & 0x3)];
+            dest[4] = UPPER_HEX_DIGITS[0x8 | cp & 0x3];
             cp >>>= 2;
             dest[2] = UPPER_HEX_DIGITS[cp & 0x7];
             return dest;
         } else {
             // If this ever happens it is due to bug in UnicodeEscaper, not bad
             // input.
-            throw new IllegalArgumentException("Invalid unicode character value " + cp);
+            throw new IllegalArgumentException(
+                    "Invalid unicode character value " + cp);
         }
     }
 }

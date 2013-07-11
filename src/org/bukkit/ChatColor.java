@@ -101,11 +101,12 @@ public enum ChatColor {
     RESET('r', 0x15);
 
     /**
-     * The special character which prefixes all chat colour codes. Use this if you need to dynamically
-     * convert colour codes from your custom format.
+     * The special character which prefixes all chat colour codes. Use this if
+     * you need to dynamically convert colour codes from your custom format.
      */
     public static final char COLOR_CHAR = '\u00A7';
-    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)" + String.valueOf(COLOR_CHAR) + "[0-9A-FK-OR]");
+    private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)"
+            + String.valueOf(COLOR_CHAR) + "[0-9A-FK-OR]");
 
     private final int intCode;
     private final char code;
@@ -122,12 +123,12 @@ public enum ChatColor {
         this.code = code;
         this.intCode = intCode;
         this.isFormat = isFormat;
-        this.toString = new String(new char[] {COLOR_CHAR, code});
+        toString = new String(new char[] { COLOR_CHAR, code });
     }
 
     /**
      * Gets the char value associated with this color
-     *
+     * 
      * @return A char value of this color code
      */
     public char getChar() {
@@ -155,9 +156,11 @@ public enum ChatColor {
 
     /**
      * Gets the color represented by the specified color code
-     *
-     * @param code Code to check
-     * @return Associative {@link org.bukkit.ChatColor} with the given code, or null if it doesn't exist
+     * 
+     * @param code
+     *            Code to check
+     * @return Associative {@link org.bukkit.ChatColor} with the given code, or
+     *         null if it doesn't exist
      */
     public static ChatColor getByChar(char code) {
         return BY_CHAR.get(code);
@@ -165,9 +168,11 @@ public enum ChatColor {
 
     /**
      * Gets the color represented by the specified color code
-     *
-     * @param code Code to check
-     * @return Associative {@link org.bukkit.ChatColor} with the given code, or null if it doesn't exist
+     * 
+     * @param code
+     *            Code to check
+     * @return Associative {@link org.bukkit.ChatColor} with the given code, or
+     *         null if it doesn't exist
      */
     public static ChatColor getByChar(String code) {
         Validate.notNull(code, "Code cannot be null");
@@ -178,8 +183,9 @@ public enum ChatColor {
 
     /**
      * Strips the given message of all color codes
-     *
-     * @param input String to strip of color
+     * 
+     * @param input
+     *            String to strip of color
      * @return A copy of the input string, without any coloring
      */
     public static String stripColor(final String input) {
@@ -191,20 +197,25 @@ public enum ChatColor {
     }
 
     /**
-     * Translates a string using an alternate color code character into a string that uses the internal
-     * ChatColor.COLOR_CODE color code character. The alternate color code character will only be replaced
-     * if it is immediately followed by 0-9, A-F, or a-f.
+     * Translates a string using an alternate color code character into a string
+     * that uses the internal ChatColor.COLOR_CODE color code character. The
+     * alternate color code character will only be replaced if it is immediately
+     * followed by 0-9, A-F, or a-f.
      * 
-     * @param altColorChar The alternate color code character to replace. Ex: &
-     * @param textToTranslate Text containing the alternate color code character. 
+     * @param altColorChar
+     *            The alternate color code character to replace. Ex: &
+     * @param textToTranslate
+     *            Text containing the alternate color code character.
      * @return Text containing the ChatColor.COLOR_CODE color code character.
      */
-    public static String translateAlternateColorCodes(char altColorChar, String textToTranslate) {
+    public static String translateAlternateColorCodes(char altColorChar,
+            String textToTranslate) {
         char[] b = textToTranslate.toCharArray();
         for (int i = 0; i < b.length - 1; i++) {
-            if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i+1]) > -1) {
+            if (b[i] == altColorChar
+                    && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1) {
                 b[i] = ChatColor.COLOR_CHAR;
-                b[i+1] = Character.toLowerCase(b[i+1]);
+                b[i + 1] = Character.toLowerCase(b[i + 1]);
             }
         }
         return new String(b);
@@ -212,8 +223,9 @@ public enum ChatColor {
 
     /**
      * Gets the ChatColors used at the end of the given input string.
-     *
-     * @param input Input string to retrieve the colors from.
+     * 
+     * @param input
+     *            Input string to retrieve the colors from.
      * @return Any remaining ChatColors to pass onto the next line.
      */
     public static String getLastColors(String input) {

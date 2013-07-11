@@ -19,21 +19,27 @@ package org.apache.commons.lang;
 import org.apache.commons.lang.text.StrBuilder;
 
 /**
- * <p>Represents a range of {@link Number} objects.</p>
+ * <p>
+ * Represents a range of {@link Number} objects.
+ * </p>
  * 
- * <p>This class uses <code>double</code> comparisons. This means that it
- * is unsuitable for dealing with large <code>Long</code>, <code>BigDecimal</code>
- * or <code>BigInteger</code> numbers.</p>
- *
+ * <p>
+ * This class uses <code>double</code> comparisons. This means that it is
+ * unsuitable for dealing with large <code>Long</code>, <code>BigDecimal</code>
+ * or <code>BigInteger</code> numbers.
+ * </p>
+ * 
  * @author Apache Software Foundation
  * @author <a href="mailto:chrise@esha.com">Christopher Elkins</a>
  * @since 1.0
- * @version $Revision: 1057072 $ $Date: 2011-01-10 01:55:57 +0000 (Mon, 10 Jan 2011) $
+ * @version $Revision: 1057072 $ $Date: 2011-01-10 01:55:57 +0000 (Mon, 10 Jan
+ *          2011) $
  * 
  * @deprecated Use one of the Range classes in org.apache.commons.lang.math.
  *             Class will be removed in Commons Lang 3.0.
  * 
  */
+@Deprecated
 public final class NumberRange {
 
     /* The minimum number in this range. */
@@ -42,35 +48,43 @@ public final class NumberRange {
     /* The maximum number in this range. */
     private final Number max;
 
-
     /**
-     * <p>Constructs a new <code>NumberRange</code> using
-     * <code>number</code> as both the minimum and maximum in
-     * this range.</p>
-     *
-     * @param num the number to use for this range
-     * @throws NullPointerException if the number is <code>null</code>
+     * <p>
+     * Constructs a new <code>NumberRange</code> using <code>number</code> as
+     * both the minimum and maximum in this range.
+     * </p>
+     * 
+     * @param num
+     *            the number to use for this range
+     * @throws NullPointerException
+     *             if the number is <code>null</code>
      */
     public NumberRange(Number num) {
         if (num == null) {
             throw new NullPointerException("The number must not be null");
         }
 
-        this.min = num;
-        this.max = num;
+        min = num;
+        max = num;
     }
 
     /**
-     * <p>Constructs a new <code>NumberRange</code> with the specified
-     * minimum and maximum numbers.</p>
+     * <p>
+     * Constructs a new <code>NumberRange</code> with the specified minimum and
+     * maximum numbers.
+     * </p>
      * 
-     * <p><em>If the maximum is less than the minimum, the range will be constructed
-     * from the minimum value to the minimum value, not what you would expect!.</em></p>
-     *
-     * @param min the minimum number in this range
-     * @param max the maximum number in this range
-     * @throws NullPointerException if either the minimum or maximum number is
-     *  <code>null</code>
+     * <p>
+     * <em>If the maximum is less than the minimum, the range will be constructed
+     * from the minimum value to the minimum value, not what you would expect!.</em>
+     * </p>
+     * 
+     * @param min
+     *            the minimum number in this range
+     * @param max
+     *            the maximum number in this range
+     * @throws NullPointerException
+     *             if either the minimum or maximum number is <code>null</code>
      */
     public NumberRange(Number min, Number max) {
         if (min == null) {
@@ -88,8 +102,10 @@ public final class NumberRange {
     }
 
     /**
-     * <p>Returns the minimum number in this range.</p>
-     *
+     * <p>
+     * Returns the minimum number in this range.
+     * </p>
+     * 
      * @return the minimum number in this range
      */
     public Number getMinimum() {
@@ -97,8 +113,10 @@ public final class NumberRange {
     }
 
     /**
-     * <p>Returns the maximum number in this range.</p>
-     *
+     * <p>
+     * Returns the maximum number in this range.
+     * </p>
+     * 
      * @return the maximum number in this range
      */
     public Number getMaximum() {
@@ -106,29 +124,35 @@ public final class NumberRange {
     }
 
     /**
-     * <p>Tests whether the specified <code>number</code> occurs within
-     * this range using <code>double</code> comparison.</p>
-     *
-     * @param number the number to test
+     * <p>
+     * Tests whether the specified <code>number</code> occurs within this range
+     * using <code>double</code> comparison.
+     * </p>
+     * 
+     * @param number
+     *            the number to test
      * @return <code>true</code> if the specified number occurs within this
-     *  range; otherwise, <code>false</code>
+     *         range; otherwise, <code>false</code>
      */
     public boolean includesNumber(Number number) {
         if (number == null) {
             return false;
         } else {
-            return !(min.doubleValue() > number.doubleValue()) &&
-                !(max.doubleValue() < number.doubleValue());
+            return !(min.doubleValue() > number.doubleValue())
+                    && !(max.doubleValue() < number.doubleValue());
         }
     }
 
     /**
-     * <p>Tests whether the specified range occurs entirely within this
-     * range using <code>double</code> comparison.</p>
-     *
-     * @param range the range to test
+     * <p>
+     * Tests whether the specified range occurs entirely within this range using
+     * <code>double</code> comparison.
+     * </p>
+     * 
+     * @param range
+     *            the range to test
      * @return <code>true</code> if the specified range occurs entirely within
-     *  this range; otherwise, <code>false</code>
+     *         this range; otherwise, <code>false</code>
      */
     public boolean includesRange(NumberRange range) {
         if (range == null) {
@@ -139,46 +163,56 @@ public final class NumberRange {
     }
 
     /**
-     * <p>Tests whether the specified range overlaps with this range
-     * using <code>double</code> comparison.</p>
-     *
-     * @param range the range to test
+     * <p>
+     * Tests whether the specified range overlaps with this range using
+     * <code>double</code> comparison.
+     * </p>
+     * 
+     * @param range
+     *            the range to test
      * @return <code>true</code> if the specified range overlaps with this
-     *  range; otherwise, <code>false</code>
+     *         range; otherwise, <code>false</code>
      */
     public boolean overlaps(NumberRange range) {
         if (range == null) {
             return false;
         } else {
-            return range.includesNumber(min) || range.includesNumber(max) || 
-                includesRange(range);
+            return range.includesNumber(min) || range.includesNumber(max)
+                    || includesRange(range);
         }
     }
 
     /**
-     * <p>Indicates whether some other <code>Object</code> is
-     * &quot;equal&quot; to this one.</p>
-     *
-     * @param obj the reference object with which to compare
-     * @return <code>true</code> if this object is the same as the obj
-     *  argument; <code>false</code> otherwise
+     * <p>
+     * Indicates whether some other <code>Object</code> is &quot;equal&quot; to
+     * this one.
+     * </p>
+     * 
+     * @param obj
+     *            the reference object with which to compare
+     * @return <code>true</code> if this object is the same as the obj argument;
+     *         <code>false</code> otherwise
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         } else if (!(obj instanceof NumberRange)) {
             return false;
         } else {
-            NumberRange range = (NumberRange)obj;
+            NumberRange range = (NumberRange) obj;
             return min.equals(range.min) && max.equals(range.max);
         }
     }
 
     /**
-     * <p>Returns a hash code value for this object.</p>
-     *
+     * <p>
+     * Returns a hash code value for this object.
+     * </p>
+     * 
      * @return a hash code value for this object
      */
+    @Override
     public int hashCode() {
         int result = 17;
         result = 37 * result + min.hashCode();
@@ -187,21 +221,24 @@ public final class NumberRange {
     }
 
     /**
-     * <p>Returns the string representation of this range.</p>
-     *
-     * <p>This string is the string representation of the minimum and
-     * maximum numbers in the range, separated by a hyphen. If a number
-     * is negative, then it is enclosed in parentheses.</p>
-     *
+     * <p>
+     * Returns the string representation of this range.
+     * </p>
+     * 
+     * <p>
+     * This string is the string representation of the minimum and maximum
+     * numbers in the range, separated by a hyphen. If a number is negative,
+     * then it is enclosed in parentheses.
+     * </p>
+     * 
      * @return the string representation of this range
      */
+    @Override
     public String toString() {
         StrBuilder sb = new StrBuilder();
 
         if (min.doubleValue() < 0) {
-            sb.append('(')
-                .append(min)
-                .append(')');
+            sb.append('(').append(min).append(')');
         } else {
             sb.append(min);
         }
@@ -209,9 +246,7 @@ public final class NumberRange {
         sb.append('-');
 
         if (max.doubleValue() < 0) {
-            sb.append('(')
-                .append(max)
-                .append(')');
+            sb.append('(').append(max).append(')');
         } else {
             sb.append(max);
         }

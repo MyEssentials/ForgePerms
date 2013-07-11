@@ -51,7 +51,8 @@ public class MutableBoolean implements Mutable, Serializable, Comparable {
     /**
      * Constructs a new MutableBoolean with the specified value.
      * 
-     * @param value  the initial value to store
+     * @param value
+     *            the initial value to store
      */
     public MutableBoolean(boolean value) {
         super();
@@ -61,28 +62,32 @@ public class MutableBoolean implements Mutable, Serializable, Comparable {
     /**
      * Constructs a new MutableBoolean with the specified value.
      * 
-     * @param value  the initial value to store, not null
-     * @throws NullPointerException if the object is null
+     * @param value
+     *            the initial value to store, not null
+     * @throws NullPointerException
+     *             if the object is null
      */
     public MutableBoolean(Boolean value) {
         super();
         this.value = value.booleanValue();
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Gets the value as a Boolean instance.
      * 
      * @return the value as a Boolean, never null
      */
+    @Override
     public Object getValue() {
-        return BooleanUtils.toBooleanObject(this.value);
+        return BooleanUtils.toBooleanObject(value);
     }
 
     /**
      * Sets the value.
      * 
-     * @param value  the value to set
+     * @param value
+     *            the value to set
      */
     public void setValue(boolean value) {
         this.value = value;
@@ -91,14 +96,17 @@ public class MutableBoolean implements Mutable, Serializable, Comparable {
     /**
      * Sets the value from any Boolean instance.
      * 
-     * @param value  the value to set, not null
-     * @throws NullPointerException if the object is null
+     * @param value
+     *            the value to set, not null
+     * @throws NullPointerException
+     *             if the object is null
      */
+    @Override
     public void setValue(Object value) {
         setValue(((Boolean) value).booleanValue());
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Checks if the current value is <code>true</code>.
      * 
@@ -119,7 +127,7 @@ public class MutableBoolean implements Mutable, Serializable, Comparable {
         return value == false;
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Returns the value of this MutableBoolean as a boolean.
      * 
@@ -129,26 +137,31 @@ public class MutableBoolean implements Mutable, Serializable, Comparable {
         return value;
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Gets this mutable as an instance of Boolean.
-     *
-     * @return a Boolean instance containing the value from this mutable, never null
+     * 
+     * @return a Boolean instance containing the value from this mutable, never
+     *         null
      * @since 2.5
      */
     public Boolean toBoolean() {
-        return  BooleanUtils.toBooleanObject(this.value);
+        return BooleanUtils.toBooleanObject(value);
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * Compares this object to the specified object. The result is <code>true</code> if and only if the argument is
-     * not <code>null</code> and is an <code>MutableBoolean</code> object that contains the same
+     * Compares this object to the specified object. The result is
+     * <code>true</code> if and only if the argument is not <code>null</code>
+     * and is an <code>MutableBoolean</code> object that contains the same
      * <code>boolean</code> value as this object.
      * 
-     * @param obj  the object to compare with, null returns false
-     * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
+     * @param obj
+     *            the object to compare with, null returns false
+     * @return <code>true</code> if the objects are the same; <code>false</code>
+     *         otherwise.
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof MutableBoolean) {
             return value == ((MutableBoolean) obj).booleanValue();
@@ -159,32 +172,37 @@ public class MutableBoolean implements Mutable, Serializable, Comparable {
     /**
      * Returns a suitable hash code for this mutable.
      * 
-     * @return the hash code returned by <code>Boolean.TRUE</code> or <code>Boolean.FALSE</code>
+     * @return the hash code returned by <code>Boolean.TRUE</code> or
+     *         <code>Boolean.FALSE</code>
      */
+    @Override
     public int hashCode() {
         return value ? Boolean.TRUE.hashCode() : Boolean.FALSE.hashCode();
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Compares this mutable to another in ascending order.
      * 
-     * @param obj the other mutable to compare to, not null
+     * @param obj
+     *            the other mutable to compare to, not null
      * @return negative if this is less, zero if equal, positive if greater
-     *  where false is less than true
+     *         where false is less than true
      */
+    @Override
     public int compareTo(Object obj) {
         MutableBoolean other = (MutableBoolean) obj;
         boolean anotherVal = other.value;
-        return value == anotherVal ? 0 : (value ? 1 : -1);
+        return value == anotherVal ? 0 : value ? 1 : -1;
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Returns the String value of this mutable.
      * 
      * @return the mutable value as a string
      */
+    @Override
     public String toString() {
         return String.valueOf(value);
     }

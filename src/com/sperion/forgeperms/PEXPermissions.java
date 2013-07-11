@@ -1,10 +1,11 @@
 package com.sperion.forgeperms;
 
+import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
+
 import com.sperion.pex.permissions.IPermissionEntity;
 import com.sperion.pex.permissions.IPermissions;
 
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 
@@ -18,14 +19,14 @@ public class PEXPermissions extends PermissionsBase {
 
     @Override
     public boolean load() {
-        if (pexAvailable()){
+        if (pexAvailable()) {
             return true;
-        } else{
+        } else {
             loadError = "PermissionsEX was not found";
             return false;
         }
     }
-    
+
     private boolean pexAvailable() {
         if (pexOn == 0) {
             for (ModContainer cont : Loader.instance().getModList()) {
@@ -69,7 +70,7 @@ public class PEXPermissions extends PermissionsBase {
 
         return pex.suffix(player, world);
     }
-    
+
     @Override
     public String getOption(String player, String world, String node, String def) {
         if (!pexAvailable()) {

@@ -61,26 +61,27 @@ public final class Serializer {
     private Boolean closed;
     private Tag explicitRoot;
 
-    public Serializer(Emitable emitter, Resolver resolver, DumperOptions opts, Tag rootTag) {
+    public Serializer(Emitable emitter, Resolver resolver, DumperOptions opts,
+            Tag rootTag) {
         this.emitter = emitter;
         this.resolver = resolver;
-        this.explicitStart = opts.isExplicitStart();
-        this.explicitEnd = opts.isExplicitEnd();
+        explicitStart = opts.isExplicitStart();
+        explicitEnd = opts.isExplicitEnd();
         if (opts.getVersion() != null) {
-            this.useVersion = opts.getVersion();
+            useVersion = opts.getVersion();
         }
-        this.useTags = opts.getTags();
-        this.serializedNodes = new HashSet<Node>();
-        this.anchors = new HashMap<Node, String>();
-        this.lastAnchorId = 0;
-        this.closed = null;
-        this.explicitRoot = rootTag;
+        useTags = opts.getTags();
+        serializedNodes = new HashSet<Node>();
+        anchors = new HashMap<Node, String>();
+        lastAnchorId = 0;
+        closed = null;
+        explicitRoot = rootTag;
     }
 
     public void open() throws IOException {
         if (closed == null) {
-            this.emitter.emit(new StreamStartEvent(null, null));
-            this.closed = Boolean.FALSE;
+            emitter.emit(new StreamStartEvent(null, null));
+            closed = Boolean.FALSE;
         } else if (Boolean.TRUE.equals(closed)) {
             throw new SerializerException("serializer is closed");
         } else {
@@ -92,8 +93,8 @@ public final class Serializer {
         if (closed == null) {
             throw new SerializerException("serializer is not opened");
         } else if (!Boolean.TRUE.equals(closed)) {
-            this.emitter.emit(new StreamEndEvent(null, null));
-            this.closed = Boolean.TRUE;
+            emitter.emit(new StreamEndEvent(null, null));
+            closed = Boolean.TRUE;
         }
     }
 
@@ -103,59 +104,59 @@ public final class Serializer {
         } else if (closed) {
             throw new SerializerException("serializer is closed");
         }
-        this.emitter.emit(new DocumentStartEvent(null, null, this.explicitStart, this.useVersion,
-                useTags));
+        emitter.emit(new DocumentStartEvent(null, null, explicitStart,
+                useVersion, useTags));
         anchorNode(node);
         if (explicitRoot != null) {
             node.setTag(explicitRoot);
         }
         serializeNode(node, null);
-        this.emitter.emit(new DocumentEndEvent(null, null, this.explicitEnd));
-        this.serializedNodes.clear();
-        this.anchors.clear();
-        this.lastAnchorId = 0;
+        emitter.emit(new DocumentEndEvent(null, null, explicitEnd));
+        serializedNodes.clear();
+        anchors.clear();
+        lastAnchorId = 0;
     }
 
     private void anchorNode(Node node) {
         if (node.getNodeId() == NodeId.anchor) {
             node = ((AnchorNode) node).getRealNode();
         }
-        if (this.anchors.containsKey(node)) {
-            String anchor = this.anchors.get(node);
+        if (anchors.containsKey(node)) {
+            String anchor = anchors.get(node);
             if (null == anchor) {
                 anchor = generateAnchor();
-                this.anchors.put(node, anchor);
+                anchors.put(node, anchor);
             }
         } else {
-            this.anchors.put(node, null);
+            anchors.put(node, null);
             switch (node.getNodeId()) {
-            case sequence:
-                SequenceNode seqNode = (SequenceNode) node;
-                List<Node> list = seqNode.getValue();
-                for (Node item : list) {
-                    anchorNode(item);
-                }
-                break;
-            case mapping:
-                MappingNode mnode = (MappingNode) node;
-                List<NodeTuple> map = mnode.getValue();
-                for (NodeTuple object : map) {
-                    Node key = object.getKeyNode();
-                    Node value = object.getValueNode();
-                    anchorNode(key);
-                    anchorNode(value);
-                }
-                break;
+                case sequence:
+                    SequenceNode seqNode = (SequenceNode) node;
+                    List<Node> list = seqNode.getValue();
+                    for (Node item : list) {
+                        anchorNode(item);
+                    }
+                    break;
+                case mapping:
+                    MappingNode mnode = (MappingNode) node;
+                    List<NodeTuple> map = mnode.getValue();
+                    for (NodeTuple object : map) {
+                        Node key = object.getKeyNode();
+                        Node value = object.getValueNode();
+                        anchorNode(key);
+                        anchorNode(value);
+                    }
+                    break;
             }
         }
     }
 
     private String generateAnchor() {
-        this.lastAnchorId++;
+        lastAnchorId++;
         NumberFormat format = NumberFormat.getNumberInstance();
         format.setMinimumIntegerDigits(3);
         format.setGroupingUsed(false);
-        String anchorId = format.format(this.lastAnchorId);
+        String anchorId = format.format(lastAnchorId);
         return "id" + anchorId;
     }
 
@@ -163,50 +164,55 @@ public final class Serializer {
         if (node.getNodeId() == NodeId.anchor) {
             node = ((AnchorNode) node).getRealNode();
         }
-        String tAlias = this.anchors.get(node);
-        if (this.serializedNodes.contains(node)) {
-            this.emitter.emit(new AliasEvent(tAlias, null, null));
+        String tAlias = anchors.get(node);
+        if (serializedNodes.contains(node)) {
+            emitter.emit(new AliasEvent(tAlias, null, null));
         } else {
-            this.serializedNodes.add(node);
+            serializedNodes.add(node);
             switch (node.getNodeId()) {
-            case scalar:
-                ScalarNode scalarNode = (ScalarNode) node;
-                Tag detectedTag = this.resolver.resolve(NodeId.scalar, scalarNode.getValue(), true);
-                Tag defaultTag = this.resolver.resolve(NodeId.scalar, scalarNode.getValue(), false);
-                ImplicitTuple tuple = new ImplicitTuple(node.getTag().equals(detectedTag), node
-                        .getTag().equals(defaultTag));
-                ScalarEvent event = new ScalarEvent(tAlias, node.getTag().getValue(), tuple,
-                        scalarNode.getValue(), null, null, scalarNode.getStyle());
-                this.emitter.emit(event);
-                break;
-            case sequence:
-                SequenceNode seqNode = (SequenceNode) node;
-                boolean implicitS = (node.getTag().equals(this.resolver.resolve(NodeId.sequence,
-                        null, true)));
-                this.emitter.emit(new SequenceStartEvent(tAlias, node.getTag().getValue(),
-                        implicitS, null, null, seqNode.getFlowStyle()));
-                int indexCounter = 0;
-                List<Node> list = seqNode.getValue();
-                for (Node item : list) {
-                    serializeNode(item, node);
-                    indexCounter++;
-                }
-                this.emitter.emit(new SequenceEndEvent(null, null));
-                break;
-            default:// instance of MappingNode
-                Tag implicitTag = this.resolver.resolve(NodeId.mapping, null, true);
-                boolean implicitM = (node.getTag().equals(implicitTag));
-                this.emitter.emit(new MappingStartEvent(tAlias, node.getTag().getValue(),
-                        implicitM, null, null, ((CollectionNode) node).getFlowStyle()));
-                MappingNode mnode = (MappingNode) node;
-                List<NodeTuple> map = mnode.getValue();
-                for (NodeTuple row : map) {
-                    Node key = row.getKeyNode();
-                    Node value = row.getValueNode();
-                    serializeNode(key, mnode);
-                    serializeNode(value, mnode);
-                }
-                this.emitter.emit(new MappingEndEvent(null, null));
+                case scalar:
+                    ScalarNode scalarNode = (ScalarNode) node;
+                    Tag detectedTag = resolver.resolve(NodeId.scalar,
+                            scalarNode.getValue(), true);
+                    Tag defaultTag = resolver.resolve(NodeId.scalar, scalarNode
+                            .getValue(), false);
+                    ImplicitTuple tuple = new ImplicitTuple(node.getTag()
+                            .equals(detectedTag), node.getTag().equals(
+                            defaultTag));
+                    ScalarEvent event = new ScalarEvent(tAlias, node.getTag()
+                            .getValue(), tuple, scalarNode.getValue(), null,
+                            null, scalarNode.getStyle());
+                    emitter.emit(event);
+                    break;
+                case sequence:
+                    SequenceNode seqNode = (SequenceNode) node;
+                    boolean implicitS = node.getTag().equals(
+                            resolver.resolve(NodeId.sequence, null, true));
+                    emitter.emit(new SequenceStartEvent(tAlias, node.getTag()
+                            .getValue(), implicitS, null, null, seqNode
+                            .getFlowStyle()));
+                    List<Node> list = seqNode.getValue();
+                    for (Node item : list) {
+                        serializeNode(item, node);
+                    }
+                    emitter.emit(new SequenceEndEvent(null, null));
+                    break;
+                default:// instance of MappingNode
+                    Tag implicitTag = resolver.resolve(NodeId.mapping, null,
+                            true);
+                    boolean implicitM = node.getTag().equals(implicitTag);
+                    emitter.emit(new MappingStartEvent(tAlias, node.getTag()
+                            .getValue(), implicitM, null, null,
+                            ((CollectionNode) node).getFlowStyle()));
+                    MappingNode mnode = (MappingNode) node;
+                    List<NodeTuple> map = mnode.getValue();
+                    for (NodeTuple row : map) {
+                        Node key = row.getKeyNode();
+                        Node value = row.getValueNode();
+                        serializeNode(key, mnode);
+                        serializeNode(value, mnode);
+                    }
+                    emitter.emit(new MappingEndEvent(null, null));
             }
         }
     }

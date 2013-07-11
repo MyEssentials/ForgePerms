@@ -49,7 +49,7 @@ public final class NodeTuple {
 
     @Override
     public String toString() {
-        return "<NodeTuple keyNode=" + keyNode.toString() + "; valueNode=" + valueNode.toString()
-                + ">";
+        return "<NodeTuple keyNode=" + keyNode.toString() + "; valueNode="
+                + valueNode.toString() + ">";
     }
 }

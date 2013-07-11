@@ -20,6 +20,7 @@ import org.yaml.snakeyaml.representer.Representer;
 /**
  * @deprecated Dumper's functionality was moved to Yaml
  */
+@Deprecated
 public final class Dumper {
     protected final Representer representer;
     protected final DumperOptions options;

@@ -21,18 +21,21 @@ import java.io.PrintWriter;
 
 /**
  * The base class of all exceptions which can contain other exceptions.
- *
- * It is intended to ease the debugging by carrying on the information
- * about the exception which was caught and provoked throwing the
- * current exception. Catching and rethrowing may occur multiple
- * times, and provided that all exceptions except the first one
- * are descendants of <code>NestedException</code>, when the
- * exception is finally printed out using any of the <code>
- * printStackTrace()</code> methods, the stack trace will contain
- * the information about all exceptions thrown and caught on
- * the way.
- * <p> Running the following program
- * <p><blockquote><pre>
+ * 
+ * It is intended to ease the debugging by carrying on the information about the
+ * exception which was caught and provoked throwing the current exception.
+ * Catching and rethrowing may occur multiple times, and provided that all
+ * exceptions except the first one are descendants of
+ * <code>NestedException</code>, when the exception is finally printed out using
+ * any of the <code>
+ * printStackTrace()</code> methods, the stack trace will contain the
+ * information about all exceptions thrown and caught on the way.
+ * <p>
+ * Running the following program
+ * <p>
+ * <blockquote>
+ * 
+ * <pre>
  *  1 import org.apache.commons.lang.exception.NestableException;
  *  2
  *  3 public class Test {
@@ -64,9 +67,15 @@ import java.io.PrintWriter;
  * 29          throw new Exception("baz");
  * 30      }
  * 31 }
- * </pre></blockquote>
- * <p>Yields the following stack trace:
- * <p><blockquote><pre>
+ * </pre>
+ * 
+ * </blockquote>
+ * <p>
+ * Yields the following stack trace:
+ * <p>
+ * <blockquote>
+ * 
+ * <pre>
  * org.apache.commons.lang.exception.NestableException: foo
  *         at Test.a(Test.java:16)
  *         at Test.main(Test.java:6)
@@ -78,8 +87,10 @@ import java.io.PrintWriter;
  *         at Test.c(Test.java:29)
  *         at Test.b(Test.java:22)
  *         ... 2 more
- * </pre></blockquote><br>
- *
+ * </pre>
+ * 
+ * </blockquote><br>
+ * 
  * @author <a href="mailto:Rafal.Krzewski@e-point.pl">Rafal Krzewski</a>
  * @author Daniel L. Rall
  * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
@@ -88,7 +99,7 @@ import java.io.PrintWriter;
  * @version $Id: NestableException.java 512889 2007-02-28 18:18:20Z dlr $
  */
 public class NestableException extends Exception implements Nestable {
-    
+
     /**
      * Required for serialization support.
      * 
@@ -97,41 +108,41 @@ public class NestableException extends Exception implements Nestable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * The helper instance which contains much of the code which we
-     * delegate to.
+     * The helper instance which contains much of the code which we delegate to.
      */
     protected NestableDelegate delegate = new NestableDelegate(this);
 
     /**
-     * Holds the reference to the exception or error that caused
-     * this exception to be thrown.
+     * Holds the reference to the exception or error that caused this exception
+     * to be thrown.
      */
     private Throwable cause = null;
 
     /**
-     * Constructs a new <code>NestableException</code> without specified
-     * detail message.
+     * Constructs a new <code>NestableException</code> without specified detail
+     * message.
      */
     public NestableException() {
         super();
     }
 
     /**
-     * Constructs a new <code>NestableException</code> with specified
-     * detail message.
-     *
-     * @param msg The error message.
+     * Constructs a new <code>NestableException</code> with specified detail
+     * message.
+     * 
+     * @param msg
+     *            The error message.
      */
     public NestableException(String msg) {
         super(msg);
     }
 
     /**
-     * Constructs a new <code>NestableException</code> with specified
-     * nested <code>Throwable</code>.
-     *
-     * @param cause the exception or error that caused this exception to be
-     * thrown
+     * Constructs a new <code>NestableException</code> with specified nested
+     * <code>Throwable</code>.
+     * 
+     * @param cause
+     *            the exception or error that caused this exception to be thrown
      */
     public NestableException(Throwable cause) {
         super();
@@ -139,12 +150,13 @@ public class NestableException extends Exception implements Nestable {
     }
 
     /**
-     * Constructs a new <code>NestableException</code> with specified
-     * detail message and nested <code>Throwable</code>.
-     *
-     * @param msg    the error message
-     * @param cause  the exception or error that caused this exception to be
-     * thrown
+     * Constructs a new <code>NestableException</code> with specified detail
+     * message and nested <code>Throwable</code>.
+     * 
+     * @param msg
+     *            the error message
+     * @param cause
+     *            the exception or error that caused this exception to be thrown
      */
     public NestableException(String msg, Throwable cause) {
         super(msg);
@@ -154,17 +166,19 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Throwable getCause() {
         return cause;
     }
 
     /**
-     * Returns the detail message string of this throwable. If it was
-     * created with a null message, returns the following:
-     * (cause==null ? null : cause.toString()).
-     *
+     * Returns the detail message string of this throwable. If it was created
+     * with a null message, returns the following: (cause==null ? null :
+     * cause.toString()).
+     * 
      * @return String message string of the throwable
      */
+    @Override
     public String getMessage() {
         if (super.getMessage() != null) {
             return super.getMessage();
@@ -178,6 +192,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getMessage(int index) {
         if (index == 0) {
             return super.getMessage();
@@ -188,6 +203,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getMessages() {
         return delegate.getMessages();
     }
@@ -195,6 +211,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Throwable getThrowable(int index) {
         return delegate.getThrowable(index);
     }
@@ -202,6 +219,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getThrowableCount() {
         return delegate.getThrowableCount();
     }
@@ -209,6 +227,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Throwable[] getThrowables() {
         return delegate.getThrowables();
     }
@@ -216,6 +235,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int indexOfThrowable(Class type) {
         return delegate.indexOfThrowable(type, 0);
     }
@@ -223,6 +243,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int indexOfThrowable(Class type, int fromIndex) {
         return delegate.indexOfThrowable(type, fromIndex);
     }
@@ -230,6 +251,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void printStackTrace() {
         delegate.printStackTrace();
     }
@@ -237,6 +259,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void printStackTrace(PrintStream out) {
         delegate.printStackTrace(out);
     }
@@ -244,6 +267,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void printStackTrace(PrintWriter out) {
         delegate.printStackTrace(out);
     }
@@ -251,6 +275,7 @@ public class NestableException extends Exception implements Nestable {
     /**
      * {@inheritDoc}
      */
+    @Override
     public final void printPartialStackTrace(PrintWriter out) {
         super.printStackTrace(out);
     }

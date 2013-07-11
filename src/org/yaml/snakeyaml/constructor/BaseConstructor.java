@@ -174,8 +174,8 @@ public abstract class BaseConstructor {
             return constructedObjects.get(node);
         }
         if (recursiveObjects.contains(node)) {
-            throw new ConstructorException(null, null, "found unconstructable recursive node",
-                    node.getStartMark());
+            throw new ConstructorException(null, null,
+                    "found unconstructable recursive node", node.getStartMark());
         }
         recursiveObjects.add(node);
         Construct constructor = getConstructor(node);
@@ -234,7 +234,8 @@ public abstract class BaseConstructor {
     @SuppressWarnings("unchecked")
     protected List<? extends Object> constructSequence(SequenceNode node) {
         List<Object> result;
-        if (List.class.isAssignableFrom(node.getType()) && !node.getType().isInterface()) {
+        if (List.class.isAssignableFrom(node.getType())
+                && !node.getType().isInterface()) {
             // the root class may be defined (Vector for instance)
             try {
                 result = (List<Object>) node.getType().newInstance();
@@ -268,10 +269,12 @@ public abstract class BaseConstructor {
     }
 
     protected Object constructArray(SequenceNode node) {
-        return constructArrayStep2(node, createArray(node.getType(), node.getValue().size()));
+        return constructArrayStep2(node, createArray(node.getType(), node
+                .getValue().size()));
     }
 
-    protected void constructSequenceStep2(SequenceNode node, Collection<Object> collection) {
+    protected void constructSequenceStep2(SequenceNode node,
+            Collection<Object> collection) {
         for (Node child : node.getValue()) {
             collection.add(constructObject(child));
         }
@@ -307,8 +310,9 @@ public abstract class BaseConstructor {
         return mapping;
     }
 
-    protected void constructMapping2ndStep(MappingNode node, Map<Object, Object> mapping) {
-        List<NodeTuple> nodeValue = (List<NodeTuple>) node.getValue();
+    protected void constructMapping2ndStep(MappingNode node,
+            Map<Object, Object> mapping) {
+        List<NodeTuple> nodeValue = node.getValue();
         for (NodeTuple tuple : nodeValue) {
             Node keyNode = tuple.getKeyNode();
             Node valueNode = tuple.getValueNode();
@@ -317,9 +321,10 @@ public abstract class BaseConstructor {
                 try {
                     key.hashCode();// check circular dependencies
                 } catch (Exception e) {
-                    throw new ConstructorException("while constructing a mapping",
-                            node.getStartMark(), "found unacceptable key " + key, tuple
-                                    .getKeyNode().getStartMark(), e);
+                    throw new ConstructorException(
+                            "while constructing a mapping",
+                            node.getStartMark(), "found unacceptable key "
+                                    + key, tuple.getKeyNode().getStartMark(), e);
                 }
             }
             Object value = constructObject(valueNode);
@@ -330,9 +335,12 @@ public abstract class BaseConstructor {
                  * initialization compared to clean just created one. And map of
                  * course does not observe key hashCode changes.
                  */
-                maps2fill.add(0,
-                        new RecursiveTuple<Map<Object, Object>, RecursiveTuple<Object, Object>>(
-                                mapping, new RecursiveTuple<Object, Object>(key, value)));
+                maps2fill
+                        .add(0,
+                                new RecursiveTuple<Map<Object, Object>, RecursiveTuple<Object, Object>>(
+                                        mapping,
+                                        new RecursiveTuple<Object, Object>(key,
+                                                value)));
             } else {
                 mapping.put(key, value);
             }
@@ -340,7 +348,7 @@ public abstract class BaseConstructor {
     }
 
     protected void constructSet2ndStep(MappingNode node, Set<Object> set) {
-        List<NodeTuple> nodeValue = (List<NodeTuple>) node.getValue();
+        List<NodeTuple> nodeValue = node.getValue();
         for (NodeTuple tuple : nodeValue) {
             Node keyNode = tuple.getKeyNode();
             Object key = constructObject(keyNode);
@@ -348,8 +356,9 @@ public abstract class BaseConstructor {
                 try {
                     key.hashCode();// check circular dependencies
                 } catch (Exception e) {
-                    throw new ConstructorException("while constructing a Set", node.getStartMark(),
-                            "found unacceptable key " + key, tuple.getKeyNode().getStartMark(), e);
+                    throw new ConstructorException("while constructing a Set",
+                            node.getStartMark(), "found unacceptable key "
+                                    + key, tuple.getKeyNode().getStartMark(), e);
                 }
             }
             if (keyNode.isTwoStepsConstruction()) {
@@ -359,7 +368,8 @@ public abstract class BaseConstructor {
                  * initialization compared to clean just created one. And set of
                  * course does not observe value hashCode changes.
                  */
-                sets2fill.add(0, new RecursiveTuple<Set<Object>, Object>(set, key));
+                sets2fill.add(0, new RecursiveTuple<Set<Object>, Object>(set,
+                        key));
             } else {
                 set.add(key);
             }

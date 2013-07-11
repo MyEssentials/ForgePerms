@@ -29,12 +29,13 @@ import org.yaml.snakeyaml.external.com.google.gdata.util.common.base.Escaper;
 import org.yaml.snakeyaml.external.com.google.gdata.util.common.base.PercentEscaper;
 
 public abstract class UriEncoder {
-    private static final CharsetDecoder UTF8Decoder = Charset.forName("UTF-8").newDecoder()
-            .onMalformedInput(CodingErrorAction.REPORT);
+    private static final CharsetDecoder UTF8Decoder = Charset.forName("UTF-8")
+            .newDecoder().onMalformedInput(CodingErrorAction.REPORT);
     // Include the [] chars to the SAFEPATHCHARS_URLENCODER to avoid
     // its escape as required by spec. See
     // http://yaml.org/spec/1.1/#escaping%20in%20URI/
-    private static final String SAFE_CHARS = PercentEscaper.SAFEPATHCHARS_URLENCODER + "[]/";
+    private static final String SAFE_CHARS = PercentEscaper.SAFEPATHCHARS_URLENCODER
+            + "[]/";
     private static final Escaper escaper = new PercentEscaper(SAFE_CHARS, false);
 
     /**
@@ -47,7 +48,8 @@ public abstract class UriEncoder {
     /**
      * Decode '%'-escaped characters. Decoding fails in case of invalid UTF-8
      */
-    public static String decode(ByteBuffer buff) throws CharacterCodingException {
+    public static String decode(ByteBuffer buff)
+            throws CharacterCodingException {
         CharBuffer chars = UTF8Decoder.decode(buff);
         return chars.toString();
     }

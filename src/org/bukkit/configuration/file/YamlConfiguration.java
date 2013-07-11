@@ -26,7 +26,8 @@ public class YamlConfiguration extends FileConfiguration {
     protected static final String BLANK_CONFIG = "{}\n";
     private final DumperOptions yamlOptions = new DumperOptions();
     private final Representer yamlRepresenter = new YamlRepresenter();
-    private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter, yamlOptions);
+    private final Yaml yaml = new Yaml(new YamlConstructor(), yamlRepresenter,
+            yamlOptions);
 
     @Override
     public String saveToString() {
@@ -45,7 +46,8 @@ public class YamlConfiguration extends FileConfiguration {
     }
 
     @Override
-    public void loadFromString(String contents) throws InvalidConfigurationException {
+    public void loadFromString(String contents)
+            throws InvalidConfigurationException {
         Validate.notNull(contents, "Contents cannot be null");
 
         Map<?, ?> input;
@@ -67,13 +69,15 @@ public class YamlConfiguration extends FileConfiguration {
         }
     }
 
-    protected void convertMapsToSections(Map<?, ?> input, ConfigurationSection section) {
+    protected void convertMapsToSections(Map<?, ?> input,
+            ConfigurationSection section) {
         for (Map.Entry<?, ?> entry : input.entrySet()) {
             String key = entry.getKey().toString();
             Object value = entry.getValue();
 
             if (value instanceof Map) {
-                convertMapsToSections((Map<?, ?>) value, section.createSection(key));
+                convertMapsToSections((Map<?, ?>) value, section
+                        .createSection(key));
             } else {
                 section.set(key, value);
             }
@@ -86,7 +90,7 @@ public class YamlConfiguration extends FileConfiguration {
         boolean readingHeader = true;
         boolean foundHeader = false;
 
-        for (int i = 0; (i < lines.length) && (readingHeader); i++) {
+        for (int i = 0; i < lines.length && readingHeader; i++) {
             String line = lines[i];
 
             if (line.startsWith(COMMENT_PREFIX)) {
@@ -99,7 +103,7 @@ public class YamlConfiguration extends FileConfiguration {
                 }
 
                 foundHeader = true;
-            } else if ((foundHeader) && (line.length() == 0)) {
+            } else if (foundHeader && line.length() == 0) {
                 result.append("\n");
             } else if (foundHeader) {
                 readingHeader = false;
@@ -116,11 +120,11 @@ public class YamlConfiguration extends FileConfiguration {
         if (options().copyHeader()) {
             Configuration def = getDefaults();
 
-            if ((def != null) && (def instanceof FileConfiguration)) {
+            if (def != null && def instanceof FileConfiguration) {
                 FileConfiguration filedefaults = (FileConfiguration) def;
                 String defaultsHeader = filedefaults.buildHeader();
 
-                if ((defaultsHeader != null) && (defaultsHeader.length() > 0)) {
+                if (defaultsHeader != null && defaultsHeader.length() > 0) {
                     return defaultsHeader;
                 }
             }
@@ -137,7 +141,7 @@ public class YamlConfiguration extends FileConfiguration {
         for (int i = lines.length - 1; i >= 0; i--) {
             builder.insert(0, "\n");
 
-            if ((startedHeader) || (lines[i].length() != 0)) {
+            if (startedHeader || lines[i].length() != 0) {
                 builder.insert(0, lines[i]);
                 builder.insert(0, COMMENT_PREFIX);
                 startedHeader = true;
@@ -159,12 +163,15 @@ public class YamlConfiguration extends FileConfiguration {
     /**
      * Creates a new {@link YamlConfiguration}, loading from the given file.
      * <p />
-     * Any errors loading the Configuration will be logged and then ignored.
-     * If the specified input is not a valid config, a blank config will be returned.
-     *
-     * @param file Input file
+     * Any errors loading the Configuration will be logged and then ignored. If
+     * the specified input is not a valid config, a blank config will be
+     * returned.
+     * 
+     * @param file
+     *            Input file
      * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown if file is null
+     * @throws IllegalArgumentException
+     *             Thrown if file is null
      */
     public static YamlConfiguration loadConfiguration(File file) {
         Validate.notNull(file, "File cannot be null");
@@ -173,11 +180,12 @@ public class YamlConfiguration extends FileConfiguration {
 
         try {
             config.load(file);
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
-        	Logger.getLogger("minecraft").log(Level.SEVERE, "Cannot load " + file, ex);
+        } catch (FileNotFoundException ex) {} catch (IOException ex) {
+            Logger.getLogger("minecraft").log(Level.SEVERE,
+                    "Cannot load " + file, ex);
         } catch (InvalidConfigurationException ex) {
-        	Logger.getLogger("minecraft").log(Level.SEVERE, "Cannot load " + file , ex);
+            Logger.getLogger("minecraft").log(Level.SEVERE,
+                    "Cannot load " + file, ex);
         }
 
         return config;
@@ -186,12 +194,15 @@ public class YamlConfiguration extends FileConfiguration {
     /**
      * Creates a new {@link YamlConfiguration}, loading from the given stream.
      * <p />
-     * Any errors loading the Configuration will be logged and then ignored.
-     * If the specified input is not a valid config, a blank config will be returned.
-     *
-     * @param stream Input stream
+     * Any errors loading the Configuration will be logged and then ignored. If
+     * the specified input is not a valid config, a blank config will be
+     * returned.
+     * 
+     * @param stream
+     *            Input stream
      * @return Resulting configuration
-     * @throws IllegalArgumentException Thrown if stream is null
+     * @throws IllegalArgumentException
+     *             Thrown if stream is null
      */
     public static YamlConfiguration loadConfiguration(InputStream stream) {
         Validate.notNull(stream, "Stream cannot be null");
@@ -201,9 +212,11 @@ public class YamlConfiguration extends FileConfiguration {
         try {
             config.load(stream);
         } catch (IOException ex) {
-        	Logger.getLogger("minecraft").log(Level.SEVERE, "Cannot load configuration from stream", ex);
+            Logger.getLogger("minecraft").log(Level.SEVERE,
+                    "Cannot load configuration from stream", ex);
         } catch (InvalidConfigurationException ex) {
-        	Logger.getLogger("minecraft").log(Level.SEVERE, "Cannot load configuration from stream", ex);
+            Logger.getLogger("minecraft").log(Level.SEVERE,
+                    "Cannot load configuration from stream", ex);
         }
 
         return config;

@@ -19,13 +19,20 @@ package org.apache.commons.lang;
 import org.apache.commons.lang.text.StrBuilder;
 
 /**
- * <p>Operations on <code>CharSet</code>s.</p>
- *
- * <p>This class handles <code>null</code> input gracefully.
- * An exception will not be thrown for a <code>null</code> input.
- * Each method documents its behaviour in more detail.</p>
+ * <p>
+ * Operations on <code>CharSet</code>s.
+ * </p>
  * 
- * <p>#ThreadSafe#</p>
+ * <p>
+ * This class handles <code>null</code> input gracefully. An exception will not
+ * be thrown for a <code>null</code> input. Each method documents its behaviour
+ * in more detail.
+ * </p>
+ * 
+ * <p>
+ * #ThreadSafe#
+ * </p>
+ * 
  * @see CharSet
  * @author Apache Software Foundation
  * @author Phil Steitz
@@ -36,26 +43,35 @@ import org.apache.commons.lang.text.StrBuilder;
 public class CharSetUtils {
 
     /**
-     * <p>CharSetUtils instances should NOT be constructed in standard programming.
-     * Instead, the class should be used as <code>CharSetUtils.evaluateSet(null);</code>.</p>
-     *
-     * <p>This constructor is public to permit tools that require a JavaBean instance
-     * to operate.</p>
+     * <p>
+     * CharSetUtils instances should NOT be constructed in standard programming.
+     * Instead, the class should be used as
+     * <code>CharSetUtils.evaluateSet(null);</code>.
+     * </p>
+     * 
+     * <p>
+     * This constructor is public to permit tools that require a JavaBean
+     * instance to operate.
+     * </p>
      */
     public CharSetUtils() {
-      super();
+        super();
     }
 
     // Factory
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * <p>Creates a <code>CharSet</code> instance which allows a certain amount of
-     * set logic to be performed.</p>
-     * <p>The syntax is:</p>
+     * <p>
+     * Creates a <code>CharSet</code> instance which allows a certain amount of
+     * set logic to be performed.
+     * </p>
+     * <p>
+     * The syntax is:
+     * </p>
      * <ul>
-     *  <li>&quot;aeio&quot; which implies 'a','e',..</li>
-     *  <li>&quot;^e&quot; implies not e.</li>
-     *  <li>&quot;ej-m&quot; implies e,j-&gt;m. e,j,k,l,m.</li>
+     * <li>&quot;aeio&quot; which implies 'a','e',..</li>
+     * <li>&quot;^e&quot; implies not e.</li>
+     * <li>&quot;ej-m&quot; implies e,j-&gt;m. e,j,k,l,m.</li>
      * </ul>
      * 
      * <pre>
@@ -63,25 +79,29 @@ public class CharSetUtils {
      * CharSetUtils.evaluateSet([])      = CharSet matching nothing
      * CharSetUtils.evaluateSet(["a-e"]) = CharSet matching a,b,c,d,e
      * </pre>
-     *
-     * @param set  the set, may be null
+     * 
+     * @param set
+     *            the set, may be null
      * @return a CharSet instance, <code>null</code> if null input
-     * @deprecated Use {@link CharSet#getInstance(String[])}.
-     *             Method will be removed in Commons Lang 3.0.
+     * @deprecated Use {@link CharSet#getInstance(String[])}. Method will be
+     *             removed in Commons Lang 3.0.
      */
+    @Deprecated
     public static CharSet evaluateSet(String[] set) {
         if (set == null) {
             return null;
         }
-        return new CharSet(set); 
+        return new CharSet(set);
     }
 
     // Squeeze
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * <p>Squeezes any repetitions of a character that is mentioned in the
-     * supplied set.</p>
-     *
+     * <p>
+     * Squeezes any repetitions of a character that is mentioned in the supplied
+     * set.
+     * </p>
+     * 
      * <pre>
      * CharSetUtils.squeeze(null, *)        = null
      * CharSetUtils.squeeze("", *)          = ""
@@ -90,10 +110,12 @@ public class CharSetUtils {
      * CharSetUtils.squeeze("hello", "k-p") = "helo"
      * CharSetUtils.squeeze("hello", "a-e") = "hello"
      * </pre>
-     *
+     * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  the string to squeeze, may be null
-     * @param set  the character set to use for manipulation, may be null
+     * @param str
+     *            the string to squeeze, may be null
+     * @param set
+     *            the character set to use for manipulation, may be null
      * @return modified String, <code>null</code> if null string input
      */
     public static String squeeze(String str, String set) {
@@ -106,17 +128,23 @@ public class CharSetUtils {
     }
 
     /**
-     * <p>Squeezes any repetitions of a character that is mentioned in the
-     * supplied set.</p>
-     *
-     * <p>An example is:</p>
+     * <p>
+     * Squeezes any repetitions of a character that is mentioned in the supplied
+     * set.
+     * </p>
+     * 
+     * <p>
+     * An example is:
+     * </p>
      * <ul>
-     *   <li>squeeze(&quot;hello&quot;, {&quot;el&quot;}) => &quot;helo&quot;</li>
+     * <li>squeeze(&quot;hello&quot;, {&quot;el&quot;}) => &quot;helo&quot;</li>
      * </ul>
      * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  the string to squeeze, may be null
-     * @param set  the character set to use for manipulation, may be null
+     * @param str
+     *            the string to squeeze, may be null
+     * @param set
+     *            the character set to use for manipulation, may be null
      * @return modified String, <code>null</code> if null string input
      */
     public static String squeeze(String str, String[] set) {
@@ -132,7 +160,7 @@ public class CharSetUtils {
         for (int i = 0; i < sz; i++) {
             ch = chrs[i];
             if (chars.contains(ch)) {
-                if ((ch == lastChar) && (i != 0)) {
+                if (ch == lastChar && i != 0) {
                     continue;
                 }
             }
@@ -143,11 +171,13 @@ public class CharSetUtils {
     }
 
     // Count
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * <p>Takes an argument in set-syntax, see evaluateSet,
-     * and returns the number of characters present in the specified string.</p>
-     *
+     * <p>
+     * Takes an argument in set-syntax, see evaluateSet, and returns the number
+     * of characters present in the specified string.
+     * </p>
+     * 
      * <pre>
      * CharSetUtils.count(null, *)        = 0
      * CharSetUtils.count("", *)          = 0
@@ -156,10 +186,12 @@ public class CharSetUtils {
      * CharSetUtils.count("hello", "k-p") = 3
      * CharSetUtils.count("hello", "a-e") = 1
      * </pre>
-     *
+     * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  String to count characters in, may be null
-     * @param set  String set of characters to count, may be null
+     * @param str
+     *            String to count characters in, may be null
+     * @param set
+     *            String set of characters to count, may be null
      * @return character count, zero if null string input
      */
     public static int count(String str, String set) {
@@ -170,19 +202,26 @@ public class CharSetUtils {
         strs[0] = set;
         return count(str, strs);
     }
-    
+
     /**
-     * <p>Takes an argument in set-syntax, see evaluateSet,
-     * and returns the number of characters present in the specified string.</p>
-     *
-     * <p>An example would be:</p>
+     * <p>
+     * Takes an argument in set-syntax, see evaluateSet, and returns the number
+     * of characters present in the specified string.
+     * </p>
+     * 
+     * <p>
+     * An example would be:
+     * </p>
      * <ul>
-     *  <li>count(&quot;hello&quot;, {&quot;c-f&quot;, &quot;o&quot;}) returns 2.</li>
+     * <li>count(&quot;hello&quot;, {&quot;c-f&quot;, &quot;o&quot;}) returns 2.
+     * </li>
      * </ul>
-     *
+     * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  String to count characters in, may be null
-     * @param set  String[] set of characters to count, may be null
+     * @param str
+     *            String to count characters in, may be null
+     * @param set
+     *            String[] set of characters to count, may be null
      * @return character count, zero if null string input
      */
     public static int count(String str, String[] set) {
@@ -193,8 +232,8 @@ public class CharSetUtils {
         int count = 0;
         char[] chrs = str.toCharArray();
         int sz = chrs.length;
-        for(int i=0; i<sz; i++) {
-            if(chars.contains(chrs[i])) {
+        for (int i = 0; i < sz; i++) {
+            if (chars.contains(chrs[i])) {
                 count++;
             }
         }
@@ -202,11 +241,13 @@ public class CharSetUtils {
     }
 
     // Keep
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * <p>Takes an argument in set-syntax, see evaluateSet,
-     * and keeps any of characters present in the specified string.</p>
-     *
+     * <p>
+     * Takes an argument in set-syntax, see evaluateSet, and keeps any of
+     * characters present in the specified string.
+     * </p>
+     * 
      * <pre>
      * CharSetUtils.keep(null, *)        = null
      * CharSetUtils.keep("", *)          = ""
@@ -215,10 +256,12 @@ public class CharSetUtils {
      * CharSetUtils.keep("hello", "hl")  = "hll"
      * CharSetUtils.keep("hello", "le")  = "ell"
      * </pre>
-     *
+     * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  String to keep characters from, may be null
-     * @param set  String set of characters to keep, may be null
+     * @param str
+     *            String to keep characters from, may be null
+     * @param set
+     *            String set of characters to keep, may be null
      * @return modified String, <code>null</code> if null string input
      * @since 2.0
      */
@@ -233,20 +276,26 @@ public class CharSetUtils {
         strs[0] = set;
         return keep(str, strs);
     }
-    
+
     /**
-     * <p>Takes an argument in set-syntax, see evaluateSet,
-     * and keeps any of characters present in the specified string.</p>
-     *
-     * <p>An example would be:</p>
+     * <p>
+     * Takes an argument in set-syntax, see evaluateSet, and keeps any of
+     * characters present in the specified string.
+     * </p>
+     * 
+     * <p>
+     * An example would be:
+     * </p>
      * <ul>
-     *  <li>keep(&quot;hello&quot;, {&quot;c-f&quot;, &quot;o&quot;})
-     *   returns &quot;eo&quot;</li>
+     * <li>keep(&quot;hello&quot;, {&quot;c-f&quot;, &quot;o&quot;}) returns
+     * &quot;eo&quot;</li>
      * </ul>
-     *
+     * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  String to keep characters from, may be null
-     * @param set  String[] set of characters to keep, may be null
+     * @param str
+     *            String to keep characters from, may be null
+     * @param set
+     *            String[] set of characters to keep, may be null
      * @return modified String, <code>null</code> if null string input
      * @since 2.0
      */
@@ -261,11 +310,13 @@ public class CharSetUtils {
     }
 
     // Delete
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * <p>Takes an argument in set-syntax, see evaluateSet,
-     * and deletes any of characters present in the specified string.</p>
-     *
+     * <p>
+     * Takes an argument in set-syntax, see evaluateSet, and deletes any of
+     * characters present in the specified string.
+     * </p>
+     * 
      * <pre>
      * CharSetUtils.delete(null, *)        = null
      * CharSetUtils.delete("", *)          = ""
@@ -274,10 +325,12 @@ public class CharSetUtils {
      * CharSetUtils.delete("hello", "hl")  = "eo"
      * CharSetUtils.delete("hello", "le")  = "ho"
      * </pre>
-     *
+     * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  String to delete characters from, may be null
-     * @param set  String set of characters to delete, may be null
+     * @param str
+     *            String to delete characters from, may be null
+     * @param set
+     *            String set of characters to delete, may be null
      * @return modified String, <code>null</code> if null string input
      */
     public static String delete(String str, String set) {
@@ -288,20 +341,26 @@ public class CharSetUtils {
         strs[0] = set;
         return delete(str, strs);
     }
-    
+
     /**
-     * <p>Takes an argument in set-syntax, see evaluateSet,
-     * and deletes any of characters present in the specified string.</p>
-     *
-     * <p>An example would be:</p>
+     * <p>
+     * Takes an argument in set-syntax, see evaluateSet, and deletes any of
+     * characters present in the specified string.
+     * </p>
+     * 
+     * <p>
+     * An example would be:
+     * </p>
      * <ul>
-     *  <li>delete(&quot;hello&quot;, {&quot;c-f&quot;, &quot;o&quot;}) returns
-     *   &quot;hll&quot;</li>
+     * <li>delete(&quot;hello&quot;, {&quot;c-f&quot;, &quot;o&quot;}) returns
+     * &quot;hll&quot;</li>
      * </ul>
-     *
+     * 
      * @see CharSet#getInstance(java.lang.String) for set-syntax.
-     * @param str  String to delete characters from, may be null
-     * @param set  String[] set of characters to delete, may be null
+     * @param str
+     *            String to delete characters from, may be null
+     * @param set
+     *            String[] set of characters to delete, may be null
      * @return modified String, <code>null</code> if null string input
      */
     public static String delete(String str, String[] set) {
@@ -311,13 +370,16 @@ public class CharSetUtils {
         return modify(str, set, false);
     }
 
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
      * Implementation of delete and keep
-     *
-     * @param str String to modify characters within
-     * @param set String[] set of characters to modify
-     * @param expect whether to evaluate on match, or non-match
+     * 
+     * @param str
+     *            String to modify characters within
+     * @param set
+     *            String[] set of characters to modify
+     * @param expect
+     *            whether to evaluate on match, or non-match
      * @return modified String
      */
     private static String modify(String str, String[] set, boolean expect) {
@@ -325,8 +387,8 @@ public class CharSetUtils {
         StrBuilder buffer = new StrBuilder(str.length());
         char[] chrs = str.toCharArray();
         int sz = chrs.length;
-        for(int i=0; i<sz; i++) {
-            if(chars.contains(chrs[i]) == expect) {
+        for (int i = 0; i < sz; i++) {
+            if (chars.contains(chrs[i]) == expect) {
                 buffer.append(chrs[i]);
             }
         }
@@ -334,40 +396,55 @@ public class CharSetUtils {
     }
 
     // Translate
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * <p>Translate characters in a String.
-     * This is a multi character search and replace routine.</p>
-     *
-     * <p>An example is:</p>
+     * <p>
+     * Translate characters in a String. This is a multi character search and
+     * replace routine.
+     * </p>
+     * 
+     * <p>
+     * An example is:
+     * </p>
      * <ul>
-     *   <li>translate(&quot;hello&quot;, &quot;ho&quot;, &quot;jy&quot;)
-     *    =&gt; jelly</li>
+     * <li>translate(&quot;hello&quot;, &quot;ho&quot;, &quot;jy&quot;) =&gt;
+     * jelly</li>
      * </ul>
-     *
-     * <p>If the length of characters to search for is greater than the
-     * length of characters to replace, then the last character is 
-     * used.</p>
+     * 
+     * <p>
+     * If the length of characters to search for is greater than the length of
+     * characters to replace, then the last character is used.
+     * </p>
      * 
      * <pre>
      * CharSetUtils.translate(null, *, *) = null
      * CharSetUtils.translate("", *, *)   = ""
      * </pre>
-     *
-     * @param str  String to replace characters in, may be null
-     * @param searchChars   a set of characters to search for, must not be null
-     * @param replaceChars  a set of characters to replace, must not be null or empty (&quot;&quot;)
+     * 
+     * @param str
+     *            String to replace characters in, may be null
+     * @param searchChars
+     *            a set of characters to search for, must not be null
+     * @param replaceChars
+     *            a set of characters to replace, must not be null or empty
+     *            (&quot;&quot;)
      * @return translated String, <code>null</code> if null string input
-     * @throws NullPointerException if <code>searchChars</code> or <code>replaceChars</code> 
-     *  is <code>null</code>
-     * @throws ArrayIndexOutOfBoundsException if <code>replaceChars</code> is empty (&quot;&quot;)
+     * @throws NullPointerException
+     *             if <code>searchChars</code> or <code>replaceChars</code> is
+     *             <code>null</code>
+     * @throws ArrayIndexOutOfBoundsException
+     *             if <code>replaceChars</code> is empty (&quot;&quot;)
      * @deprecated Use {@link StringUtils#replaceChars(String, String, String)}.
-     *             Method will be removed in Commons Lang 3.0.
-     *  NOTE: StringUtils#replaceChars behaves differently when 'searchChars' is longer
-     *  than 'replaceChars'. CharSetUtils#translate will use the last char of the replacement
-     *  string whereas StringUtils#replaceChars will delete
+     *             Method will be removed in Commons Lang 3.0. NOTE:
+     *             StringUtils#replaceChars behaves differently when
+     *             'searchChars' is longer than 'replaceChars'.
+     *             CharSetUtils#translate will use the last char of the
+     *             replacement string whereas StringUtils#replaceChars will
+     *             delete
      */
-    public static String translate(String str, String searchChars, String replaceChars) {
+    @Deprecated
+    public static String translate(String str, String searchChars,
+            String replaceChars) {
         if (StringUtils.isEmpty(str)) {
             return str;
         }
@@ -376,10 +453,10 @@ public class CharSetUtils {
         char[] withChrs = replaceChars.toCharArray();
         int sz = chrs.length;
         int withMax = replaceChars.length() - 1;
-        for(int i=0; i<sz; i++) {
+        for (int i = 0; i < sz; i++) {
             int idx = searchChars.indexOf(chrs[i]);
-            if(idx != -1) {
-                if(idx > withMax) {
+            if (idx != -1) {
+                if (idx > withMax) {
                     idx = withMax;
                 }
                 buffer.append(withChrs[idx]);

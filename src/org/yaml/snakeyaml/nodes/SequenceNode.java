@@ -28,8 +28,8 @@ import org.yaml.snakeyaml.error.Mark;
 public class SequenceNode extends CollectionNode {
     final private List<Node> value;
 
-    public SequenceNode(Tag tag, boolean resolved, List<Node> value, Mark startMark, Mark endMark,
-            Boolean flowStyle) {
+    public SequenceNode(Tag tag, boolean resolved, List<Node> value,
+            Mark startMark, Mark endMark, Boolean flowStyle) {
         super(tag, startMark, endMark, flowStyle);
         if (value == null) {
             throw new NullPointerException("value in a Node is required.");
@@ -62,8 +62,9 @@ public class SequenceNode extends CollectionNode {
         }
     }
 
+    @Override
     public String toString() {
-        return "<" + this.getClass().getName() + " (tag=" + getTag() + ", value=" + getValue()
-                + ")>";
+        return "<" + this.getClass().getName() + " (tag=" + getTag()
+                + ", value=" + getValue() + ")>";
     }
 }

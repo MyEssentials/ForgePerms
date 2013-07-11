@@ -52,6 +52,7 @@ public abstract class BaseRepresenter {
     protected final Map<Object, Node> representedObjects = new IdentityHashMap<Object, Node>() {
         private static final long serialVersionUID = -5576159264232131854L;
 
+        @Override
         public Node put(Object key, Node value) {
             return super.put(key, new AnchorNode(value));
         }
@@ -98,7 +99,8 @@ public abstract class BaseRepresenter {
             }
             // check array of primitives
             if (clazz.isArray()) {
-                throw new YAMLException("Arrays of primitives are not fully supported.");
+                throw new YAMLException(
+                        "Arrays of primitives are not fully supported.");
             }
             // check defaults
             if (multiRepresenters.containsKey(null)) {
@@ -114,7 +116,7 @@ public abstract class BaseRepresenter {
 
     protected Node representScalar(Tag tag, String value, Character style) {
         if (style == null) {
-            style = this.defaultScalarStyle;
+            style = defaultScalarStyle;
         }
         Node node = new ScalarNode(tag, value, null, null, style);
         return node;
@@ -124,7 +126,8 @@ public abstract class BaseRepresenter {
         return representScalar(tag, value, null);
     }
 
-    protected Node representSequence(Tag tag, Iterable<? extends Object> sequence, Boolean flowStyle) {
+    protected Node representSequence(Tag tag,
+            Iterable<? extends Object> sequence, Boolean flowStyle) {
         int size = 10;// default for ArrayList
         if (sequence instanceof List<?>) {
             size = ((List<?>) sequence).size();
@@ -135,7 +138,8 @@ public abstract class BaseRepresenter {
         boolean bestStyle = true;
         for (Object item : sequence) {
             Node nodeItem = representData(item);
-            if (!((nodeItem instanceof ScalarNode && ((ScalarNode) nodeItem).getStyle() == null))) {
+            if (!(nodeItem instanceof ScalarNode && ((ScalarNode) nodeItem)
+                    .getStyle() == null)) {
                 bestStyle = false;
             }
             value.add(nodeItem);
@@ -150,8 +154,8 @@ public abstract class BaseRepresenter {
         return node;
     }
 
-    protected Node representMapping(Tag tag, Map<? extends Object, Object> mapping,
-            Boolean flowStyle) {
+    protected Node representMapping(Tag tag,
+            Map<? extends Object, Object> mapping, Boolean flowStyle) {
         List<NodeTuple> value = new ArrayList<NodeTuple>(mapping.size());
         MappingNode node = new MappingNode(tag, value, flowStyle);
         representedObjects.put(objectToRepresent, node);
@@ -159,10 +163,12 @@ public abstract class BaseRepresenter {
         for (Map.Entry<? extends Object, Object> entry : mapping.entrySet()) {
             Node nodeKey = representData(entry.getKey());
             Node nodeValue = representData(entry.getValue());
-            if (!((nodeKey instanceof ScalarNode && ((ScalarNode) nodeKey).getStyle() == null))) {
+            if (!(nodeKey instanceof ScalarNode && ((ScalarNode) nodeKey)
+                    .getStyle() == null)) {
                 bestStyle = false;
             }
-            if (!((nodeValue instanceof ScalarNode && ((ScalarNode) nodeValue).getStyle() == null))) {
+            if (!(nodeValue instanceof ScalarNode && ((ScalarNode) nodeValue)
+                    .getStyle() == null)) {
                 bestStyle = false;
             }
             value.add(new NodeTuple(nodeKey, nodeValue));
@@ -178,7 +184,7 @@ public abstract class BaseRepresenter {
     }
 
     public void setDefaultScalarStyle(ScalarStyle defaultStyle) {
-        this.defaultScalarStyle = defaultStyle.getChar();
+        defaultScalarStyle = defaultStyle.getChar();
     }
 
     public void setDefaultFlowStyle(FlowStyle defaultFlowStyle) {
@@ -186,12 +192,12 @@ public abstract class BaseRepresenter {
     }
 
     public FlowStyle getDefaultFlowStyle() {
-        return this.defaultFlowStyle;
+        return defaultFlowStyle;
     }
 
     public void setPropertyUtils(PropertyUtils propertyUtils) {
         this.propertyUtils = propertyUtils;
-        this.explicitPropertyUtils = true;
+        explicitPropertyUtils = true;
     }
 
     public final PropertyUtils getPropertyUtils() {

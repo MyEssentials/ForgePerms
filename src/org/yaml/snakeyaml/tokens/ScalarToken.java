@@ -26,7 +26,8 @@ public final class ScalarToken extends Token {
         this(value, plain, startMark, endMark, (char) 0);
     }
 
-    public ScalarToken(String value, boolean plain, Mark startMark, Mark endMark, char style) {
+    public ScalarToken(String value, boolean plain, Mark startMark,
+            Mark endMark, char style) {
         super(startMark, endMark);
         this.value = value;
         this.plain = plain;
@@ -34,15 +35,15 @@ public final class ScalarToken extends Token {
     }
 
     public boolean getPlain() {
-        return this.plain;
+        return plain;
     }
 
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public char getStyle() {
-        return this.style;
+        return style;
     }
 
     @Override

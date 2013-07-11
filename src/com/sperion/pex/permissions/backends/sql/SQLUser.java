@@ -23,30 +23,30 @@ import com.sperion.pex.permissions.ProxyPermissionUser;
 import com.sperion.pex.permissions.events.PermissionEntityEvent;
 
 /**
- *
+ * 
  * @author code
  */
 public class SQLUser extends ProxyPermissionUser {
 
-	protected SQLEntity backend;
+    protected SQLEntity backend;
 
-	public SQLUser(String name, PermissionManager manager, SQLConnection sql) {
-		super(new SQLEntity(name, manager, SQLEntity.Type.USER, sql));
+    public SQLUser(String name, PermissionManager manager, SQLConnection sql) {
+        super(new SQLEntity(name, manager, SQLEntity.Type.USER, sql));
 
-		this.backend = (SQLEntity) this.backendEntity;
-	}
+        backend = (SQLEntity) backendEntity;
+    }
 
-	@Override
-	public void setGroups(String[] parentGroups, String worldName) {
-		backend.setParents(parentGroups, worldName);
+    @Override
+    public void setGroups(String[] parentGroups, String worldName) {
+        backend.setParents(parentGroups, worldName);
 
-		this.clearCache();
+        this.clearCache();
 
-		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
-	}
+        this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
+    }
 
-	@Override
-	protected String[] getGroupsNamesImpl(String worldName) {
-		return backend.getParentNames(worldName);
-	}
+    @Override
+    protected String[] getGroupsNamesImpl(String worldName) {
+        return backend.getParentNames(worldName);
+    }
 }

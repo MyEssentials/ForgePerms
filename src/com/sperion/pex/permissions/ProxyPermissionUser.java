@@ -33,15 +33,15 @@ public abstract class ProxyPermissionUser extends PermissionUser {
 
         this.setName(backendEntity.getName());
 
-        this.virtual = backendEntity.isVirtual();
+        virtual = backendEntity.isVirtual();
 
     }
-	
-	@Override
-	public void initialize() {
-		super.initialize();
-		this.backendEntity.initialize();
-	}	
+
+    @Override
+    public void initialize() {
+        super.initialize();
+        backendEntity.initialize();
+    }
 
     @Override
     public String[] getWorlds() {
@@ -60,14 +60,14 @@ public abstract class ProxyPermissionUser extends PermissionUser {
 
     @Override
     public void setPrefix(String prefix, String worldName) {
-        this.backendEntity.setPrefix(prefix, worldName);
+        backendEntity.setPrefix(prefix, worldName);
 
         this.clearCache();
     }
 
     @Override
     public void setSuffix(String suffix, String worldName) {
-        this.backendEntity.setSuffix(suffix, worldName);
+        backendEntity.setSuffix(suffix, worldName);
 
         this.clearCache();
     }
@@ -79,17 +79,17 @@ public abstract class ProxyPermissionUser extends PermissionUser {
 
     @Override
     public String[] getOwnPermissions(String world) {
-        return this.backendEntity.getPermissions(world);
+        return backendEntity.getPermissions(world);
     }
 
     @Override
     public Map<String, String[]> getAllPermissions() {
-        return this.backendEntity.getAllPermissions();
+        return backendEntity.getAllPermissions();
     }
 
     @Override
     public void setPermissions(String[] permissions, String world) {
-        this.backendEntity.setPermissions(permissions, world);
+        backendEntity.setPermissions(permissions, world);
 
         this.clearCache();
 
@@ -98,22 +98,22 @@ public abstract class ProxyPermissionUser extends PermissionUser {
 
     @Override
     public Map<String, Map<String, String>> getAllOptions() {
-        return this.backendEntity.getAllOptions();
+        return backendEntity.getAllOptions();
     }
 
     @Override
     public String getOwnOption(String option, String world, String defaultValue) {
-        return this.backendEntity.getOption(option, world, defaultValue);
+        return backendEntity.getOption(option, world, defaultValue);
     }
 
     @Override
     public Map<String, String> getOptions(String world) {
-        return this.backendEntity.getOptions(world);
+        return backendEntity.getOptions(world);
     }
 
     @Override
     public void setOption(String permission, String value, String world) {
-        this.backendEntity.setOption(permission, value, world);
+        backendEntity.setOption(permission, value, world);
 
         this.clearCache();
 
@@ -122,13 +122,13 @@ public abstract class ProxyPermissionUser extends PermissionUser {
 
     @Override
     public void save() {
-        this.backendEntity.save();
+        backendEntity.save();
         super.save();
     }
 
     @Override
     public void remove() {
-        this.backendEntity.remove();
+        backendEntity.remove();
         super.remove();
     }
 }

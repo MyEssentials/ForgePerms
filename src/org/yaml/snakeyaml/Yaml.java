@@ -60,14 +60,17 @@ public class Yaml {
      * in different Threads.
      */
     public Yaml() {
-        this(new Constructor(), new Representer(), new DumperOptions(), new Resolver());
+        this(new Constructor(), new Representer(), new DumperOptions(),
+                new Resolver());
     }
 
     /**
      * @deprecated
      */
+    @Deprecated
     public Yaml(LoaderOptions loaderOptions) {
-        this(new Constructor(), new Representer(), new DumperOptions(), new Resolver());
+        this(new Constructor(), new Representer(), new DumperOptions(),
+                new Resolver());
     }
 
     /**
@@ -139,7 +142,8 @@ public class Yaml {
      * @param dumperOptions
      *            DumperOptions to configure outgoing objects
      */
-    public Yaml(BaseConstructor constructor, Representer representer, DumperOptions dumperOptions) {
+    public Yaml(BaseConstructor constructor, Representer representer,
+            DumperOptions dumperOptions) {
         this(constructor, representer, dumperOptions, new Resolver());
     }
 
@@ -156,8 +160,8 @@ public class Yaml {
      * @param resolver
      *            Resolver to detect implicit type
      */
-    public Yaml(BaseConstructor constructor, Representer representer, DumperOptions dumperOptions,
-            Resolver resolver) {
+    public Yaml(BaseConstructor constructor, Representer representer,
+            DumperOptions dumperOptions, Resolver resolver) {
         if (!constructor.isExplicitPropertyUtils()) {
             constructor.setPropertyUtils(representer.getPropertyUtils());
         } else if (!representer.isExplicitPropertyUtils()) {
@@ -165,14 +169,15 @@ public class Yaml {
         }
         this.constructor = constructor;
         representer.setDefaultFlowStyle(dumperOptions.getDefaultFlowStyle());
-        representer.setDefaultScalarStyle(dumperOptions.getDefaultScalarStyle());
+        representer
+                .setDefaultScalarStyle(dumperOptions.getDefaultScalarStyle());
         representer.getPropertyUtils().setAllowReadOnlyProperties(
                 dumperOptions.isAllowReadOnlyProperties());
         representer.setTimeZone(dumperOptions.getTimeZone());
         this.representer = representer;
         this.dumperOptions = dumperOptions;
         this.resolver = resolver;
-        this.name = "Yaml:" + System.identityHashCode(this);
+        name = "Yaml:" + System.identityHashCode(this);
     }
 
     /**
@@ -191,8 +196,10 @@ public class Yaml {
      *            Resolver to detect implicit type
      * @deprecated
      */
-    public Yaml(BaseConstructor constructor, LoaderOptions loaderOptions, Representer representer,
-            DumperOptions dumperOptions, Resolver resolver) {
+    @Deprecated
+    public Yaml(BaseConstructor constructor, LoaderOptions loaderOptions,
+            Representer representer, DumperOptions dumperOptions,
+            Resolver resolver) {
         this(constructor, representer, dumperOptions, resolver);
     }
 
@@ -262,9 +269,10 @@ public class Yaml {
         dumpAll(data, output, dumperOptions.getExplicitRoot());
     }
 
-    private void dumpAll(Iterator<? extends Object> data, Writer output, Tag rootTag) {
-        Serializer serializer = new Serializer(new Emitter(output, dumperOptions), resolver,
-                dumperOptions, rootTag);
+    private void dumpAll(Iterator<? extends Object> data, Writer output,
+            Tag rootTag) {
+        Serializer serializer = new Serializer(new Emitter(output,
+                dumperOptions), resolver, dumperOptions, rootTag);
         try {
             serializer.open();
             while (data.hasNext()) {
@@ -364,8 +372,8 @@ public class Yaml {
     public List<Event> serialize(Node data) {
         SilentEmitter emitter = new SilentEmitter();
         @SuppressWarnings("deprecation")
-        Serializer serializer = new Serializer(emitter, resolver, dumperOptions,
-                dumperOptions.getExplicitRoot());
+        Serializer serializer = new Serializer(emitter, resolver,
+                dumperOptions, dumperOptions.getExplicitRoot());
         try {
             serializer.open();
             serializer.serialize(data);
@@ -383,6 +391,7 @@ public class Yaml {
             return events;
         }
 
+        @Override
         public void emit(Event event) throws IOException {
             events.add(event);
         }
@@ -409,7 +418,8 @@ public class Yaml {
      * @return parsed object
      */
     public Object load(InputStream io) {
-        return loadFromReader(new StreamReader(new UnicodeReader(io)), Object.class);
+        return loadFromReader(new StreamReader(new UnicodeReader(io)),
+                Object.class);
     }
 
     /**
@@ -472,7 +482,8 @@ public class Yaml {
      */
     @SuppressWarnings("unchecked")
     public <T> T loadAs(InputStream input, Class<T> type) {
-        return (T) loadFromReader(new StreamReader(new UnicodeReader(input)), type);
+        return (T) loadFromReader(new StreamReader(new UnicodeReader(input)),
+                type);
     }
 
     private Object loadFromReader(StreamReader sreader, Class<?> type) {
@@ -491,17 +502,21 @@ public class Yaml {
      *         sequence
      */
     public Iterable<Object> loadAll(Reader yaml) {
-        Composer composer = new Composer(new ParserImpl(new StreamReader(yaml)), resolver);
+        Composer composer = new Composer(
+                new ParserImpl(new StreamReader(yaml)), resolver);
         constructor.setComposer(composer);
         Iterator<Object> result = new Iterator<Object>() {
+            @Override
             public boolean hasNext() {
                 return constructor.checkData();
             }
 
+            @Override
             public Object next() {
                 return constructor.getData();
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
@@ -516,6 +531,7 @@ public class Yaml {
             this.iterator = iterator;
         }
 
+        @Override
         public Iterator<Object> iterator() {
             return iterator;
         }
@@ -559,7 +575,8 @@ public class Yaml {
      * @return parsed root Node for the specified YAML document
      */
     public Node compose(Reader yaml) {
-        Composer composer = new Composer(new ParserImpl(new StreamReader(yaml)), resolver);
+        Composer composer = new Composer(
+                new ParserImpl(new StreamReader(yaml)), resolver);
         constructor.setComposer(composer);
         return composer.getSingleNode();
     }
@@ -574,17 +591,21 @@ public class Yaml {
      * @return parsed root Nodes for all the specified YAML documents
      */
     public Iterable<Node> composeAll(Reader yaml) {
-        final Composer composer = new Composer(new ParserImpl(new StreamReader(yaml)), resolver);
+        final Composer composer = new Composer(new ParserImpl(new StreamReader(
+                yaml)), resolver);
         constructor.setComposer(composer);
         Iterator<Node> result = new Iterator<Node>() {
+            @Override
             public boolean hasNext() {
                 return composer.checkNode();
             }
 
+            @Override
             public Node next() {
                 return composer.getNode();
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
@@ -599,6 +620,7 @@ public class Yaml {
             this.iterator = iterator;
         }
 
+        @Override
         public Iterator<Node> iterator() {
             return iterator;
         }
@@ -618,6 +640,7 @@ public class Yaml {
      *            any).
      * 
      */
+    @Deprecated
     public void addImplicitResolver(String tag, Pattern regexp, String first) {
         addImplicitResolver(new Tag(tag), regexp, first);
     }
@@ -675,14 +698,17 @@ public class Yaml {
     public Iterable<Event> parse(Reader yaml) {
         final Parser parser = new ParserImpl(new StreamReader(yaml));
         Iterator<Event> result = new Iterator<Event>() {
+            @Override
             public boolean hasNext() {
                 return parser.peekEvent() != null;
             }
 
+            @Override
             public Event next() {
                 return parser.getEvent();
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
@@ -697,6 +723,7 @@ public class Yaml {
             this.iterator = iterator;
         }
 
+        @Override
         public Iterator<Event> iterator() {
             return iterator;
         }
@@ -711,6 +738,7 @@ public class Yaml {
     /**
      * @deprecated use with Constructor instead of Loader
      */
+    @Deprecated
     public Yaml(Loader loader) {
         this(loader, new Dumper(new DumperOptions()));
     }
@@ -718,6 +746,7 @@ public class Yaml {
     /**
      * @deprecated use with Constructor instead of Loader
      */
+    @Deprecated
     public Yaml(Loader loader, Dumper dumper) {
         this(loader, dumper, new Resolver());
     }
@@ -725,6 +754,7 @@ public class Yaml {
     /**
      * @deprecated use with Constructor instead of Loader
      */
+    @Deprecated
     public Yaml(Loader loader, Dumper dumper, Resolver resolver) {
         this(loader.constructor, dumper.representer, dumper.options, resolver);
     }

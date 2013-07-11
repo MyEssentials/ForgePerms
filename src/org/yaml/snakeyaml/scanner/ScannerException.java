@@ -42,8 +42,8 @@ public class ScannerException extends MarkedYAMLException {
      *            Message for the user with further information about the
      *            problem.
      */
-    public ScannerException(String context, Mark contextMark, String problem, Mark problemMark,
-            String note) {
+    public ScannerException(String context, Mark contextMark, String problem,
+            Mark problemMark, String note) {
         super(context, contextMark, problem, problemMark, note);
     }
 
@@ -60,7 +60,8 @@ public class ScannerException extends MarkedYAMLException {
      * @param problemMark
      *            Position of the <code>problem</code> within the document.
      */
-    public ScannerException(String context, Mark contextMark, String problem, Mark problemMark) {
+    public ScannerException(String context, Mark contextMark, String problem,
+            Mark problemMark) {
         this(context, contextMark, problem, problemMark, null);
     }
 }

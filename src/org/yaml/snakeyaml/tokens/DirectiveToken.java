@@ -24,7 +24,8 @@ public final class DirectiveToken<T> extends Token {
     private final String name;
     private final List<T> value;
 
-    public DirectiveToken(String name, List<T> value, Mark startMark, Mark endMark) {
+    public DirectiveToken(String name, List<T> value, Mark startMark,
+            Mark endMark) {
         super(startMark, endMark);
         this.name = name;
         if (value != null && value.size() != 2) {
@@ -45,7 +46,8 @@ public final class DirectiveToken<T> extends Token {
     @Override
     protected String getArguments() {
         if (value != null) {
-            return "name=" + name + ", value=[" + value.get(0) + ", " + value.get(1) + "]";
+            return "name=" + name + ", value=[" + value.get(0) + ", "
+                    + value.get(1) + "]";
         } else {
             return "name=" + name;
         }

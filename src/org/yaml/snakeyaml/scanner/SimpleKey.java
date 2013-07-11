@@ -33,7 +33,8 @@ final class SimpleKey {
     private int column;
     private Mark mark;
 
-    public SimpleKey(int tokenNumber, boolean required, int index, int line, int column, Mark mark) {
+    public SimpleKey(int tokenNumber, boolean required, int index, int line,
+            int column, Mark mark) {
         this.tokenNumber = tokenNumber;
         this.required = required;
         this.index = index;
@@ -43,11 +44,11 @@ final class SimpleKey {
     }
 
     public int getTokenNumber() {
-        return this.tokenNumber;
+        return tokenNumber;
     }
 
     public int getColumn() {
-        return this.column;
+        return column;
     }
 
     public Mark getMark() {
@@ -68,7 +69,8 @@ final class SimpleKey {
 
     @Override
     public String toString() {
-        return "SimpleKey - tokenNumber=" + tokenNumber + " required=" + required + " index="
-                + index + " line=" + line + " column=" + column;
+        return "SimpleKey - tokenNumber=" + tokenNumber + " required="
+                + required + " index=" + index + " line=" + line + " column="
+                + column;
     }
 }

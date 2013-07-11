@@ -28,6 +28,7 @@ import org.yaml.snakeyaml.representer.Representer;
  * 
  * @deprecated use Yaml.dumpAs(data, Tag.MAP) instead
  */
+@Deprecated
 public class JavaBeanDumper {
     private boolean useGlobalTag;
     private FlowStyle flowStyle;
@@ -44,7 +45,7 @@ public class JavaBeanDumper {
     public JavaBeanDumper(boolean useGlobalTag, BeanAccess beanAccess) {
         this.useGlobalTag = useGlobalTag;
         this.beanAccess = beanAccess;
-        this.flowStyle = FlowStyle.BLOCK;
+        flowStyle = FlowStyle.BLOCK;
     }
 
     public JavaBeanDumper(boolean useGlobalTag) {
@@ -71,7 +72,7 @@ public class JavaBeanDumper {
         }
         this.options = options;
         this.representer = representer;
-        this.beanAccess = null; // bean access in not used if representer
+        beanAccess = null; // bean access in not used if representer
         // supplied
     }
 
@@ -85,21 +86,21 @@ public class JavaBeanDumper {
      */
     public void dump(Object data, Writer output) {
         DumperOptions doptions;
-        if (this.options == null) {
+        if (options == null) {
             doptions = new DumperOptions();
             if (!useGlobalTag) {
                 doptions.setExplicitRoot(Tag.MAP);
             }
             doptions.setDefaultFlowStyle(flowStyle);
         } else {
-            doptions = this.options;
+            doptions = options;
         }
         Representer repr;
-        if (this.representer == null) {
+        if (representer == null) {
             repr = new Representer();
             repr.getPropertyUtils().setBeanAccess(beanAccess);
         } else {
-            repr = this.representer;
+            repr = representer;
         }
         Yaml dumper = new Yaml(repr, doptions);
         dumper.dump(data, output);

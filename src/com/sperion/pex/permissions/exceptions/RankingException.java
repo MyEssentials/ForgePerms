@@ -25,7 +25,8 @@ public class RankingException extends Exception {
     protected PermissionUser target = null;
     protected PermissionUser promoter = null;
 
-    public RankingException(String message, PermissionUser target, PermissionUser promoter) {
+    public RankingException(String message, PermissionUser target,
+            PermissionUser promoter) {
         super(message);
         this.target = target;
         this.promoter = promoter;

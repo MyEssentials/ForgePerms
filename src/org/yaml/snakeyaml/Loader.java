@@ -22,6 +22,7 @@ import org.yaml.snakeyaml.resolver.Resolver;
 /**
  * @deprecated Loader's functionality was moved to Yaml
  */
+@Deprecated
 public final class Loader {
     protected final BaseConstructor constructor;
     protected Resolver resolver;

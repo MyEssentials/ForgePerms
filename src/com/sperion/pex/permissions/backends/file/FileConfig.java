@@ -1,13 +1,13 @@
 package com.sperion.pex.permissions.backends.file;
 
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.sperion.pex.permissions.backends.FileBackend;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Logger;
+
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.sperion.pex.permissions.backends.FileBackend;
 
 public class FileConfig extends YamlConfiguration {
 
@@ -42,7 +42,9 @@ public class FileConfig extends YamlConfiguration {
         try {
             this.save(file);
         } catch (IOException e) {
-            Logger.getLogger("Minecraft").severe("[PermissionsEx] Error during saving permissions file: " + e.getMessage());
+            Logger.getLogger("Minecraft").severe(
+                    "[PermissionsEx] Error during saving permissions file: "
+                            + e.getMessage());
         }
     }
 }

@@ -20,9 +20,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * The base class of all runtime exceptions which can contain other
- * exceptions.
- *
+ * The base class of all runtime exceptions which can contain other exceptions.
+ * 
  * @see org.apache.commons.lang.exception.NestableException
  * @author <a href="mailto:Rafal.Krzewski@e-point.pl">Rafal Krzewski</a>
  * @author Daniel L. Rall
@@ -31,8 +30,9 @@ import java.io.PrintWriter;
  * @since 1.0
  * @version $Id: NestableRuntimeException.java 512889 2007-02-28 18:18:20Z dlr $
  */
-public class NestableRuntimeException extends RuntimeException implements Nestable {
-    
+public class NestableRuntimeException extends RuntimeException implements
+        Nestable {
+
     /**
      * Required for serialization support.
      * 
@@ -41,14 +41,13 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     private static final long serialVersionUID = 1L;
 
     /**
-     * The helper instance which contains much of the code which we
-     * delegate to.
+     * The helper instance which contains much of the code which we delegate to.
      */
     protected NestableDelegate delegate = new NestableDelegate(this);
 
     /**
-     * Holds the reference to the exception or error that caused
-     * this exception to be thrown.
+     * Holds the reference to the exception or error that caused this exception
+     * to be thrown.
      */
     private Throwable cause = null;
 
@@ -63,8 +62,9 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * Constructs a new <code>NestableRuntimeException</code> with specified
      * detail message.
-     *
-     * @param msg the error message
+     * 
+     * @param msg
+     *            the error message
      */
     public NestableRuntimeException(String msg) {
         super(msg);
@@ -73,9 +73,9 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * Constructs a new <code>NestableRuntimeException</code> with specified
      * nested <code>Throwable</code>.
-     *
-     * @param cause the exception or error that caused this exception to be
-     * thrown
+     * 
+     * @param cause
+     *            the exception or error that caused this exception to be thrown
      */
     public NestableRuntimeException(Throwable cause) {
         super();
@@ -85,10 +85,11 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * Constructs a new <code>NestableRuntimeException</code> with specified
      * detail message and nested <code>Throwable</code>.
-     *
-     * @param msg    the error message
-     * @param cause  the exception or error that caused this exception to be
-     * thrown
+     * 
+     * @param msg
+     *            the error message
+     * @param cause
+     *            the exception or error that caused this exception to be thrown
      */
     public NestableRuntimeException(String msg, Throwable cause) {
         super(msg);
@@ -98,17 +99,19 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public Throwable getCause() {
         return cause;
     }
 
     /**
-     * Returns the detail message string of this throwable. If it was
-     * created with a null message, returns the following:
-     * (cause==null ? null : cause.toString()).
-     *
+     * Returns the detail message string of this throwable. If it was created
+     * with a null message, returns the following: (cause==null ? null :
+     * cause.toString()).
+     * 
      * @return String message string of the throwable
      */
+    @Override
     public String getMessage() {
         if (super.getMessage() != null) {
             return super.getMessage();
@@ -122,6 +125,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getMessage(int index) {
         if (index == 0) {
             return super.getMessage();
@@ -132,6 +136,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public String[] getMessages() {
         return delegate.getMessages();
     }
@@ -139,6 +144,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public Throwable getThrowable(int index) {
         return delegate.getThrowable(index);
     }
@@ -146,6 +152,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public int getThrowableCount() {
         return delegate.getThrowableCount();
     }
@@ -153,6 +160,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public Throwable[] getThrowables() {
         return delegate.getThrowables();
     }
@@ -160,6 +168,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public int indexOfThrowable(Class type) {
         return delegate.indexOfThrowable(type, 0);
     }
@@ -167,6 +176,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public int indexOfThrowable(Class type, int fromIndex) {
         return delegate.indexOfThrowable(type, fromIndex);
     }
@@ -174,6 +184,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public void printStackTrace() {
         delegate.printStackTrace();
     }
@@ -181,6 +192,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public void printStackTrace(PrintStream out) {
         delegate.printStackTrace(out);
     }
@@ -188,6 +200,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public void printStackTrace(PrintWriter out) {
         delegate.printStackTrace(out);
     }
@@ -195,6 +208,7 @@ public class NestableRuntimeException extends RuntimeException implements Nestab
     /**
      * {@inheritDoc}
      */
+    @Override
     public final void printPartialStackTrace(PrintWriter out) {
         super.printStackTrace(out);
     }

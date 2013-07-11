@@ -36,12 +36,13 @@ public class DumperOptions {
      * @see <a href="http://yaml.org/spec/1.1/#id858081">2.3. Scalars</a>
      */
     public enum ScalarStyle {
-        DOUBLE_QUOTED(Character.valueOf('"')), SINGLE_QUOTED(Character.valueOf('\'')), LITERAL(
-                Character.valueOf('|')), FOLDED(Character.valueOf('>')), PLAIN(null);
+        DOUBLE_QUOTED(Character.valueOf('"')), SINGLE_QUOTED(Character
+                .valueOf('\'')), LITERAL(Character.valueOf('|')), FOLDED(
+                Character.valueOf('>')), PLAIN(null);
         private Character styleChar;
 
         private ScalarStyle(Character style) {
-            this.styleChar = style;
+            styleChar = style;
         }
 
         public Character getChar() {
@@ -58,16 +59,17 @@ public class DumperOptions {
                 return PLAIN;
             } else {
                 switch (style) {
-                case '"':
-                    return DOUBLE_QUOTED;
-                case '\'':
-                    return SINGLE_QUOTED;
-                case '|':
-                    return LITERAL;
-                case '>':
-                    return FOLDED;
-                default:
-                    throw new YAMLException("Unknown scalar style character: " + style);
+                    case '"':
+                        return DOUBLE_QUOTED;
+                    case '\'':
+                        return SINGLE_QUOTED;
+                    case '|':
+                        return LITERAL;
+                    case '>':
+                        return FOLDED;
+                    default:
+                        throw new YAMLException(
+                                "Unknown scalar style character: " + style);
                 }
             }
         }
@@ -173,6 +175,7 @@ public class DumperOptions {
     /**
      * @deprecated do not use explicit root Tag
      */
+    @Deprecated
     private Tag explicitRoot = null;
     private Version version = null;
     private Map<String, String> tags = null;
@@ -214,16 +217,18 @@ public class DumperOptions {
 
     public void setIndent(int indent) {
         if (indent < Emitter.MIN_INDENT) {
-            throw new YAMLException("Indent must be at least " + Emitter.MIN_INDENT);
+            throw new YAMLException("Indent must be at least "
+                    + Emitter.MIN_INDENT);
         }
         if (indent > Emitter.MAX_INDENT) {
-            throw new YAMLException("Indent must be at most " + Emitter.MAX_INDENT);
+            throw new YAMLException("Indent must be at most "
+                    + Emitter.MAX_INDENT);
         }
         this.indent = indent;
     }
 
     public int getIndent() {
-        return this.indent;
+        return indent;
     }
 
     public void setVersion(Version version) {
@@ -231,7 +236,7 @@ public class DumperOptions {
     }
 
     public Version getVersion() {
-        return this.version;
+        return version;
     }
 
     /**
@@ -245,7 +250,7 @@ public class DumperOptions {
     }
 
     public boolean isCanonical() {
-        return this.canonical;
+        return canonical;
     }
 
     /**
@@ -260,7 +265,7 @@ public class DumperOptions {
     }
 
     public boolean isPrettyFlow() {
-        return this.prettyFlow;
+        return prettyFlow;
     }
 
     /**
@@ -276,7 +281,7 @@ public class DumperOptions {
     }
 
     public int getWidth() {
-        return this.bestWidth;
+        return bestWidth;
     }
 
     public LineBreak getLineBreak() {
@@ -297,6 +302,7 @@ public class DumperOptions {
     /**
      * @deprecated do not use explicit root Tag
      */
+    @Deprecated
     public Tag getExplicitRoot() {
         return explicitRoot;
     }
@@ -307,6 +313,7 @@ public class DumperOptions {
      *            Tag.MAP="tag:yaml.org,2002:map")
      * @deprecated use Tag instead of String
      */
+    @Deprecated
     public void setExplicitRoot(String expRoot) {
         setExplicitRoot(new Tag(expRoot));
     }
@@ -317,11 +324,12 @@ public class DumperOptions {
      *            Tag.MAP="tag:yaml.org,2002:map")
      * @deprecated do not use explicit root Tag
      */
+    @Deprecated
     public void setExplicitRoot(Tag expRoot) {
         if (expRoot == null) {
             throw new NullPointerException("Root tag must be specified.");
         }
-        this.explicitRoot = expRoot;
+        explicitRoot = expRoot;
     }
 
     /**
@@ -371,7 +379,9 @@ public class DumperOptions {
      * @return ScalarStyle to be used for scalar
      * @deprecated it was implemented as a quick fix for issue 29
      */
-    public ScalarStyle calculateScalarStyle(ScalarAnalysis analysis, ScalarStyle style) {
+    @Deprecated
+    public ScalarStyle calculateScalarStyle(ScalarAnalysis analysis,
+            ScalarStyle style) {
         return style;
     }
 

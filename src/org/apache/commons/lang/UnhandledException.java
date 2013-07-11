@@ -19,25 +19,30 @@ package org.apache.commons.lang;
 import org.apache.commons.lang.exception.NestableRuntimeException;
 
 /**
- * <p>Thrown when it is impossible or undesirable to consume or throw a checked exception.</p>
+ * <p>
+ * Thrown when it is impossible or undesirable to consume or throw a checked
+ * exception.
+ * </p>
  * This exception supplements the standard exception classes by providing a more
  * semantically rich description of the problem.</p>
  * 
- * <p><code>UnhandledException</code> represents the case where a method has to deal
- * with a checked exception but does not wish to.
- * Instead, the checked exception is rethrown in this unchecked wrapper.</p>
+ * <p>
+ * <code>UnhandledException</code> represents the case where a method has to
+ * deal with a checked exception but does not wish to. Instead, the checked
+ * exception is rethrown in this unchecked wrapper.
+ * </p>
  * 
  * <pre>
  * public void foo() {
- *   try {
- *     // do something that throws IOException
- *   } catch (IOException ex) {
- *     // don't want to or can't throw IOException from foo()
- *     throw new UnhandledException(ex);
- *   }
+ *     try {
+ *         // do something that throws IOException
+ *     } catch (IOException ex) {
+ *         // don't want to or can't throw IOException from foo()
+ *         throw new UnhandledException(ex);
+ *     }
  * }
  * </pre>
- *
+ * 
  * @author Matthew Hawthorne
  * @since 2.0
  * @version $Id: UnhandledException.java 437554 2006-08-28 06:21:41Z bayard $
@@ -53,8 +58,9 @@ public class UnhandledException extends NestableRuntimeException {
 
     /**
      * Constructs the exception using a cause.
-     *
-     * @param cause  the underlying cause
+     * 
+     * @param cause
+     *            the underlying cause
      */
     public UnhandledException(Throwable cause) {
         super(cause);
@@ -62,9 +68,11 @@ public class UnhandledException extends NestableRuntimeException {
 
     /**
      * Constructs the exception using a message and cause.
-     *
-     * @param message  the message to use
-     * @param cause  the underlying cause
+     * 
+     * @param message
+     *            the message to use
+     * @param cause
+     *            the underlying cause
      */
     public UnhandledException(String message, Throwable cause) {
         super(message, cause);

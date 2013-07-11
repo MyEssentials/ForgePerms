@@ -48,8 +48,10 @@ public class CompositeFormat extends Format {
      * Create a format that points its parseObject method to one implementation
      * and its format method to another.
      * 
-     * @param parser implementation
-     * @param formatter implementation
+     * @param parser
+     *            implementation
+     * @param formatter
+     *            implementation
      */
     public CompositeFormat(Format parser, Format formatter) {
         this.parser = parser;
@@ -59,12 +61,16 @@ public class CompositeFormat extends Format {
     /**
      * Uses the formatter Format instance.
      * 
-     * @param obj the object to format
-     * @param toAppendTo the {@link StringBuffer} to append to
-     * @param pos the FieldPosition to use (or ignore).
+     * @param obj
+     *            the object to format
+     * @param toAppendTo
+     *            the {@link StringBuffer} to append to
+     * @param pos
+     *            the FieldPosition to use (or ignore).
      * @return <code>toAppendTo</code>
      * @see Format#format(Object, StringBuffer, FieldPosition)
      */
+    @Override
     public StringBuffer format(Object obj, StringBuffer toAppendTo,
             FieldPosition pos) {
         return formatter.format(obj, toAppendTo, pos);
@@ -73,13 +79,16 @@ public class CompositeFormat extends Format {
     /**
      * Uses the parser Format instance.
      * 
-     * @param source the String source
-     * @param pos the ParsePosition containing the position to parse from, will
+     * @param source
+     *            the String source
+     * @param pos
+     *            the ParsePosition containing the position to parse from, will
      *            be updated according to parsing success (index) or failure
      *            (error index)
      * @return the parsed Object
      * @see Format#parseObject(String, ParsePosition)
      */
+    @Override
     public Object parseObject(String source, ParsePosition pos) {
         return parser.parseObject(source, pos);
     }
@@ -90,7 +99,7 @@ public class CompositeFormat extends Format {
      * @return parser Format implementation
      */
     public Format getParser() {
-        return this.parser;
+        return parser;
     }
 
     /**
@@ -99,15 +108,17 @@ public class CompositeFormat extends Format {
      * @return formatter Format implementation
      */
     public Format getFormatter() {
-        return this.formatter;
+        return formatter;
     }
 
     /**
      * Utility method to parse and then reformat a String.
      * 
-     * @param input String to reformat
+     * @param input
+     *            String to reformat
      * @return A reformatted String
-     * @throws ParseException thrown by parseObject(String) call
+     * @throws ParseException
+     *             thrown by parseObject(String) call
      */
     public String reformat(String input) throws ParseException {
         return format(parseObject(input));

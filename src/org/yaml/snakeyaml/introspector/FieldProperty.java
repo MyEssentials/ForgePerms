@@ -45,8 +45,8 @@ public class FieldProperty extends GenericProperty {
         try {
             return field.get(object);
         } catch (Exception e) {
-            throw new YAMLException("Unable to access field " + field.getName() + " on object "
-                    + object + " : " + e);
+            throw new YAMLException("Unable to access field " + field.getName()
+                    + " on object " + object + " : " + e);
         }
     }
 }

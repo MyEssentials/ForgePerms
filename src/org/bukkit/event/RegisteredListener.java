@@ -10,7 +10,9 @@ public class RegisteredListener {
     private final EventExecutor executor;
     private final boolean ignoreCancelled;
 
-    public RegisteredListener(final Listener listener, final EventExecutor executor, final EventPriority priority, final Object plugin, final boolean ignoreCancelled) {
+    public RegisteredListener(final Listener listener,
+            final EventExecutor executor, final EventPriority priority,
+            final Object plugin, final boolean ignoreCancelled) {
         this.listener = listener;
         this.priority = priority;
         this.plugin = plugin;
@@ -20,7 +22,7 @@ public class RegisteredListener {
 
     /**
      * Gets the listener for this registration
-     *
+     * 
      * @return Registered Listener
      */
     public Listener getListener() {
@@ -29,7 +31,7 @@ public class RegisteredListener {
 
     /**
      * Gets the plugin for this registration
-     *
+     * 
      * @return Registered Plugin
      */
     public Object getPlugin() {
@@ -38,7 +40,7 @@ public class RegisteredListener {
 
     /**
      * Gets the priority for this registration
-     *
+     * 
      * @return Registered Priority
      */
     public EventPriority getPriority() {
@@ -47,22 +49,24 @@ public class RegisteredListener {
 
     /**
      * Calls the event executor
-     *
-     * @param event The event
-     * @throws EventException If an event handler throws an exception.
+     * 
+     * @param event
+     *            The event
+     * @throws EventException
+     *             If an event handler throws an exception.
      */
     public void callEvent(final Event event) throws EventException {
-        if (event instanceof Cancellable){
-            if (((Cancellable) event).isCancelled() && isIgnoringCancelled()){
+        if (event instanceof Cancellable) {
+            if (((Cancellable) event).isCancelled() && isIgnoringCancelled()) {
                 return;
             }
         }
         executor.execute(listener, event);
     }
 
-     /**
+    /**
      * Whether this listener accepts cancelled events
-     *
+     * 
      * @return True when ignoring cancelled events
      */
     public boolean isIgnoringCancelled() {

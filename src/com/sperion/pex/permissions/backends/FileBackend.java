@@ -41,222 +41,242 @@ import com.sperion.pex.permissions.backends.file.FileGroup;
 import com.sperion.pex.permissions.backends.file.FileUser;
 
 /**
- *
+ * 
  * @author code
  */
 public class FileBackend extends PermissionBackend {
 
-	public final static char PATH_SEPARATOR = '/';
-	public FileConfiguration permissions;
-	public File permissionsFile;
+    public final static char PATH_SEPARATOR = '/';
+    public FileConfiguration permissions;
+    public File permissionsFile;
 
-	public FileBackend(PermissionManager manager, net.minecraftforge.common.Configuration config) {
-		super(manager, config);
-	}
+    public FileBackend(PermissionManager manager,
+            net.minecraftforge.common.Configuration config) {
+        super(manager, config);
+    }
 
-	@Override
-	public void initialize() {
-		String permissionFilename = config.get("permissions", "backends_file_file", "permissions.yml").getString();
+    @Override
+    public void initialize() {
+        String permissionFilename = config.get("permissions",
+                "backends_file_file", "permissions.yml").getString();
 
-		String baseDir = config.get("permissions", "basedir", "config").getString();
+        String baseDir = config.get("permissions", "basedir", "config")
+                .getString();
 
-		if (baseDir.contains("\\") && !"\\".equals(File.separator)) {
-			baseDir = baseDir.replace("\\", File.separator);
-		}
+        if (baseDir.contains("\\") && !"\\".equals(File.separator)) {
+            baseDir = baseDir.replace("\\", File.separator);
+        }
 
-		File baseDirectory = new File(baseDir);
-		if (!baseDirectory.exists()) {
-			baseDirectory.mkdirs();
-		}
+        File baseDirectory = new File(baseDir);
+        if (!baseDirectory.exists()) {
+            baseDirectory.mkdirs();
+        }
 
-		this.permissionsFile = new File(baseDir, permissionFilename);
+        permissionsFile = new File(baseDir, permissionFilename);
 
-		this.reload();
+        this.reload();
 
-		if (!permissionsFile.exists()) {
-			try {
-				permissionsFile.createNewFile();
+        if (!permissionsFile.exists()) {
+            try {
+                permissionsFile.createNewFile();
 
-				// Load default permissions
-				permissions.set("groups/default/default", true);
+                // Load default permissions
+                permissions.set("groups/default/default", true);
 
+                List<String> defaultPermissions = new LinkedList<String>();
+                // Specify here default permissions
+                defaultPermissions.add("modifyworld.*");
 
-				List<String> defaultPermissions = new LinkedList<String>();
-				// Specify here default permissions
-				defaultPermissions.add("modifyworld.*");
+                permissions.set("groups/default/permissions",
+                        defaultPermissions);
 
-				permissions.set("groups/default/permissions", defaultPermissions);
+                this.save();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 
-				this.save();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-		}
-	}
+    @Override
+    public String[] getWorldInheritance(String world) {
+        if (world != null && !world.isEmpty()) {
+            List<String> parentWorlds = permissions.getStringList(buildPath(
+                    "worlds", world, "/inheritance"));
+            if (parentWorlds != null) {
+                return parentWorlds.toArray(new String[parentWorlds.size()]);
+            }
+        }
 
-	@Override
-	public String[] getWorldInheritance(String world) {
-		if (world != null && !world.isEmpty()) {
-			List<String> parentWorlds = this.permissions.getStringList(buildPath("worlds", world, "/inheritance"));
-			if (parentWorlds != null) {
-				return parentWorlds.toArray(new String[parentWorlds.size()]);
-			}
-		}
+        return new String[0];
+    }
 
-		return new String[0];
-	}
+    @Override
+    public void setWorldInheritance(String world, String[] parentWorlds) {
+        if (world == null || world.isEmpty()) {
+            return;
+        }
 
-	@Override
-	public void setWorldInheritance(String world, String[] parentWorlds) {
-		if (world == null || world.isEmpty()) {
-			return;
-		}
+        permissions.set(buildPath("worlds", world, "inheritance"), Arrays
+                .asList(parentWorlds));
+        this.save();
+    }
 
-		this.permissions.set(buildPath("worlds", world,  "inheritance"), Arrays.asList(parentWorlds));
-		this.save();
-	}
+    @Override
+    public PermissionUser getUser(String userName) {
+        return new FileUser(userName, manager, this);
+    }
 
-	@Override
-	public PermissionUser getUser(String userName) {
-		return new FileUser(userName, manager, this);
-	}
+    @Override
+    public PermissionGroup getGroup(String groupName) {
+        return new FileGroup(groupName, manager, this);
+    }
 
-	@Override
-	public PermissionGroup getGroup(String groupName) {
-		return new FileGroup(groupName, manager, this);
-	}
+    @Override
+    public PermissionGroup getDefaultGroup(String worldName) {
+        ConfigurationSection groups = permissions
+                .getConfigurationSection("groups");
 
-	@Override
-	public PermissionGroup getDefaultGroup(String worldName) {
-		ConfigurationSection groups = this.permissions.getConfigurationSection("groups");
+        if (groups == null) {
+            throw new RuntimeException(
+                    "No groups defined. Check your permissions file.");
+        }
 
-		if (groups == null) {
-			throw new RuntimeException("No groups defined. Check your permissions file.");
-		}
+        String defaultGroupProperty = "default";
+        if (worldName != null) {
+            defaultGroupProperty = buildPath("worlds", worldName,
+                    defaultGroupProperty);
+        }
 
-		String defaultGroupProperty = "default";
-		if (worldName != null) {
-			defaultGroupProperty = buildPath("worlds", worldName, defaultGroupProperty);
-		}
+        for (Map.Entry<String, Object> entry : groups.getValues(false)
+                .entrySet()) {
+            if (entry.getValue() instanceof ConfigurationSection) {
+                ConfigurationSection groupSection = (ConfigurationSection) entry
+                        .getValue();
 
-		for (Map.Entry<String, Object> entry : groups.getValues(false).entrySet()) {
-			if (entry.getValue() instanceof ConfigurationSection) {
-				ConfigurationSection groupSection = (ConfigurationSection) entry.getValue();
+                if (groupSection.getBoolean(defaultGroupProperty, false)) {
+                    return manager.getGroup(entry.getKey());
+                }
+            }
+        }
 
-				if (groupSection.getBoolean(defaultGroupProperty, false)) {
-					return this.manager.getGroup(entry.getKey());
-				}
-			}
-		}
+        if (worldName == null) {
+            throw new RuntimeException(
+                    "Default user group is not defined. Please select one using the \"default: true\" property");
+        }
 
-		if (worldName == null) {
-			throw new RuntimeException("Default user group is not defined. Please select one using the \"default: true\" property");
-		}
+        return null;
+    }
 
-		return null;
-	}
+    @Override
+    public void setDefaultGroup(PermissionGroup group, String worldName) {
+        ConfigurationSection groups = permissions
+                .getConfigurationSection("groups");
 
-	@Override
-	public void setDefaultGroup(PermissionGroup group, String worldName) {
-		ConfigurationSection groups = this.permissions.getConfigurationSection("groups");
+        String defaultGroupProperty = "default";
+        if (worldName != null) {
+            defaultGroupProperty = buildPath("worlds", worldName,
+                    defaultGroupProperty);
+        }
 
-		String defaultGroupProperty = "default";
-		if (worldName != null) {
-			defaultGroupProperty = buildPath("worlds", worldName, defaultGroupProperty);
-		}
+        for (Map.Entry<String, Object> entry : groups.getValues(false)
+                .entrySet()) {
+            if (entry.getValue() instanceof ConfigurationSection) {
+                ConfigurationSection groupSection = (ConfigurationSection) entry
+                        .getValue();
 
-		for (Map.Entry<String, Object> entry : groups.getValues(false).entrySet()) {
-			if (entry.getValue() instanceof ConfigurationSection) {
-				ConfigurationSection groupSection = (ConfigurationSection) entry.getValue();
+                groupSection.set(defaultGroupProperty, false);
 
-				groupSection.set(defaultGroupProperty, false);
+                if (!groupSection.getName().equals(group.getName())) {
+                    groupSection.set(defaultGroupProperty, null);
+                } else {
+                    groupSection.set(defaultGroupProperty, true);
+                }
+            }
+        }
 
-				if (!groupSection.getName().equals(group.getName())) {
-					groupSection.set(defaultGroupProperty, null);
-				} else {
-					groupSection.set(defaultGroupProperty, true);
-				}
-			}
-		}
+        this.save();
+    }
 
-		this.save();
-	}
+    @Override
+    public PermissionGroup[] getGroups() {
+        List<PermissionGroup> groups = new LinkedList<PermissionGroup>();
+        ConfigurationSection groupsSection = permissions
+                .getConfigurationSection("groups");
 
-	@Override
-	public PermissionGroup[] getGroups() {
-		List<PermissionGroup> groups = new LinkedList<PermissionGroup>();
-		ConfigurationSection groupsSection = this.permissions.getConfigurationSection("groups");
+        if (groupsSection == null) {
+            return new PermissionGroup[0];
+        }
 
-		if (groupsSection == null) {
-			return new PermissionGroup[0];
-		}
+        for (String groupName : groupsSection.getKeys(false)) {
+            groups.add(manager.getGroup(groupName));
+        }
 
-		for (String groupName : groupsSection.getKeys(false)) {
-			groups.add(this.manager.getGroup(groupName));
-		}
+        Collections.sort(groups);
 
-		Collections.sort(groups);
+        return groups.toArray(new PermissionGroup[0]);
+    }
 
-		return groups.toArray(new PermissionGroup[0]);
-	}
+    @Override
+    public PermissionUser[] getRegisteredUsers() {
+        List<PermissionUser> users = new LinkedList<PermissionUser>();
+        ConfigurationSection usersSection = permissions
+                .getConfigurationSection("users");
 
-	@Override
-	public PermissionUser[] getRegisteredUsers() {
-		List<PermissionUser> users = new LinkedList<PermissionUser>();
-		ConfigurationSection usersSection = this.permissions.getConfigurationSection("users");
+        if (usersSection != null) {
+            for (String userName : usersSection.getKeys(false)) {
+                users.add(manager.getUser(userName));
+            }
+        }
 
-		if (usersSection != null) {
-			for (String userName : usersSection.getKeys(false)) {
-				users.add(this.manager.getUser(userName));
-			}
-		}
+        return users.toArray(new PermissionUser[users.size()]);
+    }
 
-		return users.toArray(new PermissionUser[users.size()]);
-	}
+    public static String buildPath(String... path) {
+        StringBuilder builder = new StringBuilder();
 
-	public static String buildPath(String... path) {
-		StringBuilder builder = new StringBuilder();
+        boolean first = true;
+        char separator = PATH_SEPARATOR; // permissions.options().pathSeparator();
 
-		boolean first = true;
-		char separator = PATH_SEPARATOR; //permissions.options().pathSeparator();
+        for (String node : path) {
+            if (!first) {
+                builder.append(separator);
+            }
 
-		for (String node : path) {
-			if (!first) {
-				builder.append(separator);
-			}
+            builder.append(node);
 
-			builder.append(node);
+            first = false;
+        }
 
-			first = false;
-		}
+        return builder.toString();
+    }
 
-		return builder.toString();
-	}
+    @Override
+    public void reload() {
+        permissions = new YamlConfiguration();
+        permissions.options().pathSeparator(PATH_SEPARATOR);
 
-	@Override
-	public void reload() {
-		permissions = new YamlConfiguration();
-		permissions.options().pathSeparator(PATH_SEPARATOR);
-				
-		try {
-			permissions.load(permissionsFile);
-		} catch (FileNotFoundException e) {
-			// do nothing
-		} catch (Throwable e) {
-			throw new IllegalStateException("Error loading permissions file", e);
-		}
-	}
+        try {
+            permissions.load(permissionsFile);
+        } catch (FileNotFoundException e) {
+            // do nothing
+        } catch (Throwable e) {
+            throw new IllegalStateException("Error loading permissions file", e);
+        }
+    }
 
-	public void save() {
-		try {
-			this.permissions.save(permissionsFile);
-		} catch (IOException e) {
-			Logger.getLogger("Minecraft").severe("[PermissionsEx] Error during saving permissions file: " + e.getMessage());
-		}
-	}
+    public void save() {
+        try {
+            permissions.save(permissionsFile);
+        } catch (IOException e) {
+            Logger.getLogger("Minecraft").severe(
+                    "[PermissionsEx] Error during saving permissions file: "
+                            + e.getMessage());
+        }
+    }
 
-	@Override
-	public void dumpData(OutputStreamWriter writer) throws IOException {
-		throw new UnsupportedOperationException("Sorry, data dumping is broken!");
-	}
+    @Override
+    public void dumpData(OutputStreamWriter writer) throws IOException {
+        throw new UnsupportedOperationException(
+                "Sorry, data dumping is broken!");
+    }
 }

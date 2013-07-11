@@ -54,8 +54,8 @@ public class Composer {
     public Composer(Parser parser, Resolver resolver) {
         this.parser = parser;
         this.resolver = resolver;
-        this.anchors = new HashMap<String, Node>();
-        this.recursiveNodes = new HashSet<Node>();
+        anchors = new HashMap<String, Node>();
+        recursiveNodes = new HashSet<Node>();
     }
 
     /**
@@ -107,8 +107,10 @@ public class Composer {
         // Ensure that the stream contains no more documents.
         if (!parser.checkEvent(Event.ID.StreamEnd)) {
             Event event = parser.getEvent();
-            throw new ComposerException("expected a single document in the stream",
-                    document.getStartMark(), "but found another document", event.getStartMark());
+            throw new ComposerException(
+                    "expected a single document in the stream", document
+                            .getStartMark(), "but found another document",
+                    event.getStartMark());
         }
         // Drop the STREAM-END event.
         parser.getEvent();
@@ -122,7 +124,7 @@ public class Composer {
         Node node = composeNode(null);
         // Drop the DOCUMENT-END event.
         parser.getEvent();
-        this.anchors.clear();
+        anchors.clear();
         recursiveNodes.clear();
         return node;
     }
@@ -133,8 +135,8 @@ public class Composer {
             AliasEvent event = (AliasEvent) parser.getEvent();
             String anchor = event.getAnchor();
             if (!anchors.containsKey(anchor)) {
-                throw new ComposerException(null, null, "found undefined alias " + anchor,
-                        event.getStartMark());
+                throw new ComposerException(null, null,
+                        "found undefined alias " + anchor, event.getStartMark());
             }
             Node result = anchors.get(anchor);
             if (recursiveNodes.remove(result)) {
@@ -146,9 +148,9 @@ public class Composer {
         String anchor = null;
         anchor = event.getAnchor();
         if (anchor != null && anchors.containsKey(anchor)) {
-            throw new ComposerException("found duplicate anchor " + anchor + "; first occurence",
-                    this.anchors.get(anchor).getStartMark(), "second occurence",
-                    event.getStartMark());
+            throw new ComposerException("found duplicate anchor " + anchor
+                    + "; first occurence", anchors.get(anchor).getStartMark(),
+                    "second occurence", event.getStartMark());
         }
         Node node = null;
         if (parser.checkEvent(Event.ID.Scalar)) {
@@ -168,14 +170,14 @@ public class Composer {
         boolean resolved = false;
         Tag nodeTag;
         if (tag == null || tag.equals("!")) {
-            nodeTag = resolver.resolve(NodeId.scalar, ev.getValue(), ev.getImplicit()
-                    .canOmitTagInPlainScalar());
+            nodeTag = resolver.resolve(NodeId.scalar, ev.getValue(), ev
+                    .getImplicit().canOmitTagInPlainScalar());
             resolved = true;
         } else {
             nodeTag = new Tag(tag);
         }
-        Node node = new ScalarNode(nodeTag, resolved, ev.getValue(), ev.getStartMark(),
-                ev.getEndMark(), ev.getStyle());
+        Node node = new ScalarNode(nodeTag, resolved, ev.getValue(), ev
+                .getStartMark(), ev.getEndMark(), ev.getStyle());
         if (anchor != null) {
             anchors.put(anchor, node);
         }
@@ -188,7 +190,8 @@ public class Composer {
         Tag nodeTag;
         boolean resolved = false;
         if (tag == null || tag.equals("!")) {
-            nodeTag = resolver.resolve(NodeId.sequence, null, startEvent.getImplicit());
+            nodeTag = resolver.resolve(NodeId.sequence, null, startEvent
+                    .getImplicit());
             resolved = true;
         } else {
             nodeTag = new Tag(tag);
@@ -199,10 +202,8 @@ public class Composer {
         if (anchor != null) {
             anchors.put(anchor, node);
         }
-        int index = 0;
         while (!parser.checkEvent(Event.ID.SequenceEnd)) {
             children.add(composeNode(node));
-            index++;
         }
         Event endEvent = parser.getEvent();
         node.setEndMark(endEvent.getEndMark());
@@ -215,15 +216,16 @@ public class Composer {
         Tag nodeTag;
         boolean resolved = false;
         if (tag == null || tag.equals("!")) {
-            nodeTag = resolver.resolve(NodeId.mapping, null, startEvent.getImplicit());
+            nodeTag = resolver.resolve(NodeId.mapping, null, startEvent
+                    .getImplicit());
             resolved = true;
         } else {
             nodeTag = new Tag(tag);
         }
 
         final List<NodeTuple> children = new ArrayList<NodeTuple>();
-        MappingNode node = new MappingNode(nodeTag, resolved, children, startEvent.getStartMark(),
-                null, startEvent.getFlowStyle());
+        MappingNode node = new MappingNode(nodeTag, resolved, children,
+                startEvent.getStartMark(), null, startEvent.getFlowStyle());
         if (anchor != null) {
             anchors.put(anchor, node);
         }

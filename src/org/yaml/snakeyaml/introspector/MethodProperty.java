@@ -35,12 +35,12 @@ public class MethodProperty extends GenericProperty {
     private final boolean writable;
 
     public MethodProperty(PropertyDescriptor property) {
-        super(property.getName(), property.getPropertyType(),
-                property.getReadMethod() == null ? null : property.getReadMethod()
-                        .getGenericReturnType());
+        super(property.getName(), property.getPropertyType(), property
+                .getReadMethod() == null ? null : property.getReadMethod()
+                .getGenericReturnType());
         this.property = property;
-        this.readable = property.getReadMethod() != null;
-        this.writable = property.getWriteMethod() != null;
+        readable = property.getReadMethod() != null;
+        writable = property.getWriteMethod() != null;
     }
 
     @Override
@@ -54,8 +54,8 @@ public class MethodProperty extends GenericProperty {
             property.getReadMethod().setAccessible(true);// issue 50
             return property.getReadMethod().invoke(object);
         } catch (Exception e) {
-            throw new YAMLException("Unable to find getter for property '" + property.getName()
-                    + "' on object " + object + ":" + e);
+            throw new YAMLException("Unable to find getter for property '"
+                    + property.getName() + "' on object " + object + ":" + e);
         }
     }
 

@@ -31,8 +31,8 @@ public final class ScalarEvent extends NodeEvent {
     // and non-plain style correspondingly.
     private final ImplicitTuple implicit;
 
-    public ScalarEvent(String anchor, String tag, ImplicitTuple implicit, String value,
-            Mark startMark, Mark endMark, Character style) {
+    public ScalarEvent(String anchor, String tag, ImplicitTuple implicit,
+            String value, Mark startMark, Mark endMark, Character style) {
         super(anchor, startMark, endMark);
         this.tag = tag;
         this.implicit = implicit;
@@ -47,7 +47,7 @@ public final class ScalarEvent extends NodeEvent {
      *         is available.
      */
     public String getTag() {
-        return this.tag;
+        return tag;
     }
 
     /**
@@ -70,7 +70,7 @@ public final class ScalarEvent extends NodeEvent {
      * @return Style of the scalar.
      */
     public Character getStyle() {
-        return this.style;
+        return style;
     }
 
     /**
@@ -82,16 +82,17 @@ public final class ScalarEvent extends NodeEvent {
      * @return Value as Unicode string.
      */
     public String getValue() {
-        return this.value;
+        return value;
     }
 
     public ImplicitTuple getImplicit() {
-        return this.implicit;
+        return implicit;
     }
 
     @Override
     protected String getArguments() {
-        return super.getArguments() + ", tag=" + tag + ", " + implicit + ", value=" + value;
+        return super.getArguments() + ", tag=" + tag + ", " + implicit
+                + ", value=" + value;
     }
 
     @Override

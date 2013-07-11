@@ -75,23 +75,24 @@ public final class Tag implements Comparable<Tag> {
         } else if (tag.length() == 0) {
             throw new IllegalArgumentException("Tag must not be empty.");
         } else if (tag.trim().length() != tag.length()) {
-            throw new IllegalArgumentException("Tag must not contain leading or trailing spaces.");
+            throw new IllegalArgumentException(
+                    "Tag must not contain leading or trailing spaces.");
         }
-        this.value = UriEncoder.encode(tag);
+        value = UriEncoder.encode(tag);
     }
 
     public Tag(Class<? extends Object> clazz) {
         if (clazz == null) {
             throw new NullPointerException("Class for tag must be provided.");
         }
-        this.value = Tag.PREFIX + UriEncoder.encode(clazz.getName());
+        value = Tag.PREFIX + UriEncoder.encode(clazz.getName());
     }
 
     public Tag(URI uri) {
         if (uri == null) {
             throw new NullPointerException("URI for tag must be provided.");
         }
-        this.value = uri.toASCIIString();
+        value = uri.toASCIIString();
     }
 
     public String getValue() {
@@ -166,6 +167,7 @@ public final class Tag implements Comparable<Tag> {
         return value.equals(Tag.PREFIX + clazz.getName());
     }
 
+    @Override
     public int compareTo(Tag o) {
         return value.compareTo(o.getValue());
     }

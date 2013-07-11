@@ -32,7 +32,7 @@ public final class TypeDescription {
     private Map<String, Class<? extends Object>> valueProperties;
 
     public TypeDescription(Class<? extends Object> clazz, Tag tag) {
-        this.type = clazz;
+        type = clazz;
         this.tag = tag;
         listProperties = new HashMap<String, Class<? extends Object>>();
         keyProperties = new HashMap<String, Class<? extends Object>>();
@@ -88,7 +88,8 @@ public final class TypeDescription {
      * @param type
      *            class of List values
      */
-    public void putListPropertyType(String property, Class<? extends Object> type) {
+    public void putListPropertyType(String property,
+            Class<? extends Object> type) {
         listProperties.put(property, type);
     }
 
@@ -113,8 +114,8 @@ public final class TypeDescription {
      * @param value
      *            class of values in Map
      */
-    public void putMapPropertyType(String property, Class<? extends Object> key,
-            Class<? extends Object> value) {
+    public void putMapPropertyType(String property,
+            Class<? extends Object> key, Class<? extends Object> value) {
         keyProperties.put(property, key);
         valueProperties.put(property, value);
     }

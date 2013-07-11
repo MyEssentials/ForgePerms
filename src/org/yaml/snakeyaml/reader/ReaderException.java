@@ -23,7 +23,8 @@ public class ReaderException extends YAMLException {
     private final char character;
     private final int position;
 
-    public ReaderException(String name, int position, char character, String message) {
+    public ReaderException(String name, int position, char character,
+            String message) {
         super(message);
         this.name = name;
         this.character = character;
@@ -45,7 +46,7 @@ public class ReaderException extends YAMLException {
     @Override
     public String toString() {
         return "unacceptable character '" + character + "' (0x"
-                + Integer.toHexString((int) character).toUpperCase() + ") " + getMessage()
-                + "\nin \"" + name + "\", position " + position;
+                + Integer.toHexString(character).toUpperCase() + ") "
+                + getMessage() + "\nin \"" + name + "\", position " + position;
     }
 }

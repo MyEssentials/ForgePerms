@@ -6,7 +6,8 @@ import java.util.Random;
  * Generates simplex-based noise.
  * <p />
  * This is a modified version of the freely published version in the paper by
- * Stefan Gustavson at http://staffwww.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
+ * Stefan Gustavson at
+ * http://staffwww.itn.liu.se/~stegu/simplexnoise/simplexnoise.pdf
  */
 public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     protected static final double SQRT_3 = Math.sqrt(3);
@@ -21,23 +22,34 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     protected static final double G42 = G4 * 2.0;
     protected static final double G43 = G4 * 3.0;
     protected static final double G44 = G4 * 4.0 - 1.0;
-    protected static final int grad4[][] = {{0, 1, 1, 1}, {0, 1, 1, -1}, {0, 1, -1, 1}, {0, 1, -1, -1},
-        {0, -1, 1, 1}, {0, -1, 1, -1}, {0, -1, -1, 1}, {0, -1, -1, -1},
-        {1, 0, 1, 1}, {1, 0, 1, -1}, {1, 0, -1, 1}, {1, 0, -1, -1},
-        {-1, 0, 1, 1}, {-1, 0, 1, -1}, {-1, 0, -1, 1}, {-1, 0, -1, -1},
-        {1, 1, 0, 1}, {1, 1, 0, -1}, {1, -1, 0, 1}, {1, -1, 0, -1},
-        {-1, 1, 0, 1}, {-1, 1, 0, -1}, {-1, -1, 0, 1}, {-1, -1, 0, -1},
-        {1, 1, 1, 0}, {1, 1, -1, 0}, {1, -1, 1, 0}, {1, -1, -1, 0},
-        {-1, 1, 1, 0}, {-1, 1, -1, 0}, {-1, -1, 1, 0}, {-1, -1, -1, 0}};
-    protected static final int simplex[][] = {
-        {0, 1, 2, 3}, {0, 1, 3, 2}, {0, 0, 0, 0}, {0, 2, 3, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {1, 2, 3, 0},
-        {0, 2, 1, 3}, {0, 0, 0, 0}, {0, 3, 1, 2}, {0, 3, 2, 1}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {1, 3, 2, 0},
-        {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
-        {1, 2, 0, 3}, {0, 0, 0, 0}, {1, 3, 0, 2}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {2, 3, 0, 1}, {2, 3, 1, 0},
-        {1, 0, 2, 3}, {1, 0, 3, 2}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {2, 0, 3, 1}, {0, 0, 0, 0}, {2, 1, 3, 0},
-        {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},
-        {2, 0, 1, 3}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 0, 1, 2}, {3, 0, 2, 1}, {0, 0, 0, 0}, {3, 1, 2, 0},
-        {2, 1, 0, 3}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {3, 1, 0, 2}, {0, 0, 0, 0}, {3, 2, 0, 1}, {3, 2, 1, 0}};
+    protected static final int grad4[][] = { { 0, 1, 1, 1 }, { 0, 1, 1, -1 },
+            { 0, 1, -1, 1 }, { 0, 1, -1, -1 }, { 0, -1, 1, 1 },
+            { 0, -1, 1, -1 }, { 0, -1, -1, 1 }, { 0, -1, -1, -1 },
+            { 1, 0, 1, 1 }, { 1, 0, 1, -1 }, { 1, 0, -1, 1 }, { 1, 0, -1, -1 },
+            { -1, 0, 1, 1 }, { -1, 0, 1, -1 }, { -1, 0, -1, 1 },
+            { -1, 0, -1, -1 }, { 1, 1, 0, 1 }, { 1, 1, 0, -1 },
+            { 1, -1, 0, 1 }, { 1, -1, 0, -1 }, { -1, 1, 0, 1 },
+            { -1, 1, 0, -1 }, { -1, -1, 0, 1 }, { -1, -1, 0, -1 },
+            { 1, 1, 1, 0 }, { 1, 1, -1, 0 }, { 1, -1, 1, 0 }, { 1, -1, -1, 0 },
+            { -1, 1, 1, 0 }, { -1, 1, -1, 0 }, { -1, -1, 1, 0 },
+            { -1, -1, -1, 0 } };
+    protected static final int simplex[][] = { { 0, 1, 2, 3 }, { 0, 1, 3, 2 },
+            { 0, 0, 0, 0 }, { 0, 2, 3, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 1, 2, 3, 0 }, { 0, 2, 1, 3 }, { 0, 0, 0, 0 },
+            { 0, 3, 1, 2 }, { 0, 3, 2, 1 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 1, 3, 2, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 1, 2, 0, 3 }, { 0, 0, 0, 0 },
+            { 1, 3, 0, 2 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 },
+            { 2, 3, 0, 1 }, { 2, 3, 1, 0 }, { 1, 0, 2, 3 }, { 1, 0, 3, 2 },
+            { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 3, 1 },
+            { 0, 0, 0, 0 }, { 2, 1, 3, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 2, 0, 1, 3 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 3, 0, 1, 2 }, { 3, 0, 2, 1 },
+            { 0, 0, 0, 0 }, { 3, 1, 2, 0 }, { 2, 1, 0, 3 }, { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 3, 1, 0, 2 }, { 0, 0, 0, 0 },
+            { 3, 2, 0, 1 }, { 3, 2, 1, 0 } };
     protected static double offsetW;
     private static final SimplexNoiseGenerator instance = new SimplexNoiseGenerator();
 
@@ -47,8 +59,9 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
 
     /**
      * Creates a seeded simplex noise generator for the given seed
-     *
-     * @param seed Seed to construct this generator for
+     * 
+     * @param seed
+     *            Seed to construct this generator for
      */
     public SimplexNoiseGenerator(long seed) {
         this(new Random(seed));
@@ -56,8 +69,9 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
 
     /**
      * Creates a seeded simplex noise generator with the given Random
-     *
-     * @param rand Random to construct with
+     * 
+     * @param rand
+     *            Random to construct with
      */
     public SimplexNoiseGenerator(Random rand) {
         super(rand);
@@ -77,9 +91,11 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     }
 
     /**
-     * Computes and returns the 1D unseeded simplex noise for the given coordinates in 1D space
-     *
-     * @param xin X coordinate
+     * Computes and returns the 1D unseeded simplex noise for the given
+     * coordinates in 1D space
+     * 
+     * @param xin
+     *            X coordinate
      * @return Noise at given location, from range -1 to 1
      */
     public static double getNoise(double xin) {
@@ -87,10 +103,13 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     }
 
     /**
-     * Computes and returns the 2D unseeded simplex noise for the given coordinates in 2D space
-     *
-     * @param xin X coordinate
-     * @param yin Y coordinate
+     * Computes and returns the 2D unseeded simplex noise for the given
+     * coordinates in 2D space
+     * 
+     * @param xin
+     *            X coordinate
+     * @param yin
+     *            Y coordinate
      * @return Noise at given location, from range -1 to 1
      */
     public static double getNoise(double xin, double yin) {
@@ -98,11 +117,15 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     }
 
     /**
-     * Computes and returns the 3D unseeded simplex noise for the given coordinates in 3D space
-     *
-     * @param xin X coordinate
-     * @param yin Y coordinate
-     * @param zin Z coordinate
+     * Computes and returns the 3D unseeded simplex noise for the given
+     * coordinates in 3D space
+     * 
+     * @param xin
+     *            X coordinate
+     * @param yin
+     *            Y coordinate
+     * @param zin
+     *            Z coordinate
      * @return Noise at given location, from range -1 to 1
      */
     public static double getNoise(double xin, double yin, double zin) {
@@ -110,12 +133,17 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     }
 
     /**
-     * Computes and returns the 4D simplex noise for the given coordinates in 4D space
-     *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param w W coordinate
+     * Computes and returns the 4D simplex noise for the given coordinates in 4D
+     * space
+     * 
+     * @param x
+     *            X coordinate
+     * @param y
+     *            Y coordinate
+     * @param z
+     *            Z coordinate
+     * @param w
+     *            W coordinate
      * @return Noise at given location, from range -1 to 1
      */
     public static double getNoise(double x, double y, double z, double w) {
@@ -131,7 +159,8 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
         double n0, n1, n2, n3; // Noise contributions from the four corners
 
         // Skew the input space to determine which simplex cell we're in
-        double s = (xin + yin + zin) * F3; // Very nice and simple skew factor for 3D
+        double s = (xin + yin + zin) * F3; // Very nice and simple skew factor
+                                           // for 3D
         int i = floor(xin + s);
         int j = floor(yin + s);
         int k = floor(zin + s);
@@ -143,10 +172,12 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
         double y0 = yin - Y0;
         double z0 = zin - Z0;
 
-        // For the 3D case, the simplex shape is a slightly irregular tetrahedron.
+        // For the 3D case, the simplex shape is a slightly irregular
+        // tetrahedron.
 
         // Determine which simplex we are in.
-        int i1, j1, k1; // Offsets for second corner of simplex in (i,j,k) coords
+        int i1, j1, k1; // Offsets for second corner of simplex in (i,j,k)
+                        // coords
         int i2, j2, k2; // Offsets for third corner of simplex in (i,j,k) coords
         if (x0 >= y0) {
             if (y0 >= z0) {
@@ -201,16 +232,20 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
         }
 
         // A step of (1,0,0) in (i,j,k) means a step of (1-c,-c,-c) in (x,y,z),
-        // a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z), and
-        // a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z), where
+        // a step of (0,1,0) in (i,j,k) means a step of (-c,1-c,-c) in (x,y,z),
+        // and
+        // a step of (0,0,1) in (i,j,k) means a step of (-c,-c,1-c) in (x,y,z),
+        // where
         // c = 1/6.
         double x1 = x0 - i1 + G3; // Offsets for second corner in (x,y,z) coords
         double y1 = y0 - j1 + G3;
         double z1 = z0 - k1 + G3;
-        double x2 = x0 - i2 + 2.0 * G3; // Offsets for third corner in (x,y,z) coords
+        double x2 = x0 - i2 + 2.0 * G3; // Offsets for third corner in (x,y,z)
+                                        // coords
         double y2 = y0 - j2 + 2.0 * G3;
         double z2 = z0 - k2 + 2.0 * G3;
-        double x3 = x0 - 1.0 + 3.0 * G3; // Offsets for last corner in (x,y,z) coords
+        double x3 = x0 - 1.0 + 3.0 * G3; // Offsets for last corner in (x,y,z)
+                                         // coords
         double y3 = y0 - 1.0 + 3.0 * G3;
         double z3 = z0 - 1.0 + 3.0 * G3;
 
@@ -281,7 +316,8 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
         // For the 2D case, the simplex shape is an equilateral triangle.
 
         // Determine which simplex we are in.
-        int i1, j1; // Offsets for second (middle) corner of simplex in (i,j) coords
+        int i1, j1; // Offsets for second (middle) corner of simplex in (i,j)
+                    // coords
         if (x0 > y0) {
             i1 = 1;
             j1 = 0;
@@ -295,9 +331,11 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
         // a step of (0,1) in (i,j) means a step of (-c,1-c) in (x,y), where
         // c = (3-sqrt(3))/6
 
-        double x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed coords
+        double x1 = x0 - i1 + G2; // Offsets for middle corner in (x,y) unskewed
+                                  // coords
         double y1 = y0 - j1 + G2;
-        double x2 = x0 + G22; // Offsets for last corner in (x,y) unskewed coords
+        double x2 = x0 + G22; // Offsets for last corner in (x,y) unskewed
+                              // coords
         double y2 = y0 + G22;
 
         // Work out the hashed gradient indices of the three simplex corners
@@ -313,7 +351,8 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
             n0 = 0.0;
         } else {
             t0 *= t0;
-            n0 = t0 * t0 * dot(grad3[gi0], x0, y0); // (x,y) of grad3 used for 2D gradient
+            n0 = t0 * t0 * dot(grad3[gi0], x0, y0); // (x,y) of grad3 used for
+                                                    // 2D gradient
         }
 
         double t1 = 0.5 - x1 * x1 - y1 * y1;
@@ -338,12 +377,17 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
     }
 
     /**
-     * Computes and returns the 4D simplex noise for the given coordinates in 4D space
-     *
-     * @param x X coordinate
-     * @param y Y coordinate
-     * @param z Z coordinate
-     * @param w W coordinate
+     * Computes and returns the 4D simplex noise for the given coordinates in 4D
+     * space
+     * 
+     * @param x
+     *            X coordinate
+     * @param y
+     *            Y coordinate
+     * @param z
+     *            Z coordinate
+     * @param w
+     *            W coordinate
      * @return Noise at given location, from range -1 to 1
      */
     public double noise(double x, double y, double z, double w) {
@@ -354,7 +398,8 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
 
         double n0, n1, n2, n3, n4; // Noise contributions from the five corners
 
-        // Skew the (x,y,z,w) space to determine which cell of 24 simplices we're in
+        // Skew the (x,y,z,w) space to determine which cell of 24 simplices
+        // we're in
         double s = (x + y + z + w) * F4; // Factor for 4D skewing
         int i = floor(x + s);
         int j = floor(y + s);
@@ -371,61 +416,75 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
         double z0 = z - Z0;
         double w0 = w - W0;
 
-        // For the 4D case, the simplex is a 4D shape I won't even try to describe.
+        // For the 4D case, the simplex is a 4D shape I won't even try to
+        // describe.
         // To find out which of the 24 possible simplices we're in, we need to
         // determine the magnitude ordering of x0, y0, z0 and w0.
         // The method below is a good way of finding the ordering of x,y,z,w and
         // then find the correct traversal order for the simplex we’re in.
-        // First, six pair-wise comparisons are performed between each possible pair
-        // of the four coordinates, and the results are used to add up binary bits
+        // First, six pair-wise comparisons are performed between each possible
+        // pair
+        // of the four coordinates, and the results are used to add up binary
+        // bits
         // for an integer index.
-        int c1 = (x0 > y0) ? 32 : 0;
-        int c2 = (x0 > z0) ? 16 : 0;
-        int c3 = (y0 > z0) ? 8 : 0;
-        int c4 = (x0 > w0) ? 4 : 0;
-        int c5 = (y0 > w0) ? 2 : 0;
-        int c6 = (z0 > w0) ? 1 : 0;
+        int c1 = x0 > y0 ? 32 : 0;
+        int c2 = x0 > z0 ? 16 : 0;
+        int c3 = y0 > z0 ? 8 : 0;
+        int c4 = x0 > w0 ? 4 : 0;
+        int c5 = y0 > w0 ? 2 : 0;
+        int c6 = z0 > w0 ? 1 : 0;
         int c = c1 + c2 + c3 + c4 + c5 + c6;
         int i1, j1, k1, l1; // The integer offsets for the second simplex corner
         int i2, j2, k2, l2; // The integer offsets for the third simplex corner
         int i3, j3, k3, l3; // The integer offsets for the fourth simplex corner
 
-        // simplex[c] is a 4-vector with the numbers 0, 1, 2 and 3 in some order.
-        // Many values of c will never occur, since e.g. x>y>z>w makes x<z, y<w and x<w
-        // impossible. Only the 24 indices which have non-zero entries make any sense.
-        // We use a thresholding to set the coordinates in turn from the largest magnitude.
+        // simplex[c] is a 4-vector with the numbers 0, 1, 2 and 3 in some
+        // order.
+        // Many values of c will never occur, since e.g. x>y>z>w makes x<z, y<w
+        // and x<w
+        // impossible. Only the 24 indices which have non-zero entries make any
+        // sense.
+        // We use a thresholding to set the coordinates in turn from the largest
+        // magnitude.
 
-        // The number 3 in the "simplex" array is at the position of the largest coordinate.
+        // The number 3 in the "simplex" array is at the position of the largest
+        // coordinate.
         i1 = simplex[c][0] >= 3 ? 1 : 0;
         j1 = simplex[c][1] >= 3 ? 1 : 0;
         k1 = simplex[c][2] >= 3 ? 1 : 0;
         l1 = simplex[c][3] >= 3 ? 1 : 0;
 
-        // The number 2 in the "simplex" array is at the second largest coordinate.
+        // The number 2 in the "simplex" array is at the second largest
+        // coordinate.
         i2 = simplex[c][0] >= 2 ? 1 : 0;
         j2 = simplex[c][1] >= 2 ? 1 : 0;
         k2 = simplex[c][2] >= 2 ? 1 : 0;
         l2 = simplex[c][3] >= 2 ? 1 : 0;
 
-        // The number 1 in the "simplex" array is at the second smallest coordinate.
+        // The number 1 in the "simplex" array is at the second smallest
+        // coordinate.
         i3 = simplex[c][0] >= 1 ? 1 : 0;
         j3 = simplex[c][1] >= 1 ? 1 : 0;
         k3 = simplex[c][2] >= 1 ? 1 : 0;
         l3 = simplex[c][3] >= 1 ? 1 : 0;
 
-        // The fifth corner has all coordinate offsets = 1, so no need to look that up.
+        // The fifth corner has all coordinate offsets = 1, so no need to look
+        // that up.
 
-        double x1 = x0 - i1 + G4; // Offsets for second corner in (x,y,z,w) coords
+        double x1 = x0 - i1 + G4; // Offsets for second corner in (x,y,z,w)
+                                  // coords
         double y1 = y0 - j1 + G4;
         double z1 = z0 - k1 + G4;
         double w1 = w0 - l1 + G4;
 
-        double x2 = x0 - i2 + G42; // Offsets for third corner in (x,y,z,w) coords
+        double x2 = x0 - i2 + G42; // Offsets for third corner in (x,y,z,w)
+                                   // coords
         double y2 = y0 - j2 + G42;
         double z2 = z0 - k2 + G42;
         double w2 = w0 - l2 + G42;
 
-        double x3 = x0 - i3 + G43; // Offsets for fourth corner in (x,y,z,w) coords
+        double x3 = x0 - i3 + G43; // Offsets for fourth corner in (x,y,z,w)
+                                   // coords
         double y3 = y0 - j3 + G43;
         double z3 = z0 - k3 + G43;
         double w3 = w0 - l3 + G43;
@@ -494,7 +553,7 @@ public class SimplexNoiseGenerator extends PerlinNoiseGenerator {
 
     /**
      * Gets the singleton unseeded instance of this generator
-     *
+     * 
      * @return Singleton
      */
     public static SimplexNoiseGenerator getInstance() {

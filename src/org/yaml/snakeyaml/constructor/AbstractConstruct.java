@@ -31,11 +31,14 @@ public abstract class AbstractConstruct implements Construct {
      * @see org.yaml.snakeyaml.constructor.Construct#construct2ndStep(org.yaml.snakeyaml.nodes.Node,
      *      java.lang.Object)
      */
+    @Override
     public void construct2ndStep(Node node, Object data) {
         if (node.isTwoStepsConstruction()) {
-            throw new IllegalStateException("Not Implemented in " + getClass().getName());
+            throw new IllegalStateException("Not Implemented in "
+                    + getClass().getName());
         } else {
-            throw new YAMLException("Unexpected recursive structure for Node: " + node);
+            throw new YAMLException("Unexpected recursive structure for Node: "
+                    + node);
         }
     }
 }

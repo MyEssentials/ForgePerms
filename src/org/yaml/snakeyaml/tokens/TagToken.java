@@ -26,7 +26,7 @@ public final class TagToken extends Token {
     }
 
     public TagTuple getValue() {
-        return this.value;
+        return value;
     }
 
     @Override

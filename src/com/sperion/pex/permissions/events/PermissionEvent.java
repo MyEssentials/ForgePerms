@@ -21,11 +21,10 @@ package com.sperion.pex.permissions.events;
 import org.bukkit.event.Event;
 
 /**
- *
+ * 
  * @author t3hk0d3
  */
 public abstract class PermissionEvent extends Event {
 
-	public PermissionEvent(String name) {
-	}
+    public PermissionEvent(String name) {}
 }
