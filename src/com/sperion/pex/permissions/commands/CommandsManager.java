@@ -113,8 +113,8 @@ public class CommandsManager {
         }
 
         if (selectedBinding == null) { // there is fitting handler
-            sender.sendChatToPlayer(ChatColor.RED
-                    + "Error in command syntax. Check command help.");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Error in command syntax. Check command help.");
+            //sender.sendChatToPlayer(ChatColor.RED + "Error in command syntax. Check command help.");
             return true;
         }
 
@@ -122,12 +122,9 @@ public class CommandsManager {
         if (sender instanceof EntityPlayer) { // this method are not public and
                                               // required permission
             if (!selectedBinding.checkPermissions((EntityPlayer) sender)) {
-                logger.warning("User " + ((EntityPlayer) sender).username
-                        + " tried to access chat command \""
-                        + command.getCommandName() + " " + arguments
-                        + "\", but doesn't have permission to do this.");
-                sender.sendChatToPlayer(ChatColor.RED
-                        + "Sorry, you don't have enough permissions.");
+                logger.warning("User " + ((EntityPlayer) sender).username + " tried to access chat command \"" + command.getCommandName() + " " + arguments + "\", but doesn't have permission to do this.");
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Sorry, you don't have enough permissions.");
+                //sender.sendChatToPlayer(ChatColor.RED + "Sorry, you don't have enough permissions.");
                 return true;
             }
         }
@@ -138,10 +135,10 @@ public class CommandsManager {
             if (e.getTargetException() instanceof AutoCompleteChoicesException) {
                 AutoCompleteChoicesException autocomplete = (AutoCompleteChoicesException) e
                         .getTargetException();
-                sender.sendChatToPlayer("Autocomplete for <"
-                        + autocomplete.getArgName() + ">:");
-                sender.sendChatToPlayer("    "
-                        + StringUtils.implode(autocomplete.getChoices(), "   "));
+                PermissionsEx.sendChatToPlayer(sender, "Autocomplete for <" + autocomplete.getArgName() + ">:");
+                PermissionsEx.sendChatToPlayer(sender, "    " + StringUtils.implode(autocomplete.getChoices(), "   "));
+                //sender.sendChatToPlayer("Autocomplete for <" + autocomplete.getArgName() + ">:");
+                //sender.sendChatToPlayer("    " + StringUtils.implode(autocomplete.getChoices(), "   "));
             } else {
                 throw new RuntimeException(e.getTargetException());
             }

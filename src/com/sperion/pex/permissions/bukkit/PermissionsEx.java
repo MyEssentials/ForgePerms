@@ -27,6 +27,7 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ChatMessageComponent;
 import net.minecraftforge.common.Configuration;
 
 import org.bukkit.ChatColor;
@@ -158,13 +159,14 @@ public class PermissionsEx implements IPermissions {
             return commandsManager.execute(sender, command, args);
         } else {
             if (sender instanceof EntityPlayer) {
-                sender.sendChatToPlayer("[" + ChatColor.RED + "PermissionsEx"
-                        + ChatColor.WHITE + "]");
+                sendChatToPlayer(sender, "[" + ChatColor.RED + "PermissionsEx" + ChatColor.WHITE + "]");
+                //sender.sendChatToPlayer("[" + ChatColor.RED + "PermissionsEx" + ChatColor.WHITE + "]");
 
                 return !permissionsManager.has((EntityPlayer) sender,
                         "permissions.manage");
             } else {
-                sender.sendChatToPlayer("[PermissionsEx]");
+                sendChatToPlayer(sender, "[PermissionsEx]");
+                //sender.sendChatToPlayer("[PermissionsEx]");
 
                 return false;
             }
@@ -267,5 +269,17 @@ public class PermissionsEx implements IPermissions {
 
         @Override
         public void onPlayerRespawn(EntityPlayer player) {}
+    }
+    
+    public static void sendChatToPlayer(EntityPlayer entity, String msg){
+        ChatMessageComponent component = new ChatMessageComponent();
+        component.func_111079_a(msg);
+        entity.sendChatToPlayer(component);
+    }
+    
+    public static void sendChatToPlayer(ICommandSender sender, String msg){
+        ChatMessageComponent component = new ChatMessageComponent();
+        component.func_111079_a(msg);
+        sender.sendChatToPlayer(component);
     }
 }

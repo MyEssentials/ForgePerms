@@ -43,7 +43,7 @@ public class PromotionCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group \"" + groupName
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group \"" + groupName
                     + "\" not found");
             return;
         }
@@ -54,7 +54,7 @@ public class PromotionCommands extends PermissionsCommand {
             try {
                 group.setRank(Integer.parseInt(newRank));
             } catch (NumberFormatException e) {
-                sender.sendChatToPlayer("Wrong rank. Make sure it's number.");
+                PermissionsEx.sendChatToPlayer(sender, "Wrong rank. Make sure it's number.");
             }
 
             if (args.containsKey("ladder")) {
@@ -65,10 +65,10 @@ public class PromotionCommands extends PermissionsCommand {
         int rank = group.getRank();
 
         if (rank > 0) {
-            sender.sendChatToPlayer("Group " + group.getName() + " rank is "
+            PermissionsEx.sendChatToPlayer(sender, "Group " + group.getName() + " rank is "
                     + rank + " (ladder = " + group.getRankLadder() + ")");
         } else {
-            sender.sendChatToPlayer("Group " + group.getName() + " is unranked");
+            PermissionsEx.sendChatToPlayer(sender, "Group " + group.getName() + " is unranked");
         }
     }
 
@@ -80,7 +80,7 @@ public class PromotionCommands extends PermissionsCommand {
                 userName);
 
         if (user == null) {
-            sender.sendChatToPlayer("Specified user \"" + args.get("user")
+            PermissionsEx.sendChatToPlayer(sender, "Specified user \"" + args.get("user")
                     + "\" not found!");
             return;
         }
@@ -99,7 +99,7 @@ public class PromotionCommands extends PermissionsCommand {
             if (promoter == null
                     || !promoter.has("permissions.user.promote." + ladder,
                             String.valueOf(((EntityPlayer) sender).dimension))) {
-                sender.sendChatToPlayer(ChatColor.RED
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED
                         + "You don't have enough permissions to promote on this ladder");
                 return;
             }
@@ -113,7 +113,7 @@ public class PromotionCommands extends PermissionsCommand {
             this.informPlayer(plugin, user.getName(),
                     "You have been promoted on " + targetGroup.getRankLadder()
                             + " ladder to " + targetGroup.getName() + " group");
-            sender.sendChatToPlayer("User " + user.getName() + " promoted to "
+            PermissionsEx.sendChatToPlayer(sender, "User " + user.getName() + " promoted to "
                     + targetGroup.getName() + " group");
             Logger.getLogger("Minecraft").info(
                     "User " + user.getName() + " has been promoted to "
@@ -121,7 +121,7 @@ public class PromotionCommands extends PermissionsCommand {
                             + targetGroup.getRankLadder() + " ladder by "
                             + promoterName);
         } catch (RankingException e) {
-            sender.sendChatToPlayer(ChatColor.RED + "Promotion error: "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Promotion error: "
                     + e.getMessage());
             Logger.getLogger("Minecraft").severe(
                     "Ranking Error (" + promoterName + " > "
@@ -137,7 +137,7 @@ public class PromotionCommands extends PermissionsCommand {
                 userName);
 
         if (user == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Specified user \""
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Specified user \""
                     + args.get("user") + "\" not found!");
             return;
         }
@@ -157,7 +157,7 @@ public class PromotionCommands extends PermissionsCommand {
             if (demoter == null
                     || !demoter.has("permissions.user.demote." + ladder, String
                             .valueOf(((EntityPlayer) sender).dimension))) {
-                sender.sendChatToPlayer(ChatColor.RED
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED
                         + "You don't have enough permissions to demote on this ladder");
                 return;
             }
@@ -172,7 +172,7 @@ public class PromotionCommands extends PermissionsCommand {
             this.informPlayer(plugin, user.getName(),
                     "You have been demoted on " + targetGroup.getRankLadder()
                             + " ladder to " + targetGroup.getName() + " group");
-            sender.sendChatToPlayer("User " + user.getName() + " demoted to "
+            PermissionsEx.sendChatToPlayer(sender, "User " + user.getName() + " demoted to "
                     + targetGroup.getName() + " group");
             Logger.getLogger("Minecraft").info(
                     "User " + user.getName() + " has been demoted to "
@@ -180,7 +180,7 @@ public class PromotionCommands extends PermissionsCommand {
                             + targetGroup.getRankLadder() + " ladder by "
                             + demoterName);
         } catch (RankingException e) {
-            sender.sendChatToPlayer(ChatColor.RED + "Demotion error: "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Demotion error: "
                     + e.getMessage());
             Logger.getLogger("Minecraft").severe(
                     "Ranking Error (" + demoterName + " demotes "

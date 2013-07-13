@@ -43,7 +43,7 @@ public class GroupCommands extends PermissionsCommand {
                 .getGroups();
         String worldName = this.autoCompleteWorldName(args.get("world"));
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Registered groups: ");
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Registered groups: ");
         for (PermissionGroup group : groups) {
             String rank = "";
             if (group.isRanked()) {
@@ -51,7 +51,7 @@ public class GroupCommands extends PermissionsCommand {
                         + group.getRankLadder() + ") ";
             }
 
-            sender.sendChatToPlayer(String.format("  %s %s %s %s[%s]", group
+            PermissionsEx.sendChatToPlayer(sender, String.format("  %s %s %s %s[%s]", group
                     .getName(), " #" + group.getWeight(), rank,
                     ChatColor.DARK_GREEN, StringUtils.implode(group
                             .getParentGroupsNames(worldName), ", ")));
@@ -79,7 +79,7 @@ public class GroupCommands extends PermissionsCommand {
                 args.get("group"));
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -87,12 +87,12 @@ public class GroupCommands extends PermissionsCommand {
             try {
                 group.setWeight(Integer.parseInt(args.get("weight")));
             } catch (NumberFormatException e) {
-                sender.sendChatToPlayer("Error! Weight should be integer value.");
+                PermissionsEx.sendChatToPlayer(sender, "Error! Weight should be integer value.");
                 return;
             }
         }
 
-        sender.sendChatToPlayer("Group " + group.getName() + " have "
+        PermissionsEx.sendChatToPlayer(sender, "Group " + group.getName() + " have "
                 + group.getWeight() + " calories.");
     }
 
@@ -105,13 +105,13 @@ public class GroupCommands extends PermissionsCommand {
                 args.get("group"));
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
         group.setDebug(!group.isDebug());
 
-        sender.sendChatToPlayer("Debug mode for group " + group.getName()
+        PermissionsEx.sendChatToPlayer(sender, "Debug mode for group " + group.getName()
                 + " have been " + (group.isDebug() ? "enabled" : "disabled")
                 + "!");
     }
@@ -126,7 +126,7 @@ public class GroupCommands extends PermissionsCommand {
                 args.get("group"));
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -134,7 +134,7 @@ public class GroupCommands extends PermissionsCommand {
             group.setPrefix(args.get("newprefix"), worldName);
         }
 
-        sender.sendChatToPlayer(group.getName() + "'s prefix = \""
+        PermissionsEx.sendChatToPlayer(sender, group.getName() + "'s prefix = \""
                 + group.getPrefix(worldName) + "\"");
     }
 
@@ -148,7 +148,7 @@ public class GroupCommands extends PermissionsCommand {
                 args.get("group"));
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -156,7 +156,7 @@ public class GroupCommands extends PermissionsCommand {
             group.setSuffix(args.get("newsuffix"), worldName);
         }
 
-        sender.sendChatToPlayer(group.getName() + "'s suffix is = \""
+        PermissionsEx.sendChatToPlayer(sender, group.getName() + "'s suffix is = \""
                 + group.getSuffix(worldName) + "\"");
     }
 
@@ -167,12 +167,12 @@ public class GroupCommands extends PermissionsCommand {
                 args.get("group"));
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
         if (!group.isVirtual()) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group "
                     + args.get("group") + " already exists");
             return;
         }
@@ -189,7 +189,7 @@ public class GroupCommands extends PermissionsCommand {
             group.setParentGroups(groups.toArray(new PermissionGroup[0]), null);
         }
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Group " + group.getName()
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Group " + group.getName()
                 + " created!");
 
         group.save();
@@ -204,11 +204,11 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Group " + group.getName()
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Group " + group.getName()
                 + " removed!");
 
         group.remove();
@@ -235,20 +235,20 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
         if (group.getParentGroups(worldName).length == 0) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group " + group.getName()
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group " + group.getName()
                     + " doesn't have parents");
             return;
         }
 
-        sender.sendChatToPlayer("Group " + group.getName() + " parents:");
+        PermissionsEx.sendChatToPlayer(sender, "Group " + group.getName() + " parents:");
 
         for (PermissionGroup parent : group.getParentGroups(worldName)) {
-            sender.sendChatToPlayer("  " + parent.getName());
+            PermissionsEx.sendChatToPlayer(sender, "  " + parent.getName());
         }
 
     }
@@ -263,7 +263,7 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -284,7 +284,7 @@ public class GroupCommands extends PermissionsCommand {
             group.setParentGroups(groups.toArray(new PermissionGroup[0]),
                     worldName);
 
-            sender.sendChatToPlayer(ChatColor.WHITE + "Group "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Group "
                     + group.getName() + " inheritance updated!");
 
             group.save();
@@ -301,7 +301,7 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -323,7 +323,7 @@ public class GroupCommands extends PermissionsCommand {
             group.setParentGroups(groups.toArray(new PermissionGroup[0]),
                     worldName);
 
-            sender.sendChatToPlayer(ChatColor.WHITE + "Group "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Group "
                     + group.getName() + " inheritance updated!");
 
             group.save();
@@ -340,7 +340,7 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -360,7 +360,7 @@ public class GroupCommands extends PermissionsCommand {
             group.setParentGroups(groups.toArray(new PermissionGroup[0]),
                     worldName);
 
-            sender.sendChatToPlayer(ChatColor.WHITE + "Group "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Group "
                     + group.getName() + " inheritance updated!");
 
             group.save();
@@ -386,11 +386,11 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
-        sender.sendChatToPlayer(groupName + " are member of:");
+        PermissionsEx.sendChatToPlayer(sender, groupName + " are member of:");
         printEntityInheritance(sender, group.getParentGroups());
 
         for (String world : group.getAllParentGroups().keySet()) {
@@ -398,18 +398,18 @@ public class GroupCommands extends PermissionsCommand {
                 continue;
             }
 
-            sender.sendChatToPlayer("  @" + world + ":");
+            PermissionsEx.sendChatToPlayer(sender, "  @" + world + ":");
             printEntityInheritance(sender, group.getAllParentGroups()
                     .get(world));
         }
 
-        sender.sendChatToPlayer("Group " + group.getName() + "'s permissions:");
+        PermissionsEx.sendChatToPlayer(sender, "Group " + group.getName() + "'s permissions:");
         this.sendMessage(sender, this.mapPermissions(worldName, group, 0));
 
-        sender.sendChatToPlayer("Group " + group.getName() + "'s Options: ");
+        PermissionsEx.sendChatToPlayer(sender, "Group " + group.getName() + "'s Options: ");
         for (Map.Entry<String, String> option : group.getOptions(worldName)
                 .entrySet()) {
-            sender.sendChatToPlayer("  " + option.getKey() + " = \""
+            PermissionsEx.sendChatToPlayer(sender, "  " + option.getKey() + " = \""
                     + option.getValue() + "\"");
         }
     }
@@ -424,13 +424,13 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
         group.addPermission(args.get("permission"), worldName);
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Permission \""
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Permission \""
                 + args.get("permission") + "\" added to " + group.getName()
                 + " !");
 
@@ -447,17 +447,17 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
         group.setOption(args.get("option"), args.get("value"), worldName);
 
         if (args.containsKey("value") && args.get("value").isEmpty()) {
-            sender.sendChatToPlayer(ChatColor.WHITE + "Option \""
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Option \""
                     + args.get("option") + "\" cleared!");
         } else {
-            sender.sendChatToPlayer(ChatColor.WHITE + "Option \""
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Option \""
                     + args.get("option") + "\" set!");
         }
 
@@ -474,7 +474,7 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -484,7 +484,7 @@ public class GroupCommands extends PermissionsCommand {
         group.removePermission(permission, worldName);
         group.removeTimedPermission(permission, worldName);
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Permission \"" + permission
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Permission \"" + permission
                 + "\" removed from " + group.getName() + " !");
 
         this.informGroup(plugin, group, "Your permissions have been changed");
@@ -500,7 +500,7 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group doesn't exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group doesn't exist");
             return;
         }
 
@@ -521,9 +521,9 @@ public class GroupCommands extends PermissionsCommand {
 
             group.setPermissions(permissions, worldName);
 
-            sender.sendChatToPlayer("Permissions swapped!");
+            PermissionsEx.sendChatToPlayer(sender, "Permissions swapped!");
         } catch (Throwable e) {
-            sender.sendChatToPlayer(ChatColor.RED + "Error: " + e.getMessage());
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Error: " + e.getMessage());
         }
     }
 
@@ -543,13 +543,13 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group does not exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group does not exist");
             return;
         }
 
         group.addTimedPermission(args.get("permission"), worldName, lifetime);
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Timed permission added!");
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Timed permission added!");
         this.informGroup(plugin, group, "Your permissions have been changed!");
 
         logger.info("Group " + groupName + " get timed permission \""
@@ -568,13 +568,13 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null) {
-            sender.sendChatToPlayer(ChatColor.RED + "Group does not exist");
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group does not exist");
             return;
         }
 
         group.removeTimedPermission(args.get("permission"), worldName);
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Timed permission \""
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Timed permission \""
                 + args.get("permission") + "\" removed!");
         this.informGroup(plugin, group, "Your permissions have been changed!");
     }
@@ -591,14 +591,14 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (users == null || users.length == 0) {
-            sender.sendChatToPlayer(ChatColor.RED
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED
                     + "Group doesn't exist or empty");
         }
 
-        sender.sendChatToPlayer("Group " + groupName + " users:");
+        PermissionsEx.sendChatToPlayer(sender, "Group " + groupName + " users:");
 
         for (PermissionUser user : users) {
-            sender.sendChatToPlayer("   " + user.getName());
+            PermissionsEx.sendChatToPlayer(sender, "   " + user.getName());
         }
     }
 
@@ -622,13 +622,13 @@ public class GroupCommands extends PermissionsCommand {
                     userName);
 
             if (user == null) {
-                sender.sendChatToPlayer(ChatColor.RED + "User does not exist");
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
                 return;
             }
 
             user.addGroup(groupName, worldName);
 
-            sender.sendChatToPlayer(ChatColor.WHITE + "User " + user.getName()
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "User " + user.getName()
                     + " added to " + groupName + " !");
             this.informPlayer(plugin, userName, "You are assigned to \""
                     + groupName + "\" group");
@@ -655,13 +655,13 @@ public class GroupCommands extends PermissionsCommand {
                     userName);
 
             if (user == null) {
-                sender.sendChatToPlayer(ChatColor.RED + "User does not exist");
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
                 return;
             }
 
             user.removeGroup(groupName, worldName);
 
-            sender.sendChatToPlayer(ChatColor.WHITE + "User " + user.getName()
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "User " + user.getName()
                     + " removed from " + args.get("group") + " !");
             this.informPlayer(plugin, userName, "You were removed from \""
                     + groupName + "\" group");
@@ -676,7 +676,7 @@ public class GroupCommands extends PermissionsCommand {
 
         PermissionGroup defaultGroup = PermissionsEx.getPermissionManager()
                 .getDefaultGroup(worldName);
-        sender.sendChatToPlayer("Default group in " + worldName + " world is "
+        PermissionsEx.sendChatToPlayer(sender, "Default group in " + worldName + " world is "
                 + defaultGroup.getName() + " group");
     }
 
@@ -690,13 +690,13 @@ public class GroupCommands extends PermissionsCommand {
                 groupName);
 
         if (group == null || group.isVirtual()) {
-            sender.sendChatToPlayer(ChatColor.RED
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED
                     + "Specified group doesn't exist");
             return;
         }
 
         PermissionsEx.getPermissionManager().setDefaultGroup(group, worldName);
-        sender.sendChatToPlayer("New default group in " + worldName
+        PermissionsEx.sendChatToPlayer(sender, "New default group in " + worldName
                 + " world is " + group.getName() + " group");
     }
 }

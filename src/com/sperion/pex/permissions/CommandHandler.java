@@ -27,4 +27,10 @@ public class CommandHandler extends CommandBase {
     public void processCommand(ICommandSender sender, String[] args) {
         PermissionsEx.instance.onCommand(sender, this, getCommandName(), args);
     }
+
+    @Override
+    public String getCommandUsage(ICommandSender icommandsender) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

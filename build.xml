@@ -4,8 +4,8 @@
 	<property file="build.properties" prefix="build"/>
 	<property name="src" location="src"/>
 	<property name="release" location="../../release"/>
-	<property name="mcp" location="../../mcp-1.5.x"/>
-	<property name="project" value="forgeperms"/>
+	<property name="mcp" location="../../mcp-1.6.x/mcp"/>
+	<property name="project" value="forgeperms-1.6.x"/>
 	
 	<target name="clean">
 		<delete file="${mcp}/src/minecraft/mcmod.info" />

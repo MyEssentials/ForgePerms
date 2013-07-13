@@ -42,7 +42,7 @@ public class WorldCommands extends PermissionsCommand {
 
         PermissionManager manager = PermissionsEx.getPermissionManager();
 
-        sender.sendChatToPlayer("Worlds on server: ");
+        PermissionsEx.sendChatToPlayer(sender, "Worlds on server: ");
         for (WorldServer world : worlds) {
             String[] parentWorlds = manager.getWorldInheritance(String
                     .valueOf(world.provider.dimensionId));
@@ -53,7 +53,7 @@ public class WorldCommands extends PermissionsCommand {
                         + ChatColor.GREEN + "]";
             }
 
-            sender.sendChatToPlayer(output);
+            PermissionsEx.sendChatToPlayer(sender, output);
         }
     }
 
@@ -65,15 +65,15 @@ public class WorldCommands extends PermissionsCommand {
 
         /*
          * if (Bukkit.getServer().getWorld(worldName) == null) {
-         * sender.sendChatToPlayer("Specified world \"" + args.get("world") +
+         * PermissionsEx.sendChatToPlayer(sender, "Specified world \"" + args.get("world") +
          * "\" not found."); return; }
          */
 
         String[] parentWorlds = manager.getWorldInheritance(worldName);
 
-        sender.sendChatToPlayer("World " + worldName + " inherit:");
+        PermissionsEx.sendChatToPlayer(sender, "World " + worldName + " inherit:");
         if (parentWorlds.length == 0) {
-            sender.sendChatToPlayer("nothing :3");
+            PermissionsEx.sendChatToPlayer(sender, "nothing :3");
             return;
         }
 
@@ -86,7 +86,7 @@ public class WorldCommands extends PermissionsCommand {
                         + ChatColor.GREEN + "]";
             }
 
-            sender.sendChatToPlayer(output);
+            PermissionsEx.sendChatToPlayer(sender, output);
         }
     }
 
@@ -97,7 +97,7 @@ public class WorldCommands extends PermissionsCommand {
         PermissionManager manager = PermissionsEx.getPermissionManager();
         /*
          * if (Bukkit.getServer().getWorld(worldName) == null) {
-         * sender.sendChatToPlayer("Specified world \"" + args.get("world") +
+         * PermissionsEx.sendChatToPlayer(sender, "Specified world \"" + args.get("world") +
          * "\" not found."); return; }
          */
 
@@ -116,7 +116,7 @@ public class WorldCommands extends PermissionsCommand {
 
         manager.setWorldInheritance(worldName, parents.toArray(new String[0]));
 
-        sender.sendChatToPlayer("World " + worldName + " inherits "
+        PermissionsEx.sendChatToPlayer(sender, "World " + worldName + " inherits "
                 + StringUtils.implode(parents, ", "));
     }
 }

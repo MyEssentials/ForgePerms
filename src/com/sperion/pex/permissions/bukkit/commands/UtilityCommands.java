@@ -43,7 +43,7 @@ public class UtilityCommands extends PermissionsCommand {
             Map<String, String> args) {
         PermissionsEx.getPermissionManager().reset();
 
-        sender.sendChatToPlayer(ChatColor.WHITE + "Permissions reloaded");
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Permissions reloaded");
     }
 
     @Command(name = "pex", syntax = "config <node> [value]", permission = "permissions.manage.config", description = "Print or set <node> [value]")
@@ -53,7 +53,7 @@ public class UtilityCommands extends PermissionsCommand {
             return;
         }
 
-        sender.sendChatToPlayer("disabled");
+        PermissionsEx.sendChatToPlayer(sender, "disabled");
 
         /*
          * 
@@ -65,18 +65,18 @@ public class UtilityCommands extends PermissionsCommand {
          * if (args.get("value") != null) { config.get(category, key,
          * defaultValue).set(nodeName, this.parseValue(args.get("value"))); try
          * { config.save(); } catch (Throwable e) {
-         * sender.sendChatToPlayer(ChatColor.RED +
+         * PermissionsEx.sendChatToPlayer(sender, ChatColor.RED +
          * "[PermissionsEx] Failed to save configuration: " + e.getMessage()); }
          * }
          * 
          * Object node = config.get(nodeName); if (node instanceof Map) {
-         * sender.sendChatToPlayer("Node \"" + nodeName + "\": "); for
+         * PermissionsEx.sendChatToPlayer(sender, "Node \"" + nodeName + "\": "); for
          * (Map.Entry<String, Object> entry : ((Map<String, Object>)
-         * node).entrySet()) { sender.sendChatToPlayer("  " + entry.getKey() +
+         * node).entrySet()) { PermissionsEx.sendChatToPlayer(sender, "  " + entry.getKey() +
          * " = " + entry.getValue()); } } else if (node instanceof List) {
-         * sender.sendChatToPlayer("Node \"" + nodeName + "\": "); for (String
-         * item : ((List<String>) node)) { sender.sendChatToPlayer(" - " +
-         * item); } } else { sender.sendChatToPlayer("Node \"" + nodeName +
+         * PermissionsEx.sendChatToPlayer(sender, "Node \"" + nodeName + "\": "); for (String
+         * item : ((List<String>) node)) { PermissionsEx.sendChatToPlayer(sender, " - " +
+         * item); } } else { PermissionsEx.sendChatToPlayer(sender, "Node \"" + nodeName +
          * "\" = \"" + node + "\""); }
          */
     }
@@ -84,7 +84,7 @@ public class UtilityCommands extends PermissionsCommand {
     @Command(name = "pex", syntax = "backend", permission = "permissions.manage.backend", description = "Print currently used backend")
     public void getBackend(Object plugin, ICommandSender sender,
             Map<String, String> args) {
-        sender.sendChatToPlayer("Current backend: "
+        PermissionsEx.sendChatToPlayer(sender, "Current backend: "
                 + PermissionsEx.getPermissionManager().getBackend());
     }
 
@@ -98,14 +98,14 @@ public class UtilityCommands extends PermissionsCommand {
         try {
             PermissionsEx.getPermissionManager()
                     .setBackend(args.get("backend"));
-            sender.sendChatToPlayer(ChatColor.WHITE
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE
                     + "Permission backend changed!");
         } catch (RuntimeException e) {
             if (e.getCause() instanceof ClassNotFoundException) {
-                sender.sendChatToPlayer(ChatColor.RED
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED
                         + "Specified backend not found.");
             } else {
-                sender.sendChatToPlayer(ChatColor.RED
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED
                         + "Error during backend initialization.");
                 e.printStackTrace();
             }
@@ -115,7 +115,7 @@ public class UtilityCommands extends PermissionsCommand {
     @Command(name = "pex", syntax = "hierarchy [world]", permission = "permissions.manage.users", description = "Print complete user/group hierarchy")
     public void printHierarhy(Object plugin, ICommandSender sender,
             Map<String, String> args) {
-        sender.sendChatToPlayer("User/Group inheritance hierarchy:");
+        PermissionsEx.sendChatToPlayer(sender, "User/Group inheritance hierarchy:");
         this.sendMessage(sender, this.printHierarchy(null, this
                 .autoCompleteWorldName(args.get("world")), 0));
     }
@@ -141,21 +141,21 @@ public class UtilityCommands extends PermissionsCommand {
 
             outStream.close();
 
-            sender.sendChatToPlayer(ChatColor.WHITE
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE
                     + "[PermissionsEx] Data dumped in \"" + dstFile.getName()
                     + "\" ");
         } catch (RuntimeException e) {
             if (e.getCause() instanceof ClassNotFoundException) {
-                sender.sendChatToPlayer(ChatColor.RED
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED
                         + "Specified backend not found!");
             } else {
-                sender.sendChatToPlayer(ChatColor.RED + "Error: "
+                PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Error: "
                         + e.getMessage());
                 logger.severe("Error: " + e.getMessage());
                 e.printStackTrace();
             }
         } catch (IOException e) {
-            sender.sendChatToPlayer(ChatColor.RED + "IO Error: "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "IO Error: "
                     + e.getMessage());
         }
     }
@@ -171,7 +171,7 @@ public class UtilityCommands extends PermissionsCommand {
                 + (manager.isDebug() ? "enabled" : "disabled");
 
         if (sender instanceof EntityPlayer) {
-            sender.sendChatToPlayer(debugStatusMessage);
+            PermissionsEx.sendChatToPlayer(sender, debugStatusMessage);
         }
 
         logger.warning(debugStatusMessage);
@@ -188,13 +188,13 @@ public class UtilityCommands extends PermissionsCommand {
                 .parseInt(args.get("page")) : 1;
 
         if (page < 1) {
-            sender.sendChatToPlayer("Page couldn't be lower than 1");
+            PermissionsEx.sendChatToPlayer(sender, "Page couldn't be lower than 1");
             return;
         }
 
         int totalPages = (int) Math.ceil(commands.size() / count);
 
-        sender.sendChatToPlayer(ChatColor.BLUE + "PermissionsEx"
+        PermissionsEx.sendChatToPlayer(sender, ChatColor.BLUE + "PermissionsEx"
                 + ChatColor.WHITE + " commands (page " + ChatColor.GOLD + page
                 + "/" + totalPages + ChatColor.WHITE + "): ");
 
@@ -215,8 +215,8 @@ public class UtilityCommands extends PermissionsCommand {
                     .replace("]",
                             "]" + ChatColor.RESET + ChatColor.GOLD.toString());
 
-            sender.sendChatToPlayer(ChatColor.GOLD + commandName);
-            sender.sendChatToPlayer(ChatColor.AQUA + "    "
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.GOLD + commandName);
+            PermissionsEx.sendChatToPlayer(sender, ChatColor.AQUA + "    "
                     + command.description());
         }
     }

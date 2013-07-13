@@ -70,9 +70,8 @@ public abstract class PermissionsCommand implements CommandListener {
         if (player == null) {
             return;
         }
-
-        player.sendChatToPlayer(ChatColor.BLUE + "[PermissionsEx] "
-                + ChatColor.WHITE + message);
+        PermissionsEx.sendChatToPlayer(player, ChatColor.BLUE + "[PermissionsEx] " + ChatColor.WHITE + message); 
+        //player.sendChatToPlayer(ChatColor.BLUE + "[PermissionsEx] " + ChatColor.WHITE + message);
     }
 
     protected String autoCompletePlayerName(String playerName) {
@@ -87,8 +86,8 @@ public abstract class PermissionsCommand implements CommandListener {
                 rank = "rank " + group.getRank() + " @ "
                         + group.getRankLadder();
             }
-
-            sender.sendChatToPlayer("   " + group.getName() + " (" + rank + ")");
+            PermissionsEx.sendChatToPlayer(sender, "   " + group.getName() + " (" + rank + ")");
+            //sender.sendChatToPlayer("   " + group.getName() + " (" + rank + ")");
         }
     }
 
@@ -419,7 +418,8 @@ public abstract class PermissionsCommand implements CommandListener {
 
     protected void sendMessage(ICommandSender sender, String message) {
         for (String messagePart : message.split("\n")) {
-            sender.sendChatToPlayer(messagePart);
+            PermissionsEx.sendChatToPlayer(sender, messagePart);
+            //sender.sendChatToPlayer(messagePart);
         }
     }
 }
