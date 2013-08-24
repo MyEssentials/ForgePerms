@@ -4,6 +4,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntityCommandBlock;
 
 import com.sperion.pex.permissions.bukkit.PermissionsEx;
 
@@ -19,9 +20,16 @@ public class CommandHandler extends CommandBase {
             return true;
         }
 
-        EntityPlayer pl = (EntityPlayer) par1ICommandSender;
-        return PermissionsEx.instance.has(pl, "permissions.manage.command");
+        if (par1ICommandSender instanceof EntityPlayer) {
+        	EntityPlayer pl = (EntityPlayer) par1ICommandSender;
+            return PermissionsEx.instance.has(pl, "permissions.manage.command");
+        } else if (par1ICommandSender instanceof TileEntityCommandBlock ) {
+        	return true;
+        } else {
+        	return false;
+        }
     }
+        
 
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
