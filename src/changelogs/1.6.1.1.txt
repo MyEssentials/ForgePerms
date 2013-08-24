@@ -1,0 +1,1 @@
+- Added support for using Forge-PEx /pex command in command blocks. WARNING: Command blocks are always permitted to use the /pex command
