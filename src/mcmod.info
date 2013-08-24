@@ -3,8 +3,8 @@
   "modid": "ForgePerms",
   "name": "ForgePerms",
   "description": "A basic permission manager for Forge Mods. Uses AlphAest PermissionEX as a fallback.",
-  "version": "1.5.1.0",
-  "mcversion": "1.5.1",
+  "version": "1.6.1.6",
+  "mcversion": "1.6.1",
   "url": "",
   "updateUrl": "",
   "authors": [
