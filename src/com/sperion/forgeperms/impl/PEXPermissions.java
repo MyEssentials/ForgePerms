@@ -1,21 +1,23 @@
-package com.sperion.forgeperms;
+package com.sperion.forgeperms.impl;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 
+import com.sperion.forgeperms.api.IPermissionManager;
 import com.sperion.pex.permissions.IPermissionEntity;
 import com.sperion.pex.permissions.IPermissions;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 
-public class PEXPermissions extends PermissionsBase {
+/**
+ * Permission handler for ForgePEX
+ * @author Joe Goett
+ */
+public class PEXPermissions implements IPermissionManager {
+    public String loadError = "Unknown";
     int pexOn = 0;
     IPermissions pex = null;
-
-    public PEXPermissions() {
-        name = "Forge PEX";
-    }
 
     @Override
     public boolean load() {
@@ -27,11 +29,21 @@ public class PEXPermissions extends PermissionsBase {
         }
     }
 
+    @Override
+    public String getLoadError() {
+        return loadError;
+    }
+
+    @Override
+    public String getName() {
+        return "Forge PEX";
+    }
+
     private boolean pexAvailable() {
         if (pexOn == 0) {
             for (ModContainer cont : Loader.instance().getModList()) {
                 if (cont.getModId().equalsIgnoreCase("PermissionsEx")) {
-                    if (cont.getMod() instanceof IPermissions) {
+                    if (cont.getMod() instanceof IPermissionManager) {
                         pex = (IPermissions) cont.getMod();
                     }
 
@@ -54,24 +66,6 @@ public class PEXPermissions extends PermissionsBase {
     }
 
     @Override
-    public String getPrefix(String player, String world) {
-        if (!pexAvailable()) {
-            return "";
-        }
-
-        return pex.prefix(player, world);
-    }
-
-    @Override
-    public String getPostfix(String player, String world) {
-        if (!pexAvailable()) {
-            return "";
-        }
-
-        return pex.suffix(player, world);
-    }
-
-    @Override
     public String getOption(String player, String world, String node, String def) {
         if (!pexAvailable()) {
             return def;
@@ -91,8 +85,7 @@ public class PEXPermissions extends PermissionsBase {
             return def;
         } else {
             EntityPlayer pl = (EntityPlayer) name;
-            return getOption(pl.username, String.valueOf(pl.dimension), node,
-                    def);
+            return getOption(pl.username, String.valueOf(pl.dimension), node, def);
         }
     }
 }

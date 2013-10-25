@@ -50,6 +50,7 @@ import com.sperion.pex.permissions.exceptions.PermissionsNotAvailable;
 
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -78,7 +79,7 @@ public class PermissionsEx implements IPermissions {
                 "[PermissionsEx] PermissionEx plugin initialized.");
     }
 
-    @Mod.PreInit
+    @EventHandler
     public void onLoad(FMLPreInitializationEvent ev) {
         configFile = ev.getSuggestedConfigurationFile();
         config = new Configuration(configFile);
@@ -89,7 +90,7 @@ public class PermissionsEx implements IPermissions {
         config.save();
     }
 
-    @Mod.ServerStarted
+    @EventHandler
     public void modsLoaded(FMLServerStartedEvent var1) {
         ServerCommandManager mgr = (ServerCommandManager) MinecraftServer
                 .getServer().getCommandManager();
