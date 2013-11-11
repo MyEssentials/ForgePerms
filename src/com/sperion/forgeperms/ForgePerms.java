@@ -4,6 +4,8 @@ import com.sperion.forgeperms.api.IChatManager;
 import com.sperion.forgeperms.api.IEconomyManager;
 import com.sperion.forgeperms.api.IPermissionManager;
 import com.sperion.forgeperms.impl.ItemEconomy;
+import com.sperion.forgeperms.impl.LastResortChat;
+import com.sperion.forgeperms.impl.LastResortPerms;
 import com.sperion.forgeperms.impl.PEXPermissions;
 import com.sperion.forgeperms.impl.StandardChat;
 
@@ -72,14 +74,11 @@ public class ForgePerms {
 
     @Mod.ServerStarted
     public void serverStarted(FMLServerStartedEvent event) {
-        if (ForgePerms.permissionsHandler == null) {
-            ForgePerms.registerPermissionManager(new PEXPermissions());
-        }
-        if (ForgePerms.chatManager == null) {
-            ForgePerms.registerChatManager(new StandardChat());
-        }
-        if (ForgePerms.economyManager == null) {
-            ForgePerms.registerEconomyManager(new ItemEconomy());
-        }
+        ForgePerms.registerPermissionManager(new PEXPermissions());
+        ForgePerms.registerChatManager(new StandardChat());
+        ForgePerms.registerEconomyManager(new ItemEconomy());
+
+        ForgePerms.registerPermissionManager(new LastResortPerms());
+        ForgePerms.registerChatManager(new LastResortChat());
     }
 }

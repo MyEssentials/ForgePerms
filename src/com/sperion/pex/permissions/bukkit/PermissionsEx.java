@@ -48,6 +48,7 @@ import com.sperion.pex.permissions.bukkit.commands.WorldCommands;
 import com.sperion.pex.permissions.commands.CommandsManager;
 import com.sperion.pex.permissions.exceptions.PermissionsNotAvailable;
 
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -62,7 +63,7 @@ public class PermissionsEx implements IPermissions {
     @Mod.Instance("PermissionsEx")
     public static PermissionsEx instance;
 
-    protected static final Logger logger = Logger.getLogger("Minecraft");
+    protected static final Logger logger = Logger.getLogger("PermissionsEx");
     protected PermissionManager permissionsManager;
     protected CommandsManager commandsManager;
     protected Configuration config;
@@ -72,11 +73,11 @@ public class PermissionsEx implements IPermissions {
     // protected BukkitPermissions superms;
 
     public PermissionsEx() {
+        logger.setParent(FMLLog.getLogger());
         PermissionBackend.registerBackendAlias("sql", SQLBackend.class);
         PermissionBackend.registerBackendAlias("file", FileBackend.class);
 
-        logger.log(Level.INFO,
-                "[PermissionsEx] PermissionEx plugin initialized.");
+        logger.log(Level.INFO, "[PermissionsEx] PermissionEx plugin initialized.");
     }
 
     @EventHandler

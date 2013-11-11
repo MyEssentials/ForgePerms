@@ -5,11 +5,16 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cpw.mods.fml.common.FMLLog;
+
 public class Log {
-    private static final Pattern color_pattern = Pattern
-            .compile("(?i)§([0-9A-FK-OR])");
-    public static Logger mclog = Logger.getLogger("Minecraft");
+    private static final Pattern color_pattern = Pattern.compile("(?i)§([0-9A-FK-OR])");
+    public static Logger mytownLogger = Logger.getLogger("ForgePerms");
     public static boolean isUnix = isUnix();
+    
+    public static void init(){
+        mytownLogger.setParent(FMLLog.getLogger());
+    }
 
     public static void info(String msg, Object... paras) {
         log(Level.INFO, msg, paras);
@@ -28,17 +33,15 @@ public class Log {
     }
 
     public static void log(Level l, String msg, Object... paras) {
-        mclog.log(l, consoleColors(String.format("§7[§a%s§7]%s",
-                ForgePerms.MOD_NAME, String.format(msg, paras))));
+        mytownLogger.log(l, consoleColors(String.format("§7[§a%s§7]%s", ForgePerms.MOD_NAME, String.format(msg, paras))));
     }
 
     public static void log(Level l, String msg, Throwable t, Object... paras) {
-        mclog.log(l, consoleColors(String.format("§7[§a%s§7]%s",
-                ForgePerms.MOD_NAME, String.format(msg, paras))), t);
+        mytownLogger.log(l, consoleColors(String.format("§7[§a%s§7]%s", ForgePerms.MOD_NAME, String.format(msg, paras))), t);
     }
 
     public static void direct(String msg) {
-        mclog.log(Level.INFO, consoleColors(msg));
+        mytownLogger.log(Level.INFO, consoleColors(msg));
     }
 
     public static String consoleColors(String str) {
@@ -88,8 +91,7 @@ public class Log {
 
     public static boolean isUnix() {
         String OS = System.getProperty("os.name").toLowerCase();
-        return OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0
-                || OS.indexOf("aix") > 0;
+        return OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0;
     }
 
 }

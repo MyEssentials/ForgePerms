@@ -3,9 +3,12 @@ package com.sperion.forgeperms.impl;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 
+import com.sperion.forgeperms.Log;
 import com.sperion.forgeperms.api.IPermissionManager;
 import com.sperion.pex.permissions.IPermissionEntity;
 import com.sperion.pex.permissions.IPermissions;
+import com.sperion.pex.permissions.PermissionGroup;
+import com.sperion.pex.permissions.PermissionUser;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
@@ -43,7 +46,8 @@ public class PEXPermissions implements IPermissionManager {
         if (pexOn == 0) {
             for (ModContainer cont : Loader.instance().getModList()) {
                 if (cont.getModId().equalsIgnoreCase("PermissionsEx")) {
-                    if (cont.getMod() instanceof IPermissionManager) {
+                    Log.info("Found PEx");
+                    if (cont.getMod() instanceof IPermissions) {
                         pex = (IPermissions) cont.getMod();
                     }
 
@@ -87,5 +91,37 @@ public class PEXPermissions implements IPermissionManager {
             EntityPlayer pl = (EntityPlayer) name;
             return getOption(pl.username, String.valueOf(pl.dimension), node, def);
         }
+    }
+
+    @Override
+    public boolean addGroup(String playerName, String groupName) {
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        
+        if (group == null || user == null) {
+            return false;
+        } else {
+            user.addGroup(group);
+            return true;
+        }
+    }
+
+    @Override
+    public boolean removeGroup(String playerName, String groupName) {
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        
+        if (group == null || user == null) {
+            return false;
+        } else {
+            user.removeGroup(group);
+            return true;
+        }
+    }
+
+    @Override
+    public String[] getGroupNames(String playerName) {
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        return user.getGroupsNames();
     }
 }

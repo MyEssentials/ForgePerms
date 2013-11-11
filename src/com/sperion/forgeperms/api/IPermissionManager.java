@@ -57,4 +57,10 @@ public interface IPermissionManager {
      * @return
      */
     public String getOption(ICommandSender name, String node, String def);
+
+    public boolean addGroup(String player, String group);
+    
+    public boolean removeGroup(String player, String group);
+    
+    public String[] getGroupNames(String player);
 }
