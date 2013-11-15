@@ -248,8 +248,7 @@ public class PermissionsEx implements IPermissions {
             }
 
             PermissionUser user = getPermissionManager().getUser(event);
-            user.setOption("last-login-time", Long.toString(System
-                    .currentTimeMillis() / 1000L));
+            user.setOption("last-login-time", Long.toString(System.currentTimeMillis() / 1000L));
             // user.setOption("last-login-ip",
             // event.getPlayer().getAddress().getAddress().getHostAddress()); //
             // somehow this won't work
@@ -274,14 +273,10 @@ public class PermissionsEx implements IPermissions {
     }
     
     public static void sendChatToPlayer(EntityPlayer entity, String msg){
-        ChatMessageComponent component = new ChatMessageComponent();
-        component.func_111079_a(msg);
-        entity.sendChatToPlayer(component);
+        entity.sendChatToPlayer(ChatMessageComponent.createFromText(msg));
     }
     
     public static void sendChatToPlayer(ICommandSender sender, String msg){
-        ChatMessageComponent component = new ChatMessageComponent();
-        component.func_111079_a(msg);
-        sender.sendChatToPlayer(component);
+        sender.sendChatToPlayer(ChatMessageComponent.createFromText(msg));
     }
 }

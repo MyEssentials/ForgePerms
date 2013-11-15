@@ -46,7 +46,7 @@ public interface IEconomyManager {
      * @param world
      * @return
      */
-    public double balance(String playerName, String itemID, String world);
+    public double playerBalance(String playerName, String itemID, String world);
     
     /**
      * Returns whether the player has the amount in their account
@@ -56,7 +56,7 @@ public interface IEconomyManager {
      * @param amount
      * @return
      */
-    public boolean has(String playerName, String world, String itemID, double amount);
+    public boolean playerHas(String playerName, String world, String itemID, double amount);
     
     /**
      * Withdraws the amount from the given player
@@ -66,7 +66,7 @@ public interface IEconomyManager {
      * @param amount
      * @return
      */
-    public boolean withdraw(String playerName, String world, String itemID, double amount);
+    public boolean playerWithdraw(String playerName, String world, String itemID, double amount);
     
     /**
      * Gives the player the given amount
@@ -76,5 +76,44 @@ public interface IEconomyManager {
      * @param amount
      * @return
      */
-    public boolean deposit(String playerName, String world, String itemID, double amount);
+    public boolean playerDeposit(String playerName, String world, String itemID, double amount);
+    
+    /**
+     * Returns the given bank balance
+     * @param playerName
+     * @param itemID
+     * @param world
+     * @return
+     */
+    public double bankBalance(String name, String itemID);
+    
+    /**
+     * Returns whether the bank has the amount
+     * @param playerName
+     * @param world
+     * @param itemID
+     * @param amount
+     * @return
+     */
+    public boolean bankHas(String name, String itemID, double amount);
+    
+    /**
+     * Withdraws the amount from the given bank
+     * @param playerName
+     * @param world
+     * @param itemID
+     * @param amount
+     * @return
+     */
+    public boolean bankWithdraw(String name, String itemID, double amount);
+    
+    /**
+     * Gives the bank the given amount
+     * @param playerName
+     * @param world
+     * @param itemID
+     * @param amount
+     * @return
+     */
+    public boolean bankDeposit(String name, String itemID, double amount);
 }

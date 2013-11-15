@@ -24,7 +24,7 @@ public class ItemEconomy implements IEconomyManager {
     }
 
     @Override
-    public double balance(String playerName, String itemID, String world) {
+    public double playerBalance(String playerName, String itemID, String world) {
         String[] itemInfo = itemID.split(":");
         EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(playerName);
         for (ItemStack item : player.inventory.mainInventory){
@@ -37,12 +37,12 @@ public class ItemEconomy implements IEconomyManager {
     }
 
     @Override
-    public boolean has(String playerName, String world, String itemID, double amount) {
+    public boolean playerHas(String playerName, String world, String itemID, double amount) {
         return true;  //Pretend the player always has enough, since it is item based
     }
 
     @Override
-    public boolean withdraw(String playerName, String world, String itemID, double amount) {
+    public boolean playerWithdraw(String playerName, String world, String itemID, double amount) {
         String[] itemInfo = itemID.split(":");
         EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(playerName);
         ItemStack held = player.getHeldItem();
@@ -64,7 +64,7 @@ public class ItemEconomy implements IEconomyManager {
     }
 
     @Override
-    public boolean deposit(String playerName, String world, String itemID, double amount) {
+    public boolean playerDeposit(String playerName, String world, String itemID, double amount) {
         String[] itemInfo = itemID.split(":");
         EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(playerName);
         ItemStack item = new ItemStack(Integer.parseInt(itemInfo[0]), (int)amount, Integer.parseInt(itemInfo[1]));
@@ -91,5 +91,25 @@ public class ItemEconomy implements IEconomyManager {
     @Override
     public boolean rightClickToPay() {
         return true;
+    }
+
+    @Override
+    public double bankBalance(String name, String itemID) {
+        return 0;
+    }
+
+    @Override
+    public boolean bankHas(String name, String itemID, double amount) {
+        return false;
+    }
+
+    @Override
+    public boolean bankWithdraw(String name, String itemID, double amount) {
+        return false;
+    }
+
+    @Override
+    public boolean bankDeposit(String name, String itemID, double amount) {
+        return false;
     }
 }
