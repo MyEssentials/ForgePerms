@@ -1,11 +1,7 @@
 package com.sperion.forgeperms.impl;
 
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
-
 import com.sperion.forgeperms.Log;
 import com.sperion.forgeperms.api.IPermissionManager;
-import com.sperion.pex.permissions.IPermissionEntity;
 import com.sperion.pex.permissions.IPermissions;
 import com.sperion.pex.permissions.PermissionGroup;
 import com.sperion.pex.permissions.PermissionUser;
@@ -70,30 +66,6 @@ public class PEXPermissions implements IPermissionManager {
     }
 
     @Override
-    public String getOption(String player, String world, String node, String def) {
-        if (!pexAvailable()) {
-            return def;
-        }
-
-        IPermissionEntity entity = pex.getUser(player);
-        if (entity == null) {
-            return def;
-        }
-
-        return entity.getOption(node, world, def);
-    }
-
-    @Override
-    public String getOption(ICommandSender name, String node, String def) {
-        if (!(name instanceof EntityPlayer)) {
-            return def;
-        } else {
-            EntityPlayer pl = (EntityPlayer) name;
-            return getOption(pl.username, String.valueOf(pl.dimension), node, def);
-        }
-    }
-
-    @Override
     public boolean addGroup(String playerName, String groupName) {
         PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
         PermissionUser user = (PermissionUser) pex.getUser(playerName);
@@ -122,6 +94,14 @@ public class PEXPermissions implements IPermissionManager {
     @Override
     public String[] getGroupNames(String playerName) {
         PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return null;
         return user.getGroupsNames();
+    }
+
+    @Override
+    public String getPrimaryGroup(String world, String playerName) {
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return null;
+        return user.getGroupsNames(world)[0];
     }
 }

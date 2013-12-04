@@ -10,10 +10,11 @@ import com.sperion.forgeperms.impl.PEXPermissions;
 import com.sperion.forgeperms.impl.StandardChat;
 
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 
-@Mod(modid = "ForgePerms", name = "ForgePerms", version = "1.0.0")
+@Mod(modid = "ForgePerms", name = "ForgePerms", version = "@VERSION@.@BUILD_NUMBER@")
 @NetworkMod(clientSideRequired = false, serverSideRequired = true)
 public class ForgePerms {
     private static IPermissionManager permissionsHandler = null;
@@ -72,7 +73,7 @@ public class ForgePerms {
         return economyManager;
     }
 
-    @Mod.ServerStarted
+    @EventHandler
     public void serverStarted(FMLServerStartedEvent event) {
         ForgePerms.registerPermissionManager(new PEXPermissions());
         ForgePerms.registerChatManager(new StandardChat());

@@ -1,7 +1,5 @@
 package com.sperion.forgeperms.api;
 
-import net.minecraft.command.ICommandSender;
-
 /**
  * Base for all permission handlers
  * @author Joe Goett
@@ -37,30 +35,11 @@ public interface IPermissionManager {
      */
     public boolean canAccess(String name, String world, String node);
 
-    /**
-     * Gets the option of the player in the given world.
-     * 
-     * @param player
-     * @param world
-     * @param node
-     * @param def
-     * @return
-     */
-    public String getOption(String player, String world, String node, String def);
-
-    /**
-     * Gets the option of the player in the given world.
-     * 
-     * @param name
-     * @param node
-     * @param def
-     * @return
-     */
-    public String getOption(ICommandSender name, String node, String def);
-
     public boolean addGroup(String player, String group);
     
     public boolean removeGroup(String player, String group);
     
     public String[] getGroupNames(String player);
+    
+    public String getPrimaryGroup(String world, String playerName);
 }

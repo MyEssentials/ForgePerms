@@ -2,8 +2,8 @@ package com.sperion.forgeperms.impl;
 
 import com.sperion.forgeperms.api.IChatManager;
 import com.sperion.forgeperms.api.IPermissionManager;
-import com.sperion.pex.permissions.IPermissionEntity;
 import com.sperion.pex.permissions.IPermissions;
+import com.sperion.pex.permissions.PermissionGroup;
 import com.sperion.pex.permissions.PermissionUser;
 
 import cpw.mods.fml.common.Loader;
@@ -158,16 +158,178 @@ public class StandardChat implements IChatManager {
     }
 
     @Override
-    public String getOption(String player, String world, String node, String def) {
+    public String getPlayerInfoString(String world, String playerName, String node, String defaultValue) {
         if (!pexAvailable()) {
-            return def;
+            return defaultValue;
         }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return defaultValue;
+        return user.getOption(node, world, defaultValue);
+    }
 
-        IPermissionEntity entity = pex.getUser(player);
-        if (entity == null) {
-            return def;
+    @Override
+    public int getPlayerInfoInteger(String world, String playerName, String node, int defaultValue) {
+        if (!pexAvailable()) {
+            return defaultValue;
         }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return defaultValue;
+        return user.getOptionInteger(node, world, defaultValue);
+    }
 
-        return entity.getOption(node, world, def);
+    @Override
+    public double getPlayerInfoDouble(String world, String playerName, String node, double defaultValue) {
+        if (!pexAvailable()) {
+            return defaultValue;
+        }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return defaultValue;
+        return user.getOptionDouble(node, world, defaultValue);
+    }
+
+    @Override
+    public boolean getPlayerInfoBoolean(String world, String playerName, String node, boolean defaultValue) {
+        if (!pexAvailable()) {
+            return defaultValue;
+        }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return defaultValue;
+        return user.getOptionBoolean(node, world, defaultValue);
+    }
+
+    @Override
+    public void setPlayerInfoString(String world, String playerName, String node, String value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return;
+        user.setOption(node, value, world);
+    }
+
+    @Override
+    public void setPlayerInfoInteger(String world, String playerName, String node, int value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return;
+        user.setOption(node, String.valueOf(value), world);
+    }
+
+    @Override
+    public void setPlayerInfoDouble(String world, String playerName, String node, double value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return;
+        user.setOption(node, String.valueOf(value), world);
+    }
+
+    @Override
+    public void setPlayerInfoBoolean(String world, String playerName, String node, boolean value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionUser user = (PermissionUser) pex.getUser(playerName);
+        if (user == null) return;
+        user.setOption(node, String.valueOf(value), world);
+    }
+
+    @Override
+    public String getGroupInfoString(String world, String groupName, String node, String defaultValue) {
+        if (!pexAvailable()) {
+            return defaultValue;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return defaultValue;
+        return group.getOption(node, world, defaultValue);
+    }
+
+    @Override
+    public int getGroupInfoInteger(String world, String groupName, String node, int defaultValue) {
+        if (!pexAvailable()) {
+            return defaultValue;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return defaultValue;
+        return group.getOptionInteger(node, world, defaultValue);
+    }
+
+    @Override
+    public double getGroupInfoDouble(String world, String groupName, String node, double defaultValue) {
+        if (!pexAvailable()) {
+            return defaultValue;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return defaultValue;
+        return group.getOptionDouble(node, world, defaultValue);
+    }
+
+    @Override
+    public boolean getGroupInfoBoolean(String world, String groupName, String node, boolean defaultValue) {
+        if (!pexAvailable()) {
+            return defaultValue;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return defaultValue;
+        return group.getOptionBoolean(node, world, defaultValue);
+    }
+
+    @Override
+    public void setGroupInfoString(String world, String groupName, String node, String value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return;
+        group.setOption(node, value, world);
+    }
+
+    @Override
+    public void setGroupInfoInteger(String world, String groupName, String node, int value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return;
+        group.setOption(node, String.valueOf(value), world);
+    }
+
+    @Override
+    public void setGroupInfoDouble(String world, String groupName, String node, double value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return;
+        group.setOption(node, String.valueOf(value), world);
+    }
+
+    @Override
+    public void setGroupInfoBoolean(String world, String groupName, String node, boolean value) {
+        if (!pexAvailable()) {
+            return;
+        }
+        
+        PermissionGroup group = (PermissionGroup) pex.getGroup(groupName);
+        if (group == null) return;
+        group.setOption(node, String.valueOf(value), world);
     }
 }

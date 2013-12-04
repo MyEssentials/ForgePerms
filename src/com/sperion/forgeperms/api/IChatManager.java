@@ -108,6 +108,163 @@ public interface IChatManager {
      */
     public String getPrimaryGroup(String world, String player);
     
+    /**
+     * Gets a String option node, if the chat system supports them
+     * @param world
+     * @param playerName
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public String getPlayerInfoString(String world, String playerName, String node, String defaultValue);
 
-    public String getOption(String player, String world, String node, String def);
+    /**
+     * Gets a Integer option node, if the chat system supports them
+     * @param world
+     * @param playerName
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public int getPlayerInfoInteger(String world, String playerName, String node, int defaultValue);
+
+    /**
+     * Gets a Double option node, if the chat system supports them
+     * @param world
+     * @param playerName
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public double getPlayerInfoDouble(String world, String playerName, String node, double defaultValue);
+
+    /**
+     * Gets a Boolean option node, if the chat system supports them
+     * @param world
+     * @param playerName
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public boolean getPlayerInfoBoolean(String world, String playerName, String node, boolean defaultValue);
+    
+    /**
+     * Sets the given player's option node to the value
+     * @param world
+     * @param playerName
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setPlayerInfoString(String world, String playerName, String node, String value);
+
+    /**
+     * Sets the given player's option node to the value
+     * @param world
+     * @param playerName
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setPlayerInfoInteger(String world, String playerName, String node, int value);
+
+    /**
+     * Sets the given player's option node to the value
+     * @param world
+     * @param playerName
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setPlayerInfoDouble(String world, String playerName, String node, double value);
+    
+    /**
+     * Sets the given player's option node to the value
+     * @param world
+     * @param playerName
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setPlayerInfoBoolean(String world, String playerName, String node, boolean value);
+    
+    /**
+     * Gets a String option node, if the chat system supports them
+     * @param world
+     * @param group
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public String getGroupInfoString(String world, String group, String node, String defaultValue);
+
+    /**
+     * Gets a Integer option node, if the chat system supports them
+     * @param world
+     * @param group
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public int getGroupInfoInteger(String world, String group, String node, int defaultValue);
+
+    /**
+     * Gets a Double option node, if the chat system supports them
+     * @param world
+     * @param group
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public double getGroupInfoDouble(String world, String group, String node, double defaultValue);
+
+    /**
+     * Gets a Boolean option node, if the chat system supports them
+     * @param world
+     * @param group
+     * @param node
+     * @param defaultValue
+     * @return
+     */
+    public boolean getGroupInfoBoolean(String world, String group, String node, boolean defaultValue);
+
+    /**
+     * Sets the given group's option node to the value
+     * @param world
+     * @param group
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setGroupInfoString(String world, String group, String node, String value);
+
+    /**
+     * Sets the given group's option node to the value
+     * @param world
+     * @param group
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setGroupInfoInteger(String world, String group, String node, int value);
+
+    /**
+     * Sets the given group's option node to the value
+     * @param world
+     * @param group
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setGroupInfoDouble(String world, String group, String node, double value);
+
+    /**
+     * Sets the given group's option node to the value
+     * @param world
+     * @param group
+     * @param node
+     * @param value
+     * @return
+     */
+    public void setGroupInfoBoolean(String world, String group, String node, boolean value);
 }

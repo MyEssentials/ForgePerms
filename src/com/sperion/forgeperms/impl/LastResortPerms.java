@@ -1,7 +1,5 @@
 package com.sperion.forgeperms.impl;
 
-import net.minecraft.command.ICommandSender;
-
 import com.sperion.forgeperms.api.IPermissionManager;
 
 public class LastResortPerms implements IPermissionManager {
@@ -26,16 +24,6 @@ public class LastResortPerms implements IPermissionManager {
 		return false;
 	}
 
-	@Override
-	public String getOption(String player, String world, String node, String def) {
-		return "";
-	}
-
-	@Override
-	public String getOption(ICommandSender name, String node, String def) {
-		return "";
-	}
-
     @Override
     public boolean addGroup(String player, String group) {
         return true;
@@ -48,6 +36,11 @@ public class LastResortPerms implements IPermissionManager {
 
     @Override
     public String[] getGroupNames(String player) {
+        return null;
+    }
+
+    @Override
+    public String getPrimaryGroup(String world, String playerName) {
         return null;
     }
 }
