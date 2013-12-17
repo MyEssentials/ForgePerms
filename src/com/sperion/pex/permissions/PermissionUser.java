@@ -27,11 +27,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
-
 import com.sperion.pex.permissions.events.PermissionEntityEvent;
 import com.sperion.pex.permissions.exceptions.RankingException;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 
 /**
  * 

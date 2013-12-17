@@ -1,12 +1,12 @@
 package com.sperion.pex.permissions;
 
+import com.sperion.pex.permissions.bukkit.PermissionsEx;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntityCommandBlock;
-
-import com.sperion.pex.permissions.bukkit.PermissionsEx;
 
 public class CommandHandler extends CommandBase {
     @Override

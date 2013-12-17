@@ -97,13 +97,7 @@ public class CommandsManager {
                 continue;
             }
             if (selectedBinding != null
-                    && syntax.getRegexp().length() < argumentsLength) { // match,
-                                                                        // but
-                                                                        // there
-                                                                        // already
-                                                                        // more
-                                                                        // fitted
-                                                                        // variant
+                    && syntax.getRegexp().length() < argumentsLength) { // match, but there already more fitted variant
                 continue;
             }
 

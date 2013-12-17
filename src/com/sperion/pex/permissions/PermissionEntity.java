@@ -141,23 +141,14 @@ public abstract class PermissionEntity implements IPermissionEntity {
      */
     @Override
     public boolean has(String permission, String dimension) {
-        if (permission != null && permission.isEmpty()) { // empty permission
-                                                          // for public access
-                                                          // :)
+        if (permission != null && permission.isEmpty()) { // empty permission for public access :)
             return true;
         }
 
         String expression = getMatchingExpression(permission, dimension);
 
         if (this.isDebug()) {
-            Logger.getLogger("Minecraft").info(
-                    "User "
-                            + this.getName()
-                            + " checked for \""
-                            + permission
-                            + "\", "
-                            + (expression == null ? "no permission found"
-                                    : "\"" + expression + "\" found"));
+            Logger.getLogger("Minecraft").info("User " + this.getName() + " checked for \"" + permission + "\", " + (expression == null ? "no permission found" : "\"" + expression + "\" found"));
         }
 
         return explainExpression(expression);

@@ -1,5 +1,6 @@
 package com.sperion.forgeperms.impl;
 
+import com.sperion.forgeperms.Log;
 import com.sperion.forgeperms.api.IChatManager;
 import com.sperion.forgeperms.api.IPermissionManager;
 import com.sperion.pex.permissions.IPermissions;
@@ -13,12 +14,13 @@ public class StandardChat implements IChatManager {
     public String loadError = "Unknown";
     int pexOn = 0;
     IPermissions pex = null;
-    
+
     private boolean pexAvailable() {
         if (pexOn == 0) {
             for (ModContainer cont : Loader.instance().getModList()) {
                 if (cont.getModId().equalsIgnoreCase("PermissionsEx")) {
-                    if (cont.getMod() instanceof IPermissionManager) {
+                    //Log.info("Found PEx");
+                    if (cont.getMod() instanceof IPermissions) {
                         pex = (IPermissions) cont.getMod();
                     }
 
@@ -66,7 +68,7 @@ public class StandardChat implements IChatManager {
             return "";
         }
 
-        return pex.prefix(player, world);
+        return pex.suffix(player, world);
     }
 
     @Override

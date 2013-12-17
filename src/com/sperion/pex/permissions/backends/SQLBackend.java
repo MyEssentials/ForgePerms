@@ -30,9 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.WorldServer;
-
 import com.sperion.pex.permissions.PermissionBackend;
 import com.sperion.pex.permissions.PermissionGroup;
 import com.sperion.pex.permissions.PermissionManager;
@@ -42,6 +39,9 @@ import com.sperion.pex.permissions.backends.sql.SQLEntity;
 import com.sperion.pex.permissions.backends.sql.SQLGroup;
 import com.sperion.pex.permissions.backends.sql.SQLUser;
 import com.sperion.pex.utils.StringUtils;
+
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.WorldServer;
 
 /**
  * 

@@ -42,7 +42,7 @@ public class PEXPermissions implements IPermissionManager {
         if (pexOn == 0) {
             for (ModContainer cont : Loader.instance().getModList()) {
                 if (cont.getModId().equalsIgnoreCase("PermissionsEx")) {
-                    Log.info("Found PEx");
+                    //Log.info("Found PEx");
                     if (cont.getMod() instanceof IPermissions) {
                         pex = (IPermissions) cont.getMod();
                     }
@@ -57,12 +57,12 @@ public class PEXPermissions implements IPermissionManager {
     }
 
     @Override
-    public boolean canAccess(String name, String world, String node) {
+    public boolean canAccess(String player, String world, String node) {
         if (!pexAvailable()) {
             throw new RuntimeException("PEX not found");
         }
-
-        return pex.has(name, node, world);
+        
+        return pex.has(player, node, world);
     }
 
     @Override

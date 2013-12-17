@@ -30,11 +30,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.sperion.pex.permissions.bukkit.PermissionsEx;
+
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.Configuration;
-
-import com.sperion.pex.permissions.bukkit.PermissionsEx;
 
 /**
  * 

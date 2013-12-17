@@ -24,12 +24,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.Configuration;
-
 import com.sperion.pex.permissions.events.PermissionEntityEvent;
 import com.sperion.pex.permissions.events.PermissionEvent;
 import com.sperion.pex.permissions.events.PermissionSystemEvent;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.Configuration;
 
 /**
  * 
@@ -70,8 +70,7 @@ public class PermissionManager {
      * @return true on success false otherwise
      */
     public boolean has(EntityPlayer player, String permission) {
-        return this.has(player.username, permission, String
-                .valueOf(player.dimension));
+        return this.has(player.username, permission, String.valueOf(player.dimension));
     }
 
     /**

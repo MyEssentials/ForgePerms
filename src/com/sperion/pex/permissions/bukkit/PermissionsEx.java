@@ -162,13 +162,10 @@ public class PermissionsEx implements IPermissions {
         } else {
             if (sender instanceof EntityPlayer) {
                 sendChatToPlayer(sender, "[" + ChatColor.RED + "PermissionsEx" + ChatColor.WHITE + "]");
-                //sender.sendChatToPlayer("[" + ChatColor.RED + "PermissionsEx" + ChatColor.WHITE + "]");
 
-                return !permissionsManager.has((EntityPlayer) sender,
-                        "permissions.manage");
+                return !permissionsManager.has((EntityPlayer) sender, "permissions.manage");
             } else {
                 sendChatToPlayer(sender, "[PermissionsEx]");
-                //sender.sendChatToPlayer("[PermissionsEx]");
 
                 return false;
             }

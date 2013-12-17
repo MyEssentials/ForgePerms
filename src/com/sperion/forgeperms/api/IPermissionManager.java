@@ -33,7 +33,7 @@ public interface IPermissionManager {
      * @param node
      * @return
      */
-    public boolean canAccess(String name, String world, String node);
+    public boolean canAccess(String player, String world, String node);
 
     public boolean addGroup(String player, String group);
     
