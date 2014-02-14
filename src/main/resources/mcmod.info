@@ -1,0 +1,21 @@
+[
+{
+  "modid": "ForgePerms",
+  "name": "ForgePerms",
+  "description": "A basic permission manager for Forge Mods. Uses AlphAest PermissionEX as a fallback.",
+  "version": "@VERSION@.@BUILD_NUMBER@",
+  "mcversion": "1.6.1",
+  "url": "http://www.minecraftforum.net/topic/1889473-",
+  "updateUrl": "",
+  "authors": [
+    "Legobear154"
+  ],
+  "credits": "By Legobear154",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "requiredMods": [ "Forge" ],
+  "useDependencyInformation": "true"
+}
+]

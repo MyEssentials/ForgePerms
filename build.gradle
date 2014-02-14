@@ -1,0 +1,52 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: "forge"
+
+// define the properties file
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    // read config.  it shall from now on be referenced as simply config or as project.config
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+group = "com.sperion.forgeperms"
+version = "1.6.4"
+archivesBaseName = "ForgePerms"
+
+minecraft {
+    version = "1.6.4-9.11.1.964"
+    assetDir = "run/assets"
+}
+
+version = "${config.minecraft_version}-${config.mod_version}"
+
+processResources {
+    // replace stuff in the files we want.
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        include 'version.properties'
+
+        // replaces
+        expand 'version': project.config.mod_version, 'buildnumber': "${System.getenv().BUILD_NUMBER}"
+    }
+
+    // copy everything else, thats we didnt do before
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+        exclude 'version.properties'
+    }
+}
