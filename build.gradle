@@ -13,7 +13,6 @@ buildscript {
 
 apply plugin: "forge"
 
-// define the properties file
 ext.configFile = file "build.properties"
 
 configFile.withReader {
@@ -31,8 +30,6 @@ minecraft {
     version = "1.6.4-9.11.1.964"
     assetDir = "run/assets"
 }
-
-version = "${config.minecraft_version}-${config.mod_version}"
 
 processResources {
     // replace stuff in the files we want.
