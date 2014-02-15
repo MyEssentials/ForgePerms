@@ -28,7 +28,7 @@ public class ItemEconomy implements IEconomyManager {
         String[] itemInfo = itemID.split(":");
         EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(playerName);
         for (ItemStack item : player.inventory.mainInventory){
-            if (item.itemID == Integer.parseInt(itemInfo[0]) && item.getItemDamage() == Integer.parseInt(itemInfo[1])){
+            if (item. == Integer.parseInt(itemInfo[0]) && item.getItemDamage() == Integer.parseInt(itemInfo[1])){
                 return item.stackSize;
             }
         }
@@ -48,7 +48,7 @@ public class ItemEconomy implements IEconomyManager {
         ItemStack held = player.getHeldItem();
         ItemStack item = new ItemStack(Integer.parseInt(itemInfo[0]), (int)amount, Integer.parseInt(itemInfo[1]));
         
-        if (held == null || held.itemID != item.itemID || held.getItemDamage() != item.getItemDamage()) {  //Makes sure the player has the correct item in their hand
+        if (held == null || held. != item.itemID || held.getItemDamage() != item.getItemDamage()) {  //Makes sure the player has the correct item in their hand
             return false;
         }
         
