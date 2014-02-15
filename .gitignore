@@ -1,5 +1,21 @@
-/.settings
+# gradle
+.gradle
+build
+gradle-app.setting
 
-/.classpath
+# ForgeGradle
+/run
 
-/.project
+# eclipse
+.settings
+.metadata
+.classpath
+.project
+bin
+
+# intellij
+out
+*.idea
+*.iml
+*.ipr
+*.iws

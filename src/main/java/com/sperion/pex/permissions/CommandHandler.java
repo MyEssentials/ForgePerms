@@ -41,4 +41,9 @@ public class CommandHandler extends CommandBase {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        return 0;
+    }
 }
