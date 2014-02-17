@@ -5,7 +5,7 @@
 
 	<target name="clean">
 		<delete file="${environment.mcp_location}/src/minecraft/mcmod.info" />
-		<delete dir="${environment.mcp_location}/src/minecraft/com/" />
+		<delete dir="${environment.mcp_location}/src/minecraft/forgeperms" />
 		<delete dir="${environment.mcp_location}/src/minecraft/org" />
 		<delete dir="${environment.mcp_location}/reobf/minecraft" />
 	</target>
@@ -23,8 +23,8 @@
 	</target>
 
     <target name="replace_tokens">
-        <replace dir="${environment.mcp_location}/src/minecraft/com" token="@VERSION@" value="${build.mod_version}" />
-        <replace dir="${environment.mcp_location}/src/minecraft/com" token="@BUILD_NUMBER@" value="${build.build_number}" />
+        <replace dir="${environment.mcp_location}/src/minecraft/forgeperms" token="@VERSION@" value="${build.mod_version}" />
+        <replace dir="${environment.mcp_location}/src/minecraft/forgeperms" token="@BUILD_NUMBER@" value="${build.build_number}" />
         <replace file="${environment.mcp_location}/src/minecraft/mcmod.info" token="@VERSION@" value="${build.mod_version}" />
         <replace file="${environment.mcp_location}/src/minecraft/mcmod.info" token="@BUILD_NUMBER@" value="${build.build_number}" />
     </target>
