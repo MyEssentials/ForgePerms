@@ -13,12 +13,20 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.0.1"
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+version = config.version
 group= "forgeperms"
 archivesBaseName = "ForgePerms"
 
 minecraft {
-	version = "1.6.4-9.11.1.964"
+	version = config.minecraft_version +"-"+ config.forge_version
 }
 
 processResources
@@ -30,4 +38,15 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+task withoutpex(type: Jar){
+    from sourceSets.main.output;
+    exclude "pex";
+    exclude "org";
+    appendix = 'without-pex'
+}
+
+artifacts {
+    archives withoutpex
 }
