@@ -19,5 +19,5 @@ package org.yaml.snakeyaml.nodes;
  * Enum for the three basic YAML types: scalar, sequence and mapping.
  */
 public enum NodeId {
-    scalar, sequence, mapping, anchor;
+	scalar, sequence, mapping, anchor;
 }

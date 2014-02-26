@@ -29,37 +29,37 @@ import org.yaml.snakeyaml.tokens.Token;
  */
 public interface Scanner {
 
-    /**
-     * Check if the next token is one of the given types.
-     * 
-     * @param choices
-     *            token IDs.
-     * @return <code>true</code> if the next token can be assigned to a variable
-     *         of at least one of the given types. Returns <code>false</code> if
-     *         no more tokens are available.
-     * @throws ScannerException
-     *             Thrown in case of malformed input.
-     */
-    boolean checkToken(Token.ID... choices);
+	/**
+	 * Check if the next token is one of the given types.
+	 * 
+	 * @param choices
+	 *            token IDs.
+	 * @return <code>true</code> if the next token can be assigned to a variable
+	 *         of at least one of the given types. Returns <code>false</code> if
+	 *         no more tokens are available.
+	 * @throws ScannerException
+	 *             Thrown in case of malformed input.
+	 */
+	boolean checkToken(Token.ID... choices);
 
-    /**
-     * Return the next token, but do not delete it from the stream.
-     * 
-     * @return The token that will be returned on the next call to
-     *         {@link #getToken}
-     * @throws ScannerException
-     *             Thrown in case of malformed input.
-     */
-    Token peekToken();
+	/**
+	 * Return the next token, but do not delete it from the stream.
+	 * 
+	 * @return The token that will be returned on the next call to
+	 *         {@link #getToken}
+	 * @throws ScannerException
+	 *             Thrown in case of malformed input.
+	 */
+	Token peekToken();
 
-    /**
-     * Returns the next token.
-     * <p>
-     * The token will be removed from the stream.
-     * </p>
-     * 
-     * @throws ScannerException
-     *             Thrown in case of malformed input.
-     */
-    Token getToken();
+	/**
+	 * Returns the next token.
+	 * <p>
+	 * The token will be removed from the stream.
+	 * </p>
+	 * 
+	 * @throws ScannerException
+	 *             Thrown in case of malformed input.
+	 */
+	Token getToken();
 }

@@ -18,24 +18,24 @@ package org.yaml.snakeyaml.tokens;
 import org.yaml.snakeyaml.error.Mark;
 
 public final class AnchorToken extends Token {
-    private final String value;
+	private final String value;
 
-    public AnchorToken(String value, Mark startMark, Mark endMark) {
-        super(startMark, endMark);
-        this.value = value;
-    }
+	public AnchorToken(String value, Mark startMark, Mark endMark) {
+		super(startMark, endMark);
+		this.value = value;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 
-    @Override
-    protected String getArguments() {
-        return "value=" + value;
-    }
+	@Override
+	protected String getArguments() {
+		return "value=" + value;
+	}
 
-    @Override
-    public Token.ID getTokenId() {
-        return ID.Anchor;
-    }
+	@Override
+	public Token.ID getTokenId() {
+		return ID.Anchor;
+	}
 }

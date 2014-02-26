@@ -24,115 +24,115 @@ import pex.permissions.events.PermissionEntityEvent;
 
 public abstract class ProxyPermissionGroup extends PermissionGroup {
 
-    protected IPermissionEntity backendEntity;
+	protected IPermissionEntity backendEntity;
 
-    public ProxyPermissionGroup(PermissionEntity backendEntity) {
-        super(backendEntity.getName(), backendEntity.manager);
+	public ProxyPermissionGroup(PermissionEntity backendEntity) {
+		super(backendEntity.getName(), backendEntity.manager);
 
-        this.backendEntity = backendEntity;
+		this.backendEntity = backendEntity;
 
-        this.setName(backendEntity.getName());
+		setName(backendEntity.getName());
 
-        virtual = backendEntity.isVirtual();
+		virtual = backendEntity.isVirtual();
 
-        this.backendEntity.initialize();
-    }
+		this.backendEntity.initialize();
+	}
 
-    @Override
-    public void initialize() {
-        super.initialize();
-        backendEntity.initialize();
-    }
+	@Override
+	public void initialize() {
+		super.initialize();
+		backendEntity.initialize();
+	}
 
-    @Override
-    public String[] getWorlds() {
-        return backendEntity.getWorlds();
-    }
+	@Override
+	public String[] getWorlds() {
+		return backendEntity.getWorlds();
+	}
 
-    @Override
-    public String getOwnPrefix(String worldName) {
-        return backendEntity.getPrefix(worldName);
-    }
+	@Override
+	public String getOwnPrefix(String worldName) {
+		return backendEntity.getPrefix(worldName);
+	}
 
-    @Override
-    public String getOwnSuffix(String worldName) {
-        return backendEntity.getSuffix(worldName);
-    }
+	@Override
+	public String getOwnSuffix(String worldName) {
+		return backendEntity.getSuffix(worldName);
+	}
 
-    @Override
-    public void setPrefix(String prefix, String worldName) {
-        backendEntity.setPrefix(prefix, worldName);
+	@Override
+	public void setPrefix(String prefix, String worldName) {
+		backendEntity.setPrefix(prefix, worldName);
 
-        this.clearMembersCache();
+		clearMembersCache();
 
-        this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
-    }
+		this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
+	}
 
-    @Override
-    public void setSuffix(String suffix, String worldName) {
-        backendEntity.setSuffix(suffix, worldName);
+	@Override
+	public void setSuffix(String suffix, String worldName) {
+		backendEntity.setSuffix(suffix, worldName);
 
-        this.clearMembersCache();
+		clearMembersCache();
 
-        this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
-    }
+		this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
+	}
 
-    @Override
-    public boolean isVirtual() {
-        return backendEntity.isVirtual();
-    }
+	@Override
+	public boolean isVirtual() {
+		return backendEntity.isVirtual();
+	}
 
-    @Override
-    public Map<String, Map<String, String>> getAllOptions() {
-        return backendEntity.getAllOptions();
-    }
+	@Override
+	public Map<String, Map<String, String>> getAllOptions() {
+		return backendEntity.getAllOptions();
+	}
 
-    @Override
-    public Map<String, String[]> getAllPermissions() {
-        return backendEntity.getAllPermissions();
-    }
+	@Override
+	public Map<String, String[]> getAllPermissions() {
+		return backendEntity.getAllPermissions();
+	}
 
-    @Override
-    public String[] getOwnPermissions(String world) {
-        return backendEntity.getPermissions(world);
-    }
+	@Override
+	public String[] getOwnPermissions(String world) {
+		return backendEntity.getPermissions(world);
+	}
 
-    @Override
-    public String getOwnOption(String option, String world, String defaultValue) {
-        return backendEntity.getOption(option, world, defaultValue);
-    }
+	@Override
+	public String getOwnOption(String option, String world, String defaultValue) {
+		return backendEntity.getOption(option, world, defaultValue);
+	}
 
-    @Override
-    public Map<String, String> getOptions(String world) {
-        return backendEntity.getOptions(world);
-    }
+	@Override
+	public Map<String, String> getOptions(String world) {
+		return backendEntity.getOptions(world);
+	}
 
-    @Override
-    public void save() {
-        backendEntity.save();
-        this.callEvent(PermissionEntityEvent.Action.SAVED);
-    }
+	@Override
+	public void save() {
+		backendEntity.save();
+		this.callEvent(PermissionEntityEvent.Action.SAVED);
+	}
 
-    @Override
-    protected void removeGroup() {
-        backendEntity.remove();
-    }
+	@Override
+	protected void removeGroup() {
+		backendEntity.remove();
+	}
 
-    @Override
-    public void setOption(String permission, String value, String world) {
-        backendEntity.setOption(permission, value, world);
+	@Override
+	public void setOption(String permission, String value, String world) {
+		backendEntity.setOption(permission, value, world);
 
-        this.clearMembersCache();
+		clearMembersCache();
 
-        this.callEvent(PermissionEntityEvent.Action.OPTIONS_CHANGED);
-    }
+		this.callEvent(PermissionEntityEvent.Action.OPTIONS_CHANGED);
+	}
 
-    @Override
-    public void setPermissions(String[] permissions, String world) {
-        backendEntity.setPermissions(permissions, world);
+	@Override
+	public void setPermissions(String[] permissions, String world) {
+		backendEntity.setPermissions(permissions, world);
 
-        this.clearMembersCache();
+		clearMembersCache();
 
-        this.callEvent(PermissionEntityEvent.Action.PERMISSIONS_CHANGED);
-    }
+		this.callEvent(PermissionEntityEvent.Action.PERMISSIONS_CHANGED);
+	}
 }

@@ -42,216 +42,214 @@ import org.apache.commons.lang.text.StrBuilder;
 @Deprecated
 public final class NumberRange {
 
-    /* The minimum number in this range. */
-    private final Number min;
+	/* The minimum number in this range. */
+	private final Number min;
 
-    /* The maximum number in this range. */
-    private final Number max;
+	/* The maximum number in this range. */
+	private final Number max;
 
-    /**
-     * <p>
-     * Constructs a new <code>NumberRange</code> using <code>number</code> as
-     * both the minimum and maximum in this range.
-     * </p>
-     * 
-     * @param num
-     *            the number to use for this range
-     * @throws NullPointerException
-     *             if the number is <code>null</code>
-     */
-    public NumberRange(Number num) {
-        if (num == null) {
-            throw new NullPointerException("The number must not be null");
-        }
+	/**
+	 * <p>
+	 * Constructs a new <code>NumberRange</code> using <code>number</code> as
+	 * both the minimum and maximum in this range.
+	 * </p>
+	 * 
+	 * @param num
+	 *            the number to use for this range
+	 * @throws NullPointerException
+	 *             if the number is <code>null</code>
+	 */
+	public NumberRange(Number num) {
+		if (num == null) {
+			throw new NullPointerException("The number must not be null");
+		}
 
-        min = num;
-        max = num;
-    }
+		min = num;
+		max = num;
+	}
 
-    /**
-     * <p>
-     * Constructs a new <code>NumberRange</code> with the specified minimum and
-     * maximum numbers.
-     * </p>
-     * 
-     * <p>
-     * <em>If the maximum is less than the minimum, the range will be constructed
-     * from the minimum value to the minimum value, not what you would expect!.</em>
-     * </p>
-     * 
-     * @param min
-     *            the minimum number in this range
-     * @param max
-     *            the maximum number in this range
-     * @throws NullPointerException
-     *             if either the minimum or maximum number is <code>null</code>
-     */
-    public NumberRange(Number min, Number max) {
-        if (min == null) {
-            throw new NullPointerException("The minimum value must not be null");
-        } else if (max == null) {
-            throw new NullPointerException("The maximum value must not be null");
-        }
+	/**
+	 * <p>
+	 * Constructs a new <code>NumberRange</code> with the specified minimum and
+	 * maximum numbers.
+	 * </p>
+	 * 
+	 * <p>
+	 * <em>If the maximum is less than the minimum, the range will be constructed
+	 * from the minimum value to the minimum value, not what you would expect!.</em>
+	 * </p>
+	 * 
+	 * @param min
+	 *            the minimum number in this range
+	 * @param max
+	 *            the maximum number in this range
+	 * @throws NullPointerException
+	 *             if either the minimum or maximum number is <code>null</code>
+	 */
+	public NumberRange(Number min, Number max) {
+		if (min == null) {
+			throw new NullPointerException("The minimum value must not be null");
+		} else if (max == null) {
+			throw new NullPointerException("The maximum value must not be null");
+		}
 
-        if (max.doubleValue() < min.doubleValue()) {
-            this.min = this.max = min;
-        } else {
-            this.min = min;
-            this.max = max;
-        }
-    }
+		if (max.doubleValue() < min.doubleValue()) {
+			this.min = this.max = min;
+		} else {
+			this.min = min;
+			this.max = max;
+		}
+	}
 
-    /**
-     * <p>
-     * Returns the minimum number in this range.
-     * </p>
-     * 
-     * @return the minimum number in this range
-     */
-    public Number getMinimum() {
-        return min;
-    }
+	/**
+	 * <p>
+	 * Returns the minimum number in this range.
+	 * </p>
+	 * 
+	 * @return the minimum number in this range
+	 */
+	public Number getMinimum() {
+		return min;
+	}
 
-    /**
-     * <p>
-     * Returns the maximum number in this range.
-     * </p>
-     * 
-     * @return the maximum number in this range
-     */
-    public Number getMaximum() {
-        return max;
-    }
+	/**
+	 * <p>
+	 * Returns the maximum number in this range.
+	 * </p>
+	 * 
+	 * @return the maximum number in this range
+	 */
+	public Number getMaximum() {
+		return max;
+	}
 
-    /**
-     * <p>
-     * Tests whether the specified <code>number</code> occurs within this range
-     * using <code>double</code> comparison.
-     * </p>
-     * 
-     * @param number
-     *            the number to test
-     * @return <code>true</code> if the specified number occurs within this
-     *         range; otherwise, <code>false</code>
-     */
-    public boolean includesNumber(Number number) {
-        if (number == null) {
-            return false;
-        } else {
-            return !(min.doubleValue() > number.doubleValue())
-                    && !(max.doubleValue() < number.doubleValue());
-        }
-    }
+	/**
+	 * <p>
+	 * Tests whether the specified <code>number</code> occurs within this range
+	 * using <code>double</code> comparison.
+	 * </p>
+	 * 
+	 * @param number
+	 *            the number to test
+	 * @return <code>true</code> if the specified number occurs within this
+	 *         range; otherwise, <code>false</code>
+	 */
+	public boolean includesNumber(Number number) {
+		if (number == null) {
+			return false;
+		} else {
+			return !(min.doubleValue() > number.doubleValue()) && !(max.doubleValue() < number.doubleValue());
+		}
+	}
 
-    /**
-     * <p>
-     * Tests whether the specified range occurs entirely within this range using
-     * <code>double</code> comparison.
-     * </p>
-     * 
-     * @param range
-     *            the range to test
-     * @return <code>true</code> if the specified range occurs entirely within
-     *         this range; otherwise, <code>false</code>
-     */
-    public boolean includesRange(NumberRange range) {
-        if (range == null) {
-            return false;
-        } else {
-            return includesNumber(range.min) && includesNumber(range.max);
-        }
-    }
+	/**
+	 * <p>
+	 * Tests whether the specified range occurs entirely within this range using
+	 * <code>double</code> comparison.
+	 * </p>
+	 * 
+	 * @param range
+	 *            the range to test
+	 * @return <code>true</code> if the specified range occurs entirely within
+	 *         this range; otherwise, <code>false</code>
+	 */
+	public boolean includesRange(NumberRange range) {
+		if (range == null) {
+			return false;
+		} else {
+			return includesNumber(range.min) && includesNumber(range.max);
+		}
+	}
 
-    /**
-     * <p>
-     * Tests whether the specified range overlaps with this range using
-     * <code>double</code> comparison.
-     * </p>
-     * 
-     * @param range
-     *            the range to test
-     * @return <code>true</code> if the specified range overlaps with this
-     *         range; otherwise, <code>false</code>
-     */
-    public boolean overlaps(NumberRange range) {
-        if (range == null) {
-            return false;
-        } else {
-            return range.includesNumber(min) || range.includesNumber(max)
-                    || includesRange(range);
-        }
-    }
+	/**
+	 * <p>
+	 * Tests whether the specified range overlaps with this range using
+	 * <code>double</code> comparison.
+	 * </p>
+	 * 
+	 * @param range
+	 *            the range to test
+	 * @return <code>true</code> if the specified range overlaps with this
+	 *         range; otherwise, <code>false</code>
+	 */
+	public boolean overlaps(NumberRange range) {
+		if (range == null) {
+			return false;
+		} else {
+			return range.includesNumber(min) || range.includesNumber(max) || includesRange(range);
+		}
+	}
 
-    /**
-     * <p>
-     * Indicates whether some other <code>Object</code> is &quot;equal&quot; to
-     * this one.
-     * </p>
-     * 
-     * @param obj
-     *            the reference object with which to compare
-     * @return <code>true</code> if this object is the same as the obj argument;
-     *         <code>false</code> otherwise
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        } else if (!(obj instanceof NumberRange)) {
-            return false;
-        } else {
-            NumberRange range = (NumberRange) obj;
-            return min.equals(range.min) && max.equals(range.max);
-        }
-    }
+	/**
+	 * <p>
+	 * Indicates whether some other <code>Object</code> is &quot;equal&quot; to
+	 * this one.
+	 * </p>
+	 * 
+	 * @param obj
+	 *            the reference object with which to compare
+	 * @return <code>true</code> if this object is the same as the obj argument;
+	 *         <code>false</code> otherwise
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		} else if (!(obj instanceof NumberRange)) {
+			return false;
+		} else {
+			NumberRange range = (NumberRange) obj;
+			return min.equals(range.min) && max.equals(range.max);
+		}
+	}
 
-    /**
-     * <p>
-     * Returns a hash code value for this object.
-     * </p>
-     * 
-     * @return a hash code value for this object
-     */
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = 37 * result + min.hashCode();
-        result = 37 * result + max.hashCode();
-        return result;
-    }
+	/**
+	 * <p>
+	 * Returns a hash code value for this object.
+	 * </p>
+	 * 
+	 * @return a hash code value for this object
+	 */
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 37 * result + min.hashCode();
+		result = 37 * result + max.hashCode();
+		return result;
+	}
 
-    /**
-     * <p>
-     * Returns the string representation of this range.
-     * </p>
-     * 
-     * <p>
-     * This string is the string representation of the minimum and maximum
-     * numbers in the range, separated by a hyphen. If a number is negative,
-     * then it is enclosed in parentheses.
-     * </p>
-     * 
-     * @return the string representation of this range
-     */
-    @Override
-    public String toString() {
-        StrBuilder sb = new StrBuilder();
+	/**
+	 * <p>
+	 * Returns the string representation of this range.
+	 * </p>
+	 * 
+	 * <p>
+	 * This string is the string representation of the minimum and maximum
+	 * numbers in the range, separated by a hyphen. If a number is negative,
+	 * then it is enclosed in parentheses.
+	 * </p>
+	 * 
+	 * @return the string representation of this range
+	 */
+	@Override
+	public String toString() {
+		StrBuilder sb = new StrBuilder();
 
-        if (min.doubleValue() < 0) {
-            sb.append('(').append(min).append(')');
-        } else {
-            sb.append(min);
-        }
+		if (min.doubleValue() < 0) {
+			sb.append('(').append(min).append(')');
+		} else {
+			sb.append(min);
+		}
 
-        sb.append('-');
+		sb.append('-');
 
-        if (max.doubleValue() < 0) {
-            sb.append('(').append(max).append(')');
-        } else {
-            sb.append(max);
-        }
+		if (max.doubleValue() < 0) {
+			sb.append('(').append(max).append(')');
+		} else {
+			sb.append(max);
+		}
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 
 }

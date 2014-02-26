@@ -24,15 +24,15 @@ import org.yaml.snakeyaml.resolver.Resolver;
  */
 @Deprecated
 public final class Loader {
-    protected final BaseConstructor constructor;
-    protected Resolver resolver;
+	protected final BaseConstructor constructor;
+	protected Resolver resolver;
 
-    public Loader(BaseConstructor constructor) {
-        super();
-        this.constructor = constructor;
-    }
+	public Loader(BaseConstructor constructor) {
+		super();
+		this.constructor = constructor;
+	}
 
-    public Loader() {
-        this(new Constructor());
-    }
+	public Loader() {
+		this(new Constructor());
+	}
 }

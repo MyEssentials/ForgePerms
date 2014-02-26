@@ -32,232 +32,214 @@ import pex.permissions.backends.FileBackend;
 
 public class FileEntity extends PermissionEntity {
 
-    protected ConfigurationSection node;
-    protected FileBackend backend;
-    protected String nodePath;
+	protected ConfigurationSection node;
+	protected FileBackend backend;
+	protected String nodePath;
 
-    public FileEntity(String entityName, PermissionManager manager,
-            FileBackend backend, String baseNode) {
-        super(entityName, manager);
+	public FileEntity(String entityName, PermissionManager manager, FileBackend backend, String baseNode) {
+		super(entityName, manager);
 
-        this.backend = backend;
-        node = this.getNode(baseNode, this.getName());
-    }
+		this.backend = backend;
+		node = getNode(baseNode, getName());
+	}
 
-    protected final ConfigurationSection getNode(String baseNode,
-            String entityName) {
-        nodePath = FileBackend.buildPath(baseNode, entityName);
+	protected final ConfigurationSection getNode(String baseNode, String entityName) {
+		nodePath = FileBackend.buildPath(baseNode, entityName);
 
-        ConfigurationSection entityNode = backend.permissions
-                .getConfigurationSection(nodePath);
+		ConfigurationSection entityNode = backend.permissions.getConfigurationSection(nodePath);
 
-        if (entityNode != null) {
-            virtual = false;
-            return entityNode;
-        }
+		if (entityNode != null) {
+			virtual = false;
+			return entityNode;
+		}
 
-        ConfigurationSection users = backend.permissions
-                .getConfigurationSection(baseNode);
+		ConfigurationSection users = backend.permissions.getConfigurationSection(baseNode);
 
-        if (users != null) {
-            for (Map.Entry<String, Object> entry : users.getValues(false)
-                    .entrySet()) {
-                if (entry.getKey().equalsIgnoreCase(entityName)
-                        && entry.getValue() instanceof ConfigurationSection) {
-                    this.setName(entry.getKey());
-                    nodePath = FileBackend.buildPath(baseNode, this.getName());
-                    virtual = false;
+		if (users != null) {
+			for (Map.Entry<String, Object> entry : users.getValues(false).entrySet()) {
+				if (entry.getKey().equalsIgnoreCase(entityName) && entry.getValue() instanceof ConfigurationSection) {
+					setName(entry.getKey());
+					nodePath = FileBackend.buildPath(baseNode, getName());
+					virtual = false;
 
-                    return (ConfigurationSection) entry.getValue();
-                }
-            }
-        }
+					return (ConfigurationSection) entry.getValue();
+				}
+			}
+		}
 
-        virtual = true;
+		virtual = true;
 
-        // Silly workaround for empty nodes
-        ConfigurationSection section = backend.permissions
-                .createSection(nodePath);
-        backend.permissions.set(nodePath, null);
+		// Silly workaround for empty nodes
+		ConfigurationSection section = backend.permissions.createSection(nodePath);
+		backend.permissions.set(nodePath, null);
 
-        return section;
-    }
+		return section;
+	}
 
-    public ConfigurationSection getConfigNode() {
-        return node;
-    }
+	public ConfigurationSection getConfigNode() {
+		return node;
+	}
 
-    @Override
-    public String[] getPermissions(String world) {
-        List<String> permissions = node.getStringList(formatPath(world,
-                "permissions"));
+	@Override
+	public String[] getPermissions(String world) {
+		List<String> permissions = node.getStringList(formatPath(world, "permissions"));
 
-        if (permissions == null) {
-            return new String[0];
-        }
+		if (permissions == null) {
+			return new String[0];
+		}
 
-        return permissions.toArray(new String[permissions.size()]);
-    }
+		return permissions.toArray(new String[permissions.size()]);
+	}
 
-    @Override
-    public void setPermissions(String[] permissions, String world) {
-        node.set(formatPath(world, "permissions"),
-                permissions.length > 0 ? Arrays.asList(permissions) : null);
+	@Override
+	public void setPermissions(String[] permissions, String world) {
+		node.set(formatPath(world, "permissions"), permissions.length > 0 ? Arrays.asList(permissions) : null);
 
-        this.save();
-    }
+		save();
+	}
 
-    @Override
-    public String[] getWorlds() {
-        ConfigurationSection worldsSection = node
-                .getConfigurationSection("worlds");
+	@Override
+	public String[] getWorlds() {
+		ConfigurationSection worldsSection = node.getConfigurationSection("worlds");
 
-        if (worldsSection == null) {
-            return new String[0];
-        }
+		if (worldsSection == null) {
+			return new String[0];
+		}
 
-        return worldsSection.getKeys(false).toArray(new String[0]);
-    }
+		return worldsSection.getKeys(false).toArray(new String[0]);
+	}
 
-    @Override
-    public Map<String, String> getOptions(String world) {
+	@Override
+	public Map<String, String> getOptions(String world) {
 
-        ConfigurationSection optionsSection = node
-                .getConfigurationSection(formatPath(world, "options"));
+		ConfigurationSection optionsSection = node.getConfigurationSection(formatPath(world, "options"));
 
-        if (optionsSection != null) {
-            return this.collectOptions(optionsSection);
-        }
+		if (optionsSection != null) {
+			return collectOptions(optionsSection);
+		}
 
-        return new HashMap<String, String>(0);
-    }
+		return new HashMap<String, String>(0);
+	}
 
-    @Override
-    public String getOption(String option, String world, String defaultValue) {
-        return node.getString(formatPath(world, "options", option),
-                defaultValue);
-    }
+	@Override
+	public String getOption(String option, String world, String defaultValue) {
+		return node.getString(formatPath(world, "options", option), defaultValue);
+	}
 
-    @Override
-    public void setOption(String option, String value, String world) {
-        node.set(formatPath(world, "options", option), value);
+	@Override
+	public void setOption(String option, String value, String world) {
+		node.set(formatPath(world, "options", option), value);
 
-        this.save();
-    }
+		save();
+	}
 
-    @Override
-    public String getPrefix(String worldName) {
-        return node.getString(formatPath(worldName, "prefix"));
-    }
+	@Override
+	public String getPrefix(String worldName) {
+		return node.getString(formatPath(worldName, "prefix"));
+	}
 
-    @Override
-    public String getSuffix(String worldName) {
-        return node.getString(formatPath(worldName, "suffix"));
-    }
+	@Override
+	public String getSuffix(String worldName) {
+		return node.getString(formatPath(worldName, "suffix"));
+	}
 
-    @Override
-    public void setPrefix(String prefix, String worldName) {
-        node.set(formatPath(worldName, "prefix"), prefix);
+	@Override
+	public void setPrefix(String prefix, String worldName) {
+		node.set(formatPath(worldName, "prefix"), prefix);
 
-        this.save();
-    }
+		save();
+	}
 
-    @Override
-    public void setSuffix(String suffix, String worldName) {
-        node.set(formatPath(worldName, "suffix"), suffix);
+	@Override
+	public void setSuffix(String suffix, String worldName) {
+		node.set(formatPath(worldName, "suffix"), suffix);
 
-        this.save();
-    }
+		save();
+	}
 
-    @Override
-    public Map<String, String[]> getAllPermissions() {
-        Map<String, String[]> allPermissions = new HashMap<String, String[]>();
+	@Override
+	public Map<String, String[]> getAllPermissions() {
+		Map<String, String[]> allPermissions = new HashMap<String, String[]>();
 
-        // Common permissions
-        List<String> commonPermissions = node.getStringList("permissions");
-        if (commonPermissions != null) {
-            allPermissions.put(null, commonPermissions.toArray(new String[0]));
-        }
+		// Common permissions
+		List<String> commonPermissions = node.getStringList("permissions");
+		if (commonPermissions != null) {
+			allPermissions.put(null, commonPermissions.toArray(new String[0]));
+		}
 
-        // World-specific permissions
-        ConfigurationSection worldsSection = node
-                .getConfigurationSection("worlds");
-        if (worldsSection != null) {
-            for (String world : worldsSection.getKeys(false)) {
-                List<String> worldPermissions = node.getStringList(FileBackend
-                        .buildPath("worlds", world, "permissions"));
-                if (commonPermissions != null) {
-                    allPermissions.put(world, worldPermissions
-                            .toArray(new String[0]));
-                }
-            }
-        }
+		// World-specific permissions
+		ConfigurationSection worldsSection = node.getConfigurationSection("worlds");
+		if (worldsSection != null) {
+			for (String world : worldsSection.getKeys(false)) {
+				List<String> worldPermissions = node.getStringList(FileBackend.buildPath("worlds", world, "permissions"));
+				if (commonPermissions != null) {
+					allPermissions.put(world, worldPermissions.toArray(new String[0]));
+				}
+			}
+		}
 
-        return allPermissions;
-    }
+		return allPermissions;
+	}
 
-    @Override
-    public Map<String, Map<String, String>> getAllOptions() {
-        Map<String, Map<String, String>> allOptions = new HashMap<String, Map<String, String>>();
+	@Override
+	public Map<String, Map<String, String>> getAllOptions() {
+		Map<String, Map<String, String>> allOptions = new HashMap<String, Map<String, String>>();
 
-        allOptions.put(null, this.getOptions(null));
+		allOptions.put(null, getOptions(null));
 
-        for (String worldName : this.getWorlds()) {
-            allOptions.put(worldName, this.getOptions(worldName));
-        }
+		for (String worldName : getWorlds()) {
+			allOptions.put(worldName, getOptions(worldName));
+		}
 
-        return allOptions;
-    }
+		return allOptions;
+	}
 
-    private Map<String, String> collectOptions(ConfigurationSection section) {
-        Map<String, String> options = new LinkedHashMap<String, String>();
+	private Map<String, String> collectOptions(ConfigurationSection section) {
+		Map<String, String> options = new LinkedHashMap<String, String>();
 
-        for (String key : section.getKeys(true)) {
-            if (section.isConfigurationSection(key)) {
-                continue;
-            }
+		for (String key : section.getKeys(true)) {
+			if (section.isConfigurationSection(key)) {
+				continue;
+			}
 
-            options.put(key.replace(
-                    section.getRoot().options().pathSeparator(), '.'), section
-                    .getString(key));
-        }
+			options.put(key.replace(section.getRoot().options().pathSeparator(), '.'), section.getString(key));
+		}
 
-        return options;
-    }
+		return options;
+	}
 
-    @Override
-    public void save() {
-        backend.permissions.set(nodePath, node);
+	@Override
+	public void save() {
+		backend.permissions.set(nodePath, node);
 
-        backend.save();
-        virtual = false;
-    }
+		backend.save();
+		virtual = false;
+	}
 
-    @Override
-    public void remove() {
-        backend.permissions.set(nodePath, null);
+	@Override
+	public void remove() {
+		backend.permissions.set(nodePath, null);
 
-        backend.save();
-    }
+		backend.save();
+	}
 
-    protected static String formatPath(String worldName, String node,
-            String value) {
-        String path = FileBackend.buildPath(node, value);
+	protected static String formatPath(String worldName, String node, String value) {
+		String path = FileBackend.buildPath(node, value);
 
-        if (worldName != null && !worldName.isEmpty()) {
-            path = FileBackend.buildPath("worlds", worldName, path);
-        }
+		if (worldName != null && !worldName.isEmpty()) {
+			path = FileBackend.buildPath("worlds", worldName, path);
+		}
 
-        return path;
-    }
+		return path;
+	}
 
-    protected static String formatPath(String worldName, String node) {
-        String path = node;
+	protected static String formatPath(String worldName, String node) {
+		String path = node;
 
-        if (worldName != null && !worldName.isEmpty()) {
-            path = FileBackend.buildPath("worlds", worldName, path);
-        }
+		if (worldName != null && !worldName.isEmpty()) {
+			path = FileBackend.buildPath("worlds", worldName, path);
+		}
 
-        return path;
-    }
+		return path;
+	}
 }

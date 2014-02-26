@@ -22,29 +22,28 @@ import org.yaml.snakeyaml.error.Mark;
  * {@link SequenceNode collection}.
  */
 public abstract class CollectionNode extends Node {
-    private Boolean flowStyle;
+	private Boolean flowStyle;
 
-    public CollectionNode(Tag tag, Mark startMark, Mark endMark,
-            Boolean flowStyle) {
-        super(tag, startMark, endMark);
-        this.flowStyle = flowStyle;
-    }
+	public CollectionNode(Tag tag, Mark startMark, Mark endMark, Boolean flowStyle) {
+		super(tag, startMark, endMark);
+		this.flowStyle = flowStyle;
+	}
 
-    /**
-     * Serialization style of this collection.
-     * 
-     * @return <code>true</code> for flow style, <code>false</code> for block
-     *         style.
-     */
-    public Boolean getFlowStyle() {
-        return flowStyle;
-    }
+	/**
+	 * Serialization style of this collection.
+	 * 
+	 * @return <code>true</code> for flow style, <code>false</code> for block
+	 *         style.
+	 */
+	public Boolean getFlowStyle() {
+		return flowStyle;
+	}
 
-    public void setFlowStyle(Boolean flowStyle) {
-        this.flowStyle = flowStyle;
-    }
+	public void setFlowStyle(Boolean flowStyle) {
+		this.flowStyle = flowStyle;
+	}
 
-    public void setEndMark(Mark endMark) {
-        this.endMark = endMark;
-    }
+	public void setEndMark(Mark endMark) {
+		this.endMark = endMark;
+	}
 }

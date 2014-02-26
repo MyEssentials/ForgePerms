@@ -34,12 +34,12 @@ import org.apache.commons.lang.exception.NestableRuntimeException;
  * 
  * <pre>
  * public void foo() {
- *     try {
- *         // do something that throws IOException
- *     } catch (IOException ex) {
- *         // don't want to or can't throw IOException from foo()
- *         throw new UnhandledException(ex);
- *     }
+ * 	try {
+ * 		// do something that throws IOException
+ * 	} catch (IOException ex) {
+ * 		// don't want to or can't throw IOException from foo()
+ * 		throw new UnhandledException(ex);
+ * 	}
  * }
  * </pre>
  * 
@@ -49,33 +49,33 @@ import org.apache.commons.lang.exception.NestableRuntimeException;
  */
 public class UnhandledException extends NestableRuntimeException {
 
-    /**
-     * Required for serialization support.
-     * 
-     * @see java.io.Serializable
-     */
-    private static final long serialVersionUID = 1832101364842773720L;
+	/**
+	 * Required for serialization support.
+	 * 
+	 * @see java.io.Serializable
+	 */
+	private static final long serialVersionUID = 1832101364842773720L;
 
-    /**
-     * Constructs the exception using a cause.
-     * 
-     * @param cause
-     *            the underlying cause
-     */
-    public UnhandledException(Throwable cause) {
-        super(cause);
-    }
+	/**
+	 * Constructs the exception using a cause.
+	 * 
+	 * @param cause
+	 *            the underlying cause
+	 */
+	public UnhandledException(Throwable cause) {
+		super(cause);
+	}
 
-    /**
-     * Constructs the exception using a message and cause.
-     * 
-     * @param message
-     *            the message to use
-     * @param cause
-     *            the underlying cause
-     */
-    public UnhandledException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	/**
+	 * Constructs the exception using a message and cause.
+	 * 
+	 * @param message
+	 *            the message to use
+	 * @param cause
+	 *            the underlying cause
+	 */
+	public UnhandledException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
 }

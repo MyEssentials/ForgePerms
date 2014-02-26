@@ -28,25 +28,25 @@ import pex.permissions.events.PermissionEntityEvent;
  */
 public class SQLUser extends ProxyPermissionUser {
 
-    protected SQLEntity backend;
+	protected SQLEntity backend;
 
-    public SQLUser(String name, PermissionManager manager, SQLConnection sql) {
-        super(new SQLEntity(name, manager, SQLEntity.Type.USER, sql));
+	public SQLUser(String name, PermissionManager manager, SQLConnection sql) {
+		super(new SQLEntity(name, manager, SQLEntity.Type.USER, sql));
 
-        backend = (SQLEntity) backendEntity;
-    }
+		backend = (SQLEntity) backendEntity;
+	}
 
-    @Override
-    public void setGroups(String[] parentGroups, String worldName) {
-        backend.setParents(parentGroups, worldName);
+	@Override
+	public void setGroups(String[] parentGroups, String worldName) {
+		backend.setParents(parentGroups, worldName);
 
-        this.clearCache();
+		clearCache();
 
-        this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
-    }
+		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
+	}
 
-    @Override
-    protected String[] getGroupsNamesImpl(String worldName) {
-        return backend.getParentNames(worldName);
-    }
+	@Override
+	protected String[] getGroupsNamesImpl(String worldName) {
+		return backend.getParentNames(worldName);
+	}
 }

@@ -45,129 +45,129 @@ import java.io.UnsupportedEncodingException;
  */
 public class CharEncoding {
 
-    /**
-     * <p>
-     * ISO Latin Alphabet #1, also known as ISO-LATIN-1.
-     * </p>
-     * <p>
-     * Every implementation of the Java platform is required to support this
-     * character encoding.
-     * </p>
-     * 
-     * @see <a
-     *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
-     *      character encoding names</a>
-     */
-    public static final String ISO_8859_1 = "ISO-8859-1";
+	/**
+	 * <p>
+	 * ISO Latin Alphabet #1, also known as ISO-LATIN-1.
+	 * </p>
+	 * <p>
+	 * Every implementation of the Java platform is required to support this
+	 * character encoding.
+	 * </p>
+	 * 
+	 * @see <a
+	 *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
+	 *      character encoding names</a>
+	 */
+	public static final String ISO_8859_1 = "ISO-8859-1";
 
-    /**
-     * <p>
-     * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin
-     * block of the Unicode character set.
-     * </p>
-     * <p>
-     * Every implementation of the Java platform is required to support this
-     * character encoding.
-     * </p>
-     * 
-     * @see <a
-     *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
-     *      character encoding names</a>
-     */
-    public static final String US_ASCII = "US-ASCII";
+	/**
+	 * <p>
+	 * Seven-bit ASCII, also known as ISO646-US, also known as the Basic Latin
+	 * block of the Unicode character set.
+	 * </p>
+	 * <p>
+	 * Every implementation of the Java platform is required to support this
+	 * character encoding.
+	 * </p>
+	 * 
+	 * @see <a
+	 *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
+	 *      character encoding names</a>
+	 */
+	public static final String US_ASCII = "US-ASCII";
 
-    /**
-     * <p>
-     * Sixteen-bit Unicode Transformation Format, byte order specified by a
-     * mandatory initial byte-order mark (either order accepted on input,
-     * big-endian used on output).
-     * </p>
-     * <p>
-     * Every implementation of the Java platform is required to support this
-     * character encoding.
-     * </p>
-     * 
-     * @see <a
-     *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
-     *      character encoding names</a>
-     */
-    public static final String UTF_16 = "UTF-16";
+	/**
+	 * <p>
+	 * Sixteen-bit Unicode Transformation Format, byte order specified by a
+	 * mandatory initial byte-order mark (either order accepted on input,
+	 * big-endian used on output).
+	 * </p>
+	 * <p>
+	 * Every implementation of the Java platform is required to support this
+	 * character encoding.
+	 * </p>
+	 * 
+	 * @see <a
+	 *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
+	 *      character encoding names</a>
+	 */
+	public static final String UTF_16 = "UTF-16";
 
-    /**
-     * <p>
-     * Sixteen-bit Unicode Transformation Format, big-endian byte order.
-     * </p>
-     * <p>
-     * Every implementation of the Java platform is required to support this
-     * character encoding.
-     * </p>
-     * 
-     * @see <a
-     *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
-     *      character encoding names</a>
-     */
-    public static final String UTF_16BE = "UTF-16BE";
+	/**
+	 * <p>
+	 * Sixteen-bit Unicode Transformation Format, big-endian byte order.
+	 * </p>
+	 * <p>
+	 * Every implementation of the Java platform is required to support this
+	 * character encoding.
+	 * </p>
+	 * 
+	 * @see <a
+	 *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
+	 *      character encoding names</a>
+	 */
+	public static final String UTF_16BE = "UTF-16BE";
 
-    /**
-     * <p>
-     * Sixteen-bit Unicode Transformation Format, little-endian byte order.
-     * </p>
-     * <p>
-     * Every implementation of the Java platform is required to support this
-     * character encoding.
-     * </p>
-     * 
-     * @see <a
-     *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
-     *      character encoding names</a>
-     */
-    public static final String UTF_16LE = "UTF-16LE";
+	/**
+	 * <p>
+	 * Sixteen-bit Unicode Transformation Format, little-endian byte order.
+	 * </p>
+	 * <p>
+	 * Every implementation of the Java platform is required to support this
+	 * character encoding.
+	 * </p>
+	 * 
+	 * @see <a
+	 *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
+	 *      character encoding names</a>
+	 */
+	public static final String UTF_16LE = "UTF-16LE";
 
-    /**
-     * <p>
-     * Eight-bit Unicode Transformation Format.
-     * </p>
-     * <p>
-     * Every implementation of the Java platform is required to support this
-     * character encoding.
-     * </p>
-     * 
-     * @see <a
-     *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
-     *      character encoding names</a>
-     */
-    public static final String UTF_8 = "UTF-8";
+	/**
+	 * <p>
+	 * Eight-bit Unicode Transformation Format.
+	 * </p>
+	 * <p>
+	 * Every implementation of the Java platform is required to support this
+	 * character encoding.
+	 * </p>
+	 * 
+	 * @see <a
+	 *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
+	 *      character encoding names</a>
+	 */
+	public static final String UTF_8 = "UTF-8";
 
-    /**
-     * <p>
-     * Returns whether the named charset is supported.
-     * </p>
-     * <p>
-     * This is similar to <a href=
-     * "http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html#isSupported(java.lang.String)"
-     * > java.nio.charset.Charset.isSupported(String)</a>
-     * </p>
-     * 
-     * @param name
-     *            the name of the requested charset; may be either a canonical
-     *            name or an alias
-     * @return <code>true</code> if, and only if, support for the named charset
-     *         is available in the current Java virtual machine
-     * 
-     * @see <a
-     *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
-     *      character encoding names</a>
-     */
-    public static boolean isSupported(String name) {
-        if (name == null) {
-            return false;
-        }
-        try {
-            new String(ArrayUtils.EMPTY_BYTE_ARRAY, name);
-        } catch (UnsupportedEncodingException e) {
-            return false;
-        }
-        return true;
-    }
+	/**
+	 * <p>
+	 * Returns whether the named charset is supported.
+	 * </p>
+	 * <p>
+	 * This is similar to <a href=
+	 * "http://java.sun.com/j2se/1.4.2/docs/api/java/nio/charset/Charset.html#isSupported(java.lang.String)"
+	 * > java.nio.charset.Charset.isSupported(String)</a>
+	 * </p>
+	 * 
+	 * @param name
+	 *            the name of the requested charset; may be either a canonical
+	 *            name or an alias
+	 * @return <code>true</code> if, and only if, support for the named charset
+	 *         is available in the current Java virtual machine
+	 * 
+	 * @see <a
+	 *      href="http://java.sun.com/j2se/1.3/docs/api/java/lang/package-summary.html#charenc">JRE
+	 *      character encoding names</a>
+	 */
+	public static boolean isSupported(String name) {
+		if (name == null) {
+			return false;
+		}
+		try {
+			new String(ArrayUtils.EMPTY_BYTE_ARRAY, name);
+		} catch (UnsupportedEncodingException e) {
+			return false;
+		}
+		return true;
+	}
 
 }

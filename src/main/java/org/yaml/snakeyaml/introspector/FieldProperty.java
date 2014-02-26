@@ -27,26 +27,25 @@ import org.yaml.snakeyaml.error.YAMLException;
  * </p>
  */
 public class FieldProperty extends GenericProperty {
-    private final Field field;
+	private final Field field;
 
-    public FieldProperty(Field field) {
-        super(field.getName(), field.getType(), field.getGenericType());
-        this.field = field;
-        field.setAccessible(true);
-    }
+	public FieldProperty(Field field) {
+		super(field.getName(), field.getType(), field.getGenericType());
+		this.field = field;
+		field.setAccessible(true);
+	}
 
-    @Override
-    public void set(Object object, Object value) throws Exception {
-        field.set(object, value);
-    }
+	@Override
+	public void set(Object object, Object value) throws Exception {
+		field.set(object, value);
+	}
 
-    @Override
-    public Object get(Object object) {
-        try {
-            return field.get(object);
-        } catch (Exception e) {
-            throw new YAMLException("Unable to access field " + field.getName()
-                    + " on object " + object + " : " + e);
-        }
-    }
+	@Override
+	public Object get(Object object) {
+		try {
+			return field.get(object);
+		} catch (Exception e) {
+			throw new YAMLException("Unable to access field " + field.getName() + " on object " + object + " : " + e);
+		}
+	}
 }

@@ -5,11 +5,11 @@ import java.sql.SQLException;
 
 public interface SQLSelectQuery extends SQLQuery {
 
-    public ResultSet getResults() throws SQLException;
+	public ResultSet getResults() throws SQLException;
 
-    public boolean haveResults();
+	public boolean haveResults();
 
-    @Override
-    public SQLSelectQuery execute() throws SQLException;
+	@Override
+	public SQLSelectQuery execute() throws SQLException;
 
 }

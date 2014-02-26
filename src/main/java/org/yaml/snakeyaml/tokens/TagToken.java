@@ -18,24 +18,24 @@ package org.yaml.snakeyaml.tokens;
 import org.yaml.snakeyaml.error.Mark;
 
 public final class TagToken extends Token {
-    private final TagTuple value;
+	private final TagTuple value;
 
-    public TagToken(TagTuple value, Mark startMark, Mark endMark) {
-        super(startMark, endMark);
-        this.value = value;
-    }
+	public TagToken(TagTuple value, Mark startMark, Mark endMark) {
+		super(startMark, endMark);
+		this.value = value;
+	}
 
-    public TagTuple getValue() {
-        return value;
-    }
+	public TagTuple getValue() {
+		return value;
+	}
 
-    @Override
-    protected String getArguments() {
-        return "value=[" + value.getHandle() + ", " + value.getSuffix() + "]";
-    }
+	@Override
+	protected String getArguments() {
+		return "value=[" + value.getHandle() + ", " + value.getSuffix() + "]";
+	}
 
-    @Override
-    public Token.ID getTokenId() {
-        return ID.Tag;
-    }
+	@Override
+	public Token.ID getTokenId() {
+		return ID.Tag;
+	}
 }

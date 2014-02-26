@@ -29,12 +29,12 @@ import org.yaml.snakeyaml.error.Mark;
  * </p>
  */
 public final class StreamEndEvent extends Event {
-    public StreamEndEvent(Mark startMark, Mark endMark) {
-        super(startMark, endMark);
-    }
+	public StreamEndEvent(Mark startMark, Mark endMark) {
+		super(startMark, endMark);
+	}
 
-    @Override
-    public boolean is(Event.ID id) {
-        return ID.StreamEnd == id;
-    }
+	@Override
+	public boolean is(Event.ID id) {
+		return ID.StreamEnd == id;
+	}
 }

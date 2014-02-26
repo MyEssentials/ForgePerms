@@ -20,21 +20,21 @@ package org.yaml.snakeyaml;
  */
 @Deprecated
 public class LoaderOptions {
-    private TypeDescription rootTypeDescription;
+	private TypeDescription rootTypeDescription;
 
-    public LoaderOptions() {
-        this(new TypeDescription(Object.class));
-    }
+	public LoaderOptions() {
+		this(new TypeDescription(Object.class));
+	}
 
-    public LoaderOptions(TypeDescription rootTypeDescription) {
-        this.rootTypeDescription = rootTypeDescription;
-    }
+	public LoaderOptions(TypeDescription rootTypeDescription) {
+		this.rootTypeDescription = rootTypeDescription;
+	}
 
-    public TypeDescription getRootTypeDescription() {
-        return rootTypeDescription;
-    }
+	public TypeDescription getRootTypeDescription() {
+		return rootTypeDescription;
+	}
 
-    public void setRootTypeDescription(TypeDescription rootTypeDescription) {
-        this.rootTypeDescription = rootTypeDescription;
-    }
+	public void setRootTypeDescription(TypeDescription rootTypeDescription) {
+		this.rootTypeDescription = rootTypeDescription;
+	}
 }

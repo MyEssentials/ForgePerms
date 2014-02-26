@@ -30,57 +30,57 @@ package org.yaml.snakeyaml.introspector;
  */
 public abstract class Property implements Comparable<Property> {
 
-    private final String name;
-    private final Class<?> type;
+	private final String name;
+	private final Class<?> type;
 
-    public Property(String name, Class<?> type) {
-        this.name = name;
-        this.type = type;
-    }
+	public Property(String name, Class<?> type) {
+		this.name = name;
+		this.type = type;
+	}
 
-    public Class<?> getType() {
-        return type;
-    }
+	public Class<?> getType() {
+		return type;
+	}
 
-    abstract public Class<?>[] getActualTypeArguments();
+	abstract public Class<?>[] getActualTypeArguments();
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    @Override
-    public String toString() {
-        return getName() + " of " + getType();
-    }
+	@Override
+	public String toString() {
+		return getName() + " of " + getType();
+	}
 
-    @Override
-    public int compareTo(Property o) {
-        return name.compareTo(o.name);
-    }
+	@Override
+	public int compareTo(Property o) {
+		return name.compareTo(o.name);
+	}
 
-    public boolean isWritable() {
-        return true;
-    }
+	public boolean isWritable() {
+		return true;
+	}
 
-    public boolean isReadable() {
-        return true;
-    }
+	public boolean isReadable() {
+		return true;
+	}
 
-    abstract public void set(Object object, Object value) throws Exception;
+	abstract public void set(Object object, Object value) throws Exception;
 
-    abstract public Object get(Object object);
+	abstract public Object get(Object object);
 
-    @Override
-    public int hashCode() {
-        return name.hashCode() + type.hashCode();
-    }
+	@Override
+	public int hashCode() {
+		return name.hashCode() + type.hashCode();
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof Property) {
-            Property p = (Property) other;
-            return name.equals(p.getName()) && type.equals(p.getType());
-        }
-        return false;
-    }
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Property) {
+			Property p = (Property) other;
+			return name.equals(p.getName()) && type.equals(p.getType());
+		}
+		return false;
+	}
 }

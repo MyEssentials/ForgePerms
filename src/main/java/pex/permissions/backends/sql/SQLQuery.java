@@ -5,11 +5,11 @@ import java.sql.SQLException;
 
 public interface SQLQuery {
 
-    public PreparedStatement getStatement();
+	public PreparedStatement getStatement();
 
-    public void bindParam(int param, Object value) throws SQLException;
+	public void bindParam(int param, Object value) throws SQLException;
 
-    public void bindParams(Object... params) throws SQLException;
+	public void bindParams(Object... params) throws SQLException;
 
-    public SQLQuery execute() throws SQLException;
+	public SQLQuery execute() throws SQLException;
 }

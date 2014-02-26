@@ -19,12 +19,12 @@ import org.yaml.snakeyaml.error.Mark;
 
 public final class FlowSequenceStartToken extends Token {
 
-    public FlowSequenceStartToken(Mark startMark, Mark endMark) {
-        super(startMark, endMark);
-    }
+	public FlowSequenceStartToken(Mark startMark, Mark endMark) {
+		super(startMark, endMark);
+	}
 
-    @Override
-    public Token.ID getTokenId() {
-        return ID.FlowSequenceStart;
-    }
+	@Override
+	public Token.ID getTokenId() {
+		return ID.FlowSequenceStart;
+	}
 }

@@ -2,24 +2,24 @@ package pex.permissions;
 
 public enum PermissionCheckResult {
 
-    UNDEFINED(false), TRUE(true), FALSE(false);
+	UNDEFINED(false), TRUE(true), FALSE(false);
 
-    protected boolean result;
+	protected boolean result;
 
-    private PermissionCheckResult(boolean result) {
-        this.result = result;
-    }
+	private PermissionCheckResult(boolean result) {
+		this.result = result;
+	}
 
-    public boolean toBoolean() {
-        return result;
-    }
+	public boolean toBoolean() {
+		return result;
+	}
 
-    @Override
-    public String toString() {
-        return this == UNDEFINED ? "undefined" : Boolean.toString(result);
-    }
+	@Override
+	public String toString() {
+		return this == UNDEFINED ? "undefined" : Boolean.toString(result);
+	}
 
-    public static PermissionCheckResult fromBoolean(final boolean result) {
-        return result ? TRUE : FALSE;
-    }
+	public static PermissionCheckResult fromBoolean(final boolean result) {
+		return result ? TRUE : FALSE;
+	}
 }

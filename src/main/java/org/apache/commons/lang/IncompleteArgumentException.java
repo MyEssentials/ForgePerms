@@ -36,11 +36,10 @@ import java.util.Arrays;
  * 
  * <pre>
  * public void foo(PersonSearcher search) {
- *     if (search.getSurname() == null || search.getForename() == null
- *             || search.getSex() == null) {
- *         throw new IncompleteArgumentException(&quot;search&quot;);
- *     }
- *     // do something with the searcher
+ * 	if (search.getSurname() == null || search.getForename() == null || search.getSex() == null) {
+ * 		throw new IncompleteArgumentException(&quot;search&quot;);
+ * 	}
+ * 	// do something with the searcher
  * }
  * </pre>
  * 
@@ -51,51 +50,50 @@ import java.util.Arrays;
  */
 public class IncompleteArgumentException extends IllegalArgumentException {
 
-    /**
-     * Required for serialization support.
-     * 
-     * @see java.io.Serializable
-     */
-    private static final long serialVersionUID = 4954193403612068178L;
+	/**
+	 * Required for serialization support.
+	 * 
+	 * @see java.io.Serializable
+	 */
+	private static final long serialVersionUID = 4954193403612068178L;
 
-    /**
-     * <p>
-     * Instantiates with the specified description.
-     * </p>
-     * 
-     * @param argName
-     *            a description of the incomplete argument
-     */
-    public IncompleteArgumentException(String argName) {
-        super(argName + " is incomplete.");
-    }
+	/**
+	 * <p>
+	 * Instantiates with the specified description.
+	 * </p>
+	 * 
+	 * @param argName
+	 *            a description of the incomplete argument
+	 */
+	public IncompleteArgumentException(String argName) {
+		super(argName + " is incomplete.");
+	}
 
-    /**
-     * <p>
-     * Instantiates with the specified description.
-     * </p>
-     * 
-     * @param argName
-     *            a description of the incomplete argument
-     * @param items
-     *            an array describing the arguments missing
-     */
-    public IncompleteArgumentException(String argName, String[] items) {
-        super(argName + " is missing the following items: "
-                + safeArrayToString(items));
-    }
+	/**
+	 * <p>
+	 * Instantiates with the specified description.
+	 * </p>
+	 * 
+	 * @param argName
+	 *            a description of the incomplete argument
+	 * @param items
+	 *            an array describing the arguments missing
+	 */
+	public IncompleteArgumentException(String argName, String[] items) {
+		super(argName + " is missing the following items: " + safeArrayToString(items));
+	}
 
-    /**
-     * <p>
-     * Converts an array to a string without throwing an exception.
-     * </p>
-     * 
-     * @param array
-     *            an array
-     * @return the array as a string
-     */
-    private static final String safeArrayToString(Object[] array) {
-        return array == null ? null : Arrays.asList(array).toString();
-    }
+	/**
+	 * <p>
+	 * Converts an array to a string without throwing an exception.
+	 * </p>
+	 * 
+	 * @param array
+	 *            an array
+	 * @return the array as a string
+	 */
+	private static final String safeArrayToString(Object[] array) {
+		return array == null ? null : Arrays.asList(array).toString();
+	}
 
 }

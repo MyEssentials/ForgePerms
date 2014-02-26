@@ -22,20 +22,20 @@ package pex.permissions.commands.exceptions;
 @SuppressWarnings("serial")
 public class AutoCompleteChoicesException extends RuntimeException {
 
-    protected String[] choices;
-    protected String argName;
+	protected String[] choices;
+	protected String argName;
 
-    public AutoCompleteChoicesException(String[] choices, String argName) {
-        super();
-        this.choices = choices;
-        this.argName = argName;
-    }
+	public AutoCompleteChoicesException(String[] choices, String argName) {
+		super();
+		this.choices = choices;
+		this.argName = argName;
+	}
 
-    public String getArgName() {
-        return argName;
-    }
+	public String getArgName() {
+		return argName;
+	}
 
-    public String[] getChoices() {
-        return choices;
-    }
+	public String[] getChoices() {
+		return choices;
+	}
 }

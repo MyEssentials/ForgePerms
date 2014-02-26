@@ -100,184 +100,184 @@ import java.io.PrintWriter;
  */
 public class NestableException extends Exception implements Nestable {
 
-    /**
-     * Required for serialization support.
-     * 
-     * @see java.io.Serializable
-     */
-    private static final long serialVersionUID = 1L;
+	/**
+	 * Required for serialization support.
+	 * 
+	 * @see java.io.Serializable
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * The helper instance which contains much of the code which we delegate to.
-     */
-    protected NestableDelegate delegate = new NestableDelegate(this);
+	/**
+	 * The helper instance which contains much of the code which we delegate to.
+	 */
+	protected NestableDelegate delegate = new NestableDelegate(this);
 
-    /**
-     * Holds the reference to the exception or error that caused this exception
-     * to be thrown.
-     */
-    private Throwable cause = null;
+	/**
+	 * Holds the reference to the exception or error that caused this exception
+	 * to be thrown.
+	 */
+	private Throwable cause = null;
 
-    /**
-     * Constructs a new <code>NestableException</code> without specified detail
-     * message.
-     */
-    public NestableException() {
-        super();
-    }
+	/**
+	 * Constructs a new <code>NestableException</code> without specified detail
+	 * message.
+	 */
+	public NestableException() {
+		super();
+	}
 
-    /**
-     * Constructs a new <code>NestableException</code> with specified detail
-     * message.
-     * 
-     * @param msg
-     *            The error message.
-     */
-    public NestableException(String msg) {
-        super(msg);
-    }
+	/**
+	 * Constructs a new <code>NestableException</code> with specified detail
+	 * message.
+	 * 
+	 * @param msg
+	 *            The error message.
+	 */
+	public NestableException(String msg) {
+		super(msg);
+	}
 
-    /**
-     * Constructs a new <code>NestableException</code> with specified nested
-     * <code>Throwable</code>.
-     * 
-     * @param cause
-     *            the exception or error that caused this exception to be thrown
-     */
-    public NestableException(Throwable cause) {
-        super();
-        this.cause = cause;
-    }
+	/**
+	 * Constructs a new <code>NestableException</code> with specified nested
+	 * <code>Throwable</code>.
+	 * 
+	 * @param cause
+	 *            the exception or error that caused this exception to be thrown
+	 */
+	public NestableException(Throwable cause) {
+		super();
+		this.cause = cause;
+	}
 
-    /**
-     * Constructs a new <code>NestableException</code> with specified detail
-     * message and nested <code>Throwable</code>.
-     * 
-     * @param msg
-     *            the error message
-     * @param cause
-     *            the exception or error that caused this exception to be thrown
-     */
-    public NestableException(String msg, Throwable cause) {
-        super(msg);
-        this.cause = cause;
-    }
+	/**
+	 * Constructs a new <code>NestableException</code> with specified detail
+	 * message and nested <code>Throwable</code>.
+	 * 
+	 * @param msg
+	 *            the error message
+	 * @param cause
+	 *            the exception or error that caused this exception to be thrown
+	 */
+	public NestableException(String msg, Throwable cause) {
+		super(msg);
+		this.cause = cause;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Throwable getCause() {
-        return cause;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Throwable getCause() {
+		return cause;
+	}
 
-    /**
-     * Returns the detail message string of this throwable. If it was created
-     * with a null message, returns the following: (cause==null ? null :
-     * cause.toString()).
-     * 
-     * @return String message string of the throwable
-     */
-    @Override
-    public String getMessage() {
-        if (super.getMessage() != null) {
-            return super.getMessage();
-        } else if (cause != null) {
-            return cause.toString();
-        } else {
-            return null;
-        }
-    }
+	/**
+	 * Returns the detail message string of this throwable. If it was created
+	 * with a null message, returns the following: (cause==null ? null :
+	 * cause.toString()).
+	 * 
+	 * @return String message string of the throwable
+	 */
+	@Override
+	public String getMessage() {
+		if (super.getMessage() != null) {
+			return super.getMessage();
+		} else if (cause != null) {
+			return cause.toString();
+		} else {
+			return null;
+		}
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getMessage(int index) {
-        if (index == 0) {
-            return super.getMessage();
-        }
-        return delegate.getMessage(index);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getMessage(int index) {
+		if (index == 0) {
+			return super.getMessage();
+		}
+		return delegate.getMessage(index);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String[] getMessages() {
-        return delegate.getMessages();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String[] getMessages() {
+		return delegate.getMessages();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Throwable getThrowable(int index) {
-        return delegate.getThrowable(index);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Throwable getThrowable(int index) {
+		return delegate.getThrowable(index);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getThrowableCount() {
-        return delegate.getThrowableCount();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getThrowableCount() {
+		return delegate.getThrowableCount();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Throwable[] getThrowables() {
-        return delegate.getThrowables();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Throwable[] getThrowables() {
+		return delegate.getThrowables();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int indexOfThrowable(Class type) {
-        return delegate.indexOfThrowable(type, 0);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int indexOfThrowable(Class type) {
+		return delegate.indexOfThrowable(type, 0);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int indexOfThrowable(Class type, int fromIndex) {
-        return delegate.indexOfThrowable(type, fromIndex);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int indexOfThrowable(Class type, int fromIndex) {
+		return delegate.indexOfThrowable(type, fromIndex);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void printStackTrace() {
-        delegate.printStackTrace();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void printStackTrace() {
+		delegate.printStackTrace();
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void printStackTrace(PrintStream out) {
-        delegate.printStackTrace(out);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void printStackTrace(PrintStream out) {
+		delegate.printStackTrace(out);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void printStackTrace(PrintWriter out) {
-        delegate.printStackTrace(out);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void printStackTrace(PrintWriter out) {
+		delegate.printStackTrace(out);
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public final void printPartialStackTrace(PrintWriter out) {
-        super.printStackTrace(out);
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public final void printPartialStackTrace(PrintWriter out) {
+		super.printStackTrace(out);
+	}
 
 }

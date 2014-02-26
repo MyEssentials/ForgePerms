@@ -21,23 +21,24 @@ package org.yaml.snakeyaml.introspector;
  */
 public class MissingProperty extends Property {
 
-    public MissingProperty(String name) {
-        super(name, Object.class);
-    }
+	public MissingProperty(String name) {
+		super(name, Object.class);
+	}
 
-    @Override
-    public Class<?>[] getActualTypeArguments() {
-        return new Class[0];
-    }
+	@Override
+	public Class<?>[] getActualTypeArguments() {
+		return new Class[0];
+	}
 
-    /**
-     * Setter does nothing.
-     */
-    @Override
-    public void set(Object object, Object value) throws Exception {}
+	/**
+	 * Setter does nothing.
+	 */
+	@Override
+	public void set(Object object, Object value) throws Exception {
+	}
 
-    @Override
-    public Object get(Object object) {
-        return object;
-    }
+	@Override
+	public Object get(Object object) {
+		return object;
+	}
 }

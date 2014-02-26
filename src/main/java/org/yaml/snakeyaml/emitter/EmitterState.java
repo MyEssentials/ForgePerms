@@ -21,5 +21,5 @@ import java.io.IOException;
  * Python's methods are first class object. Java needs a class.
  */
 interface EmitterState {
-    void expect() throws IOException;
+	void expect() throws IOException;
 }

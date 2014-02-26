@@ -21,53 +21,52 @@ import org.yaml.snakeyaml.error.Mark;
  * Base class for the start events of the collection nodes.
  */
 public abstract class CollectionStartEvent extends NodeEvent {
-    private final String tag;
-    // The implicit flag of a collection start event indicates if the tag may be
-    // omitted when the collection is emitted
-    private final boolean implicit;
-    // flag indicates if a collection is block or flow
-    private final Boolean flowStyle;
+	private final String tag;
+	// The implicit flag of a collection start event indicates if the tag may be
+	// omitted when the collection is emitted
+	private final boolean implicit;
+	// flag indicates if a collection is block or flow
+	private final Boolean flowStyle;
 
-    public CollectionStartEvent(String anchor, String tag, boolean implicit,
-            Mark startMark, Mark endMark, Boolean flowStyle) {
-        super(anchor, startMark, endMark);
-        this.tag = tag;
-        this.implicit = implicit;
-        this.flowStyle = flowStyle;
-    }
+	public CollectionStartEvent(String anchor, String tag, boolean implicit, Mark startMark, Mark endMark, Boolean flowStyle) {
+		super(anchor, startMark, endMark);
+		this.tag = tag;
+		this.implicit = implicit;
+		this.flowStyle = flowStyle;
+	}
 
-    /**
-     * Tag of this collection.
-     * 
-     * @return The tag of this collection, or <code>null</code> if no explicit
-     *         tag is available.
-     */
-    public String getTag() {
-        return tag;
-    }
+	/**
+	 * Tag of this collection.
+	 * 
+	 * @return The tag of this collection, or <code>null</code> if no explicit
+	 *         tag is available.
+	 */
+	public String getTag() {
+		return tag;
+	}
 
-    /**
-     * <code>true</code> if the tag can be omitted while this collection is
-     * emitted.
-     * 
-     * @return True if the tag can be omitted while this collection is emitted.
-     */
-    public boolean getImplicit() {
-        return implicit;
-    }
+	/**
+	 * <code>true</code> if the tag can be omitted while this collection is
+	 * emitted.
+	 * 
+	 * @return True if the tag can be omitted while this collection is emitted.
+	 */
+	public boolean getImplicit() {
+		return implicit;
+	}
 
-    /**
-     * <code>true</code> if this collection is in flow style, <code>false</code>
-     * for block style.
-     * 
-     * @return If this collection is in flow style.
-     */
-    public Boolean getFlowStyle() {
-        return flowStyle;
-    }
+	/**
+	 * <code>true</code> if this collection is in flow style, <code>false</code>
+	 * for block style.
+	 * 
+	 * @return If this collection is in flow style.
+	 */
+	public Boolean getFlowStyle() {
+		return flowStyle;
+	}
 
-    @Override
-    protected String getArguments() {
-        return super.getArguments() + ", tag=" + tag + ", implicit=" + implicit;
-    }
+	@Override
+	protected String getArguments() {
+		return super.getArguments() + ", tag=" + tag + ", implicit=" + implicit;
+	}
 }

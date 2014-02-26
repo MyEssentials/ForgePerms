@@ -23,36 +23,36 @@ package org.yaml.snakeyaml.events;
  * @see <a href="http://pyyaml.org/wiki/PyYAMLDocumentation#Events">Events</a>
  */
 public class ImplicitTuple {
-    private final boolean plain;
-    private final boolean nonPlain;
+	private final boolean plain;
+	private final boolean nonPlain;
 
-    public ImplicitTuple(boolean plain, boolean nonplain) {
-        this.plain = plain;
-        nonPlain = nonplain;
-    }
+	public ImplicitTuple(boolean plain, boolean nonplain) {
+		this.plain = plain;
+		nonPlain = nonplain;
+	}
 
-    /**
-     * @return true when tag may be omitted when the scalar is emitted in a
-     *         plain style.
-     */
-    public boolean canOmitTagInPlainScalar() {
-        return plain;
-    }
+	/**
+	 * @return true when tag may be omitted when the scalar is emitted in a
+	 *         plain style.
+	 */
+	public boolean canOmitTagInPlainScalar() {
+		return plain;
+	}
 
-    /**
-     * @return true when tag may be omitted when the scalar is emitted in a
-     *         non-plain style.
-     */
-    public boolean canOmitTagInNonPlainScalar() {
-        return nonPlain;
-    }
+	/**
+	 * @return true when tag may be omitted when the scalar is emitted in a
+	 *         non-plain style.
+	 */
+	public boolean canOmitTagInNonPlainScalar() {
+		return nonPlain;
+	}
 
-    public boolean bothFalse() {
-        return !plain && !nonPlain;
-    }
+	public boolean bothFalse() {
+		return !plain && !nonPlain;
+	}
 
-    @Override
-    public String toString() {
-        return "implicit=[" + plain + ", " + nonPlain + "]";
-    }
+	@Override
+	public String toString() {
+		return "implicit=[" + plain + ", " + nonPlain + "]";
+	}
 }

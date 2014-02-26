@@ -26,88 +26,85 @@ import org.yaml.snakeyaml.error.Mark;
  * </p>
  */
 public class MappingNode extends CollectionNode {
-    private List<NodeTuple> value;
-    private boolean merged = false;
+	private List<NodeTuple> value;
+	private boolean merged = false;
 
-    public MappingNode(Tag tag, boolean resolved, List<NodeTuple> value,
-            Mark startMark, Mark endMark, Boolean flowStyle) {
-        super(tag, startMark, endMark, flowStyle);
-        if (value == null) {
-            throw new NullPointerException("value in a Node is required.");
-        }
-        this.value = value;
-        this.resolved = resolved;
-    }
+	public MappingNode(Tag tag, boolean resolved, List<NodeTuple> value, Mark startMark, Mark endMark, Boolean flowStyle) {
+		super(tag, startMark, endMark, flowStyle);
+		if (value == null) {
+			throw new NullPointerException("value in a Node is required.");
+		}
+		this.value = value;
+		this.resolved = resolved;
+	}
 
-    public MappingNode(Tag tag, List<NodeTuple> value, Boolean flowStyle) {
-        this(tag, true, value, null, null, flowStyle);
-    }
+	public MappingNode(Tag tag, List<NodeTuple> value, Boolean flowStyle) {
+		this(tag, true, value, null, null, flowStyle);
+	}
 
-    @Override
-    public NodeId getNodeId() {
-        return NodeId.mapping;
-    }
+	@Override
+	public NodeId getNodeId() {
+		return NodeId.mapping;
+	}
 
-    /**
-     * Returns the entries of this map.
-     * 
-     * @return List of entries.
-     */
-    public List<NodeTuple> getValue() {
-        return value;
-    }
+	/**
+	 * Returns the entries of this map.
+	 * 
+	 * @return List of entries.
+	 */
+	public List<NodeTuple> getValue() {
+		return value;
+	}
 
-    public void setValue(List<NodeTuple> merge) {
-        value = merge;
-    }
+	public void setValue(List<NodeTuple> merge) {
+		value = merge;
+	}
 
-    public void setOnlyKeyType(Class<? extends Object> keyType) {
-        for (NodeTuple nodes : value) {
-            nodes.getKeyNode().setType(keyType);
-        }
-    }
+	public void setOnlyKeyType(Class<? extends Object> keyType) {
+		for (NodeTuple nodes : value) {
+			nodes.getKeyNode().setType(keyType);
+		}
+	}
 
-    public void setTypes(Class<? extends Object> keyType,
-            Class<? extends Object> valueType) {
-        for (NodeTuple nodes : value) {
-            nodes.getValueNode().setType(valueType);
-            nodes.getKeyNode().setType(keyType);
-        }
-    }
+	public void setTypes(Class<? extends Object> keyType, Class<? extends Object> valueType) {
+		for (NodeTuple nodes : value) {
+			nodes.getValueNode().setType(valueType);
+			nodes.getKeyNode().setType(keyType);
+		}
+	}
 
-    @Override
-    public String toString() {
-        String values;
-        StringBuilder buf = new StringBuilder();
-        for (NodeTuple node : getValue()) {
-            buf.append("{ key=");
-            buf.append(node.getKeyNode());
-            buf.append("; value=");
-            if (node.getValueNode() instanceof CollectionNode) {
-                // to avoid overflow in case of recursive structures
-                buf.append(System.identityHashCode(node.getValueNode()));
-            } else {
-                buf.append(node.toString());
-            }
-            buf.append(" }");
-        }
-        values = buf.toString();
-        return "<" + this.getClass().getName() + " (tag=" + getTag()
-                + ", values=" + values + ")>";
-    }
+	@Override
+	public String toString() {
+		String values;
+		StringBuilder buf = new StringBuilder();
+		for (NodeTuple node : getValue()) {
+			buf.append("{ key=");
+			buf.append(node.getKeyNode());
+			buf.append("; value=");
+			if (node.getValueNode() instanceof CollectionNode) {
+				// to avoid overflow in case of recursive structures
+				buf.append(System.identityHashCode(node.getValueNode()));
+			} else {
+				buf.append(node.toString());
+			}
+			buf.append(" }");
+		}
+		values = buf.toString();
+		return "<" + this.getClass().getName() + " (tag=" + getTag() + ", values=" + values + ")>";
+	}
 
-    /**
-     * @param merged
-     *            - true if map contains merge node
-     */
-    public void setMerged(boolean merged) {
-        this.merged = merged;
-    }
+	/**
+	 * @param merged
+	 *            - true if map contains merge node
+	 */
+	public void setMerged(boolean merged) {
+		this.merged = merged;
+	}
 
-    /**
-     * @return true if map contains merge node
-     */
-    public boolean isMerged() {
-        return merged;
-    }
+	/**
+	 * @return true if map contains merge node
+	 */
+	public boolean isMerged() {
+		return merged;
+	}
 }

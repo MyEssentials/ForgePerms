@@ -30,6 +30,6 @@ package pex.permissions.commands;
  */
 public interface CommandListener {
 
-    public void onRegistered(CommandsManager manager);
+	public void onRegistered(CommandsManager manager);
 
 }

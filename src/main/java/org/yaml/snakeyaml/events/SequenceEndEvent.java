@@ -24,12 +24,12 @@ import org.yaml.snakeyaml.error.Mark;
  */
 public final class SequenceEndEvent extends CollectionEndEvent {
 
-    public SequenceEndEvent(Mark startMark, Mark endMark) {
-        super(startMark, endMark);
-    }
+	public SequenceEndEvent(Mark startMark, Mark endMark) {
+		super(startMark, endMark);
+	}
 
-    @Override
-    public boolean is(Event.ID id) {
-        return ID.SequenceEnd == id;
-    }
+	@Override
+	public boolean is(Event.ID id) {
+		return ID.SequenceEnd == id;
+	}
 }

@@ -24,19 +24,19 @@ import org.yaml.snakeyaml.error.Mark;
  * </p>
  */
 public final class DocumentEndEvent extends Event {
-    private final boolean explicit;
+	private final boolean explicit;
 
-    public DocumentEndEvent(Mark startMark, Mark endMark, boolean explicit) {
-        super(startMark, endMark);
-        this.explicit = explicit;
-    }
+	public DocumentEndEvent(Mark startMark, Mark endMark, boolean explicit) {
+		super(startMark, endMark);
+		this.explicit = explicit;
+	}
 
-    public boolean getExplicit() {
-        return explicit;
-    }
+	public boolean getExplicit() {
+		return explicit;
+	}
 
-    @Override
-    public boolean is(Event.ID id) {
-        return ID.DocumentEnd == id;
-    }
+	@Override
+	public boolean is(Event.ID id) {
+		return ID.DocumentEnd == id;
+	}
 }

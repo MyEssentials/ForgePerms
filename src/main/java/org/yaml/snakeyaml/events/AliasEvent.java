@@ -21,12 +21,12 @@ import org.yaml.snakeyaml.error.Mark;
  * Marks the inclusion of a previously anchored node.
  */
 public final class AliasEvent extends NodeEvent {
-    public AliasEvent(String anchor, Mark startMark, Mark endMark) {
-        super(anchor, startMark, endMark);
-    }
+	public AliasEvent(String anchor, Mark startMark, Mark endMark) {
+		super(anchor, startMark, endMark);
+	}
 
-    @Override
-    public boolean is(Event.ID id) {
-        return ID.Alias == id;
-    }
+	@Override
+	public boolean is(Event.ID id) {
+		return ID.Alias == id;
+	}
 }

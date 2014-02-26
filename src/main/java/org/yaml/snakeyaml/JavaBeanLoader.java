@@ -37,75 +37,73 @@ import org.yaml.snakeyaml.resolver.Resolver;
  */
 @Deprecated
 public class JavaBeanLoader<T> {
-    private Yaml loader;
+	private Yaml loader;
 
-    public JavaBeanLoader(TypeDescription typeDescription) {
-        this(typeDescription, BeanAccess.DEFAULT);
-    }
+	public JavaBeanLoader(TypeDescription typeDescription) {
+		this(typeDescription, BeanAccess.DEFAULT);
+	}
 
-    public JavaBeanLoader(TypeDescription typeDescription, BeanAccess beanAccess) {
-        this(new LoaderOptions(typeDescription), beanAccess);
-    }
+	public JavaBeanLoader(TypeDescription typeDescription, BeanAccess beanAccess) {
+		this(new LoaderOptions(typeDescription), beanAccess);
+	}
 
-    public JavaBeanLoader(LoaderOptions options, BeanAccess beanAccess) {
-        if (options == null) {
-            throw new NullPointerException("LoaderOptions must be provided.");
-        }
-        if (options.getRootTypeDescription() == null) {
-            throw new NullPointerException("TypeDescription must be provided.");
-        }
-        Constructor constructor = new Constructor(options
-                .getRootTypeDescription());
-        loader = new Yaml(constructor, options, new Representer(),
-                new DumperOptions(), new Resolver());
-        loader.setBeanAccess(beanAccess);
-    }
+	public JavaBeanLoader(LoaderOptions options, BeanAccess beanAccess) {
+		if (options == null) {
+			throw new NullPointerException("LoaderOptions must be provided.");
+		}
+		if (options.getRootTypeDescription() == null) {
+			throw new NullPointerException("TypeDescription must be provided.");
+		}
+		Constructor constructor = new Constructor(options.getRootTypeDescription());
+		loader = new Yaml(constructor, options, new Representer(), new DumperOptions(), new Resolver());
+		loader.setBeanAccess(beanAccess);
+	}
 
-    public <S extends T> JavaBeanLoader(Class<S> clazz, BeanAccess beanAccess) {
-        this(new TypeDescription(clazz), beanAccess);
-    }
+	public <S extends T> JavaBeanLoader(Class<S> clazz, BeanAccess beanAccess) {
+		this(new TypeDescription(clazz), beanAccess);
+	}
 
-    public <S extends T> JavaBeanLoader(Class<S> clazz) {
-        this(clazz, BeanAccess.DEFAULT);
-    }
+	public <S extends T> JavaBeanLoader(Class<S> clazz) {
+		this(clazz, BeanAccess.DEFAULT);
+	}
 
-    /**
-     * Parse the first YAML document in a stream and produce the corresponding
-     * JavaBean.
-     * 
-     * @param yaml
-     *            YAML document
-     * @return parsed JavaBean
-     */
-    @SuppressWarnings("unchecked")
-    public T load(String yaml) {
-        return (T) loader.load(new StringReader(yaml));
-    }
+	/**
+	 * Parse the first YAML document in a stream and produce the corresponding
+	 * JavaBean.
+	 * 
+	 * @param yaml
+	 *            YAML document
+	 * @return parsed JavaBean
+	 */
+	@SuppressWarnings("unchecked")
+	public T load(String yaml) {
+		return (T) loader.load(new StringReader(yaml));
+	}
 
-    /**
-     * Parse the first YAML document in a stream and produce the corresponding
-     * JavaBean.
-     * 
-     * @param io
-     *            data to load from (BOM is respected and removed)
-     * @return parsed JavaBean
-     */
-    @SuppressWarnings("unchecked")
-    public T load(InputStream io) {
-        return (T) loader.load(new UnicodeReader(io));
-    }
+	/**
+	 * Parse the first YAML document in a stream and produce the corresponding
+	 * JavaBean.
+	 * 
+	 * @param io
+	 *            data to load from (BOM is respected and removed)
+	 * @return parsed JavaBean
+	 */
+	@SuppressWarnings("unchecked")
+	public T load(InputStream io) {
+		return (T) loader.load(new UnicodeReader(io));
+	}
 
-    /**
-     * Parse the first YAML document in a stream and produce the corresponding
-     * Java object.
-     * 
-     * @param io
-     *            data to load from (BOM must not be present)
-     * @return parsed JavaBean
-     */
-    @SuppressWarnings("unchecked")
-    public T load(Reader io) {
-        return (T) loader.load(io);
-    }
+	/**
+	 * Parse the first YAML document in a stream and produce the corresponding
+	 * Java object.
+	 * 
+	 * @param io
+	 *            data to load from (BOM must not be present)
+	 * @return parsed JavaBean
+	 */
+	@SuppressWarnings("unchecked")
+	public T load(Reader io) {
+		return (T) loader.load(io);
+	}
 
 }

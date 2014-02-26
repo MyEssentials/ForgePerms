@@ -34,54 +34,52 @@ import pex.permissions.events.PermissionEntityEvent;
  */
 public class FileUser extends ProxyPermissionUser {
 
-    protected ConfigurationSection node;
-    protected FileBackend backend;
+	protected ConfigurationSection node;
+	protected FileBackend backend;
 
-    public FileUser(String playerName, PermissionManager manager,
-            FileBackend backend) {
-        super(new FileEntity(playerName, manager, backend, "users"));
+	public FileUser(String playerName, PermissionManager manager, FileBackend backend) {
+		super(new FileEntity(playerName, manager, backend, "users"));
 
-        this.backend = backend;
+		this.backend = backend;
 
-        node = ((FileEntity) backendEntity).getConfigNode();
-    }
+		node = ((FileEntity) backendEntity).getConfigNode();
+	}
 
-    @SuppressWarnings("unchecked")
-    @Override
-    protected String[] getGroupsNamesImpl(String worldName) {
-        Object groups = node.get(FileEntity.formatPath(worldName, "group"));
+	@SuppressWarnings("unchecked")
+	@Override
+	protected String[] getGroupsNamesImpl(String worldName) {
+		Object groups = node.get(FileEntity.formatPath(worldName, "group"));
 
-        if (groups instanceof String) { // old style
-            String[] groupsArray;
-            String groupsString = (String) groups;
-            if (groupsString.contains(",")) {
-                groupsArray = ((String) groups).split(",");
-            } else {
-                groupsArray = new String[] { groupsString };
-            }
+		if (groups instanceof String) { // old style
+			String[] groupsArray;
+			String groupsString = (String) groups;
+			if (groupsString.contains(",")) {
+				groupsArray = ((String) groups).split(",");
+			} else {
+				groupsArray = new String[] { groupsString };
+			}
 
-            // Now migrate to new system
-            node.set("group", Arrays.asList(groupsArray));
-            this.save();
+			// Now migrate to new system
+			node.set("group", Arrays.asList(groupsArray));
+			save();
 
-            return groupsArray;
-        } else if (groups instanceof List) {
-            return ((List<String>) groups).toArray(new String[0]);
-        } else {
-            return new String[0];
-        }
-    }
+			return groupsArray;
+		} else if (groups instanceof List) {
+			return ((List<String>) groups).toArray(new String[0]);
+		} else {
+			return new String[0];
+		}
+	}
 
-    @Override
-    public void setGroups(String[] groups, String worldName) {
-        if (groups == null) {
-            return;
-        }
+	@Override
+	public void setGroups(String[] groups, String worldName) {
+		if (groups == null) {
+			return;
+		}
 
-        node.set(FileEntity.formatPath(worldName, "group"), Arrays
-                .asList(groups));
+		node.set(FileEntity.formatPath(worldName, "group"), Arrays.asList(groups));
 
-        this.save();
-        this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
-    }
+		save();
+		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
+	}
 }

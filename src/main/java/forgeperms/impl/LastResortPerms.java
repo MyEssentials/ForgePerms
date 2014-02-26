@@ -24,23 +24,23 @@ public class LastResortPerms implements IPermissionManager {
 		return false;
 	}
 
-    @Override
-    public boolean addGroup(String player, String group) {
-        return true;
-    }
+	@Override
+	public boolean addGroup(String player, String group) {
+		return true;
+	}
 
-    @Override
-    public boolean removeGroup(String player, String group) {
-        return true;
-    }
+	@Override
+	public boolean removeGroup(String player, String group) {
+		return true;
+	}
 
-    @Override
-    public String[] getGroupNames(String player) {
-        return null;
-    }
+	@Override
+	public String[] getGroupNames(String player) {
+		return null;
+	}
 
-    @Override
-    public String getPrimaryGroup(String world, String playerName) {
-        return null;
-    }
+	@Override
+	public String getPrimaryGroup(String world, String playerName) {
+		return null;
+	}
 }
