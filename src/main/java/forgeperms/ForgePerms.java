@@ -1,10 +1,15 @@
 package forgeperms;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import forgeperms.api.ForgePermsAPI;
@@ -78,6 +83,14 @@ public class ForgePerms {
 	public void preInit(FMLPreInitializationEvent ev) {
 		sourceFile = ev.getSourceFile();
 	}
+	
+	@Mod.EventHandler
+	public void serverAboutToStart(FMLServerAboutToStartEvent ev) {
+		File pluginsFolder = new File("./plugins");
+		if (ev.getServer().getServerModName().contains("mcpc") && pluginsFolder.exists()) {
+			injectBukkitBridge(sourceFile, pluginsFolder);
+		}
+	}
 
 	@EventHandler
 	public void serverStarted(FMLServerStartedEvent event) {
@@ -87,7 +100,31 @@ public class ForgePerms {
 
 		ForgePerms.registerPermissionManager(new LastResortPerms());
 		ForgePerms.registerChatManager(new LastResortChat());
-
-		// MinecraftForge.EVENT_BUS.register(new CommandHandler());
+	}
+	
+	private void injectBukkitBridge(File self, File pluginFolder) {
+		Log.info("Injecting ForgePermsCBBridge!");
+		try {
+			ZipFile zip = new ZipFile(self);
+			ZipEntry entry = zip.getEntry("ForgePermsCBBridge.jar");
+			if (entry == null) {
+				Log.severe("Mod doesn't contain ForgePermsCBBridge! If using MCPC, you need this!");
+				zip.close();
+				return;
+			}
+			InputStream stream = zip.getInputStream(entry);
+			FileOutputStream outStream = new FileOutputStream(new File(pluginFolder, entry.getName()));
+			
+			byte[] tmp = new byte[4*1024];
+			int size = 0;
+			while ((size = stream.read(tmp)) != -1) {
+				outStream.write(tmp, 0, size);
+			}
+			outStream.close();
+			zip.close();
+		} catch (Exception e) {
+			Log.severe("Failed to inject ForgePermsCBBridge! ", e);
+		}
+		Log.info("Injected ForgePermsCBBridge successfully!");
 	}
 }

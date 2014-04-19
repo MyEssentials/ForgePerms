@@ -29,8 +29,11 @@ minecraft {
 	version = config.minecraft_version +"-"+ config.forge_version
 }
 
-processResources
-{
+dependencies {
+	compile "com.esotericsoftware.reflectasm:reflectasm:1.09"
+}
+
+processResources {
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod/info'
         expand 'version':project.version, 'mcversion':project.minecraft.version
@@ -49,4 +52,11 @@ task withoutpex(type: Jar){
 
 artifacts {
     archives withoutpex
+}
+
+jar {
+	manifest {
+		attributes 'FMLCorePlugin': 'forgeperms.asm.FPPlugin'
+		attributes 'FMLCorePluginContainsFMLMod': 'true'
+	}
 }

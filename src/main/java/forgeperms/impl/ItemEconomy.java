@@ -49,17 +49,7 @@ public class ItemEconomy implements IEconomyManager {
 		ItemStack held = player.getHeldItem();
 		ItemStack item = new ItemStack(Integer.parseInt(itemInfo[0]), (int) amount, Integer.parseInt(itemInfo[1]));
 
-		if (held == null || held.itemID != item.itemID || held.getItemDamage() != item.getItemDamage()) { // Makes
-																											// sure
-																											// the
-																											// player
-																											// has
-																											// the
-																											// correct
-																											// item
-																											// in
-																											// their
-																											// hand
+		if (held == null || held.itemID != item.itemID || held.getItemDamage() != item.getItemDamage()) { // Makes sure the player has the correct item in their hand
 			return false;
 		}
 
@@ -67,15 +57,9 @@ public class ItemEconomy implements IEconomyManager {
 			return false;
 		}
 
-		held.stackSize -= item.stackSize; // Removes specific amount of items
-											// from players inventory
+		held.stackSize -= item.stackSize; // Removes specific amount of items from players inventory
 		if (held.stackSize <= 0) {
-			ForgeEventFactory.onPlayerDestroyItem(player, held); // Removes the
-																	// item
-																	// completely
-																	// from the
-																	// players
-																	// inventory
+			ForgeEventFactory.onPlayerDestroyItem(player, held); // Removes the item completely from the players inventory
 		}
 		return true; // Withdraw was successful!
 	}

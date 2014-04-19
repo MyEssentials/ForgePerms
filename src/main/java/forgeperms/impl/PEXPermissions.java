@@ -60,7 +60,7 @@ public class PEXPermissions implements IPermissionManager {
 		if (!pexAvailable()) {
 			throw new RuntimeException("PEX not found");
 		}
-
+		
 		return pex.has(player, node, world);
 	}
 
