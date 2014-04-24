@@ -29,9 +29,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
 import net.minecraftforge.common.Configuration;
-
-import org.bukkit.ChatColor;
-
 import pex.permissions.CommandHandler;
 import pex.permissions.IPermissions;
 import pex.permissions.PermissionBackend;
@@ -47,6 +44,7 @@ import pex.permissions.bukkit.commands.UtilityCommands;
 import pex.permissions.bukkit.commands.WorldCommands;
 import pex.permissions.commands.CommandsManager;
 import pex.permissions.exceptions.PermissionsNotAvailable;
+import pex.utils.ChatColor;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.Mod;

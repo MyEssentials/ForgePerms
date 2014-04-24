@@ -29,9 +29,6 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
-
-import org.bukkit.ChatColor;
-
 import pex.permissions.IPermissionEntity;
 import pex.permissions.PermissionGroup;
 import pex.permissions.PermissionUser;
@@ -39,6 +36,7 @@ import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.CommandListener;
 import pex.permissions.commands.CommandsManager;
 import pex.permissions.commands.exceptions.AutoCompleteChoicesException;
+import pex.utils.ChatColor;
 import pex.utils.StringUtils;
 
 public abstract class PermissionsCommand implements CommandListener {

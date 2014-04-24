@@ -26,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import pex.permissions.events.PermissionEntityEvent;
-
 /**
  * 
  * @author t3hk0d3
@@ -154,7 +152,6 @@ public abstract class PermissionGroup extends PermissionEntity implements Compar
 		dirtyWeight = true;
 
 		clearMembersCache();
-		this.callEvent(PermissionEntityEvent.Action.WEIGHT_CHANGED);
 	}
 
 	/**
@@ -187,8 +184,6 @@ public abstract class PermissionGroup extends PermissionEntity implements Compar
 		} else {
 			this.setOption("rank", null);
 		}
-
-		this.callEvent(PermissionEntityEvent.Action.RANK_CHANGED);
 	}
 
 	/**
@@ -212,8 +207,6 @@ public abstract class PermissionGroup extends PermissionEntity implements Compar
 		}
 
 		this.setOption("rank-ladder", rankLadder);
-
-		this.callEvent(PermissionEntityEvent.Action.RANK_CHANGED);
 	}
 
 	protected abstract String[] getParentGroupsNamesImpl(String worldName);
@@ -342,8 +335,6 @@ public abstract class PermissionGroup extends PermissionEntity implements Compar
 		}
 
 		this.setParentGroups(groups.toArray(new String[0]), worldName);
-
-		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
 	}
 
 	public void setParentGroups(PermissionGroup[] parentGroups) {
@@ -647,8 +638,6 @@ public abstract class PermissionGroup extends PermissionEntity implements Compar
 		clearChildren(null);
 
 		removeGroup();
-
-		this.callEvent(PermissionEntityEvent.Action.REMOVED);
 	}
 
 	private void clearChildren(String worldName) {

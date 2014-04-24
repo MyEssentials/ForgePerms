@@ -20,7 +20,6 @@ package pex.permissions.backends.sql;
 
 import pex.permissions.PermissionManager;
 import pex.permissions.ProxyPermissionUser;
-import pex.permissions.events.PermissionEntityEvent;
 
 /**
  * 
@@ -41,8 +40,6 @@ public class SQLUser extends ProxyPermissionUser {
 		backend.setParents(parentGroups, worldName);
 
 		clearCache();
-
-		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
 	}
 
 	@Override

@@ -26,7 +26,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import pex.permissions.PermissionManager;
 import pex.permissions.ProxyPermissionUser;
 import pex.permissions.backends.FileBackend;
-import pex.permissions.events.PermissionEntityEvent;
 
 /**
  * 
@@ -80,6 +79,5 @@ public class FileUser extends ProxyPermissionUser {
 		node.set(FileEntity.formatPath(worldName, "group"), Arrays.asList(groups));
 
 		save();
-		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
 	}
 }

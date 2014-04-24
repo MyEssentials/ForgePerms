@@ -20,8 +20,6 @@ package pex.permissions;
 
 import java.util.Map;
 
-import pex.permissions.events.PermissionEntityEvent;
-
 public abstract class ProxyPermissionUser extends PermissionUser {
 
 	protected IPermissionEntity backendEntity;
@@ -92,8 +90,6 @@ public abstract class ProxyPermissionUser extends PermissionUser {
 		backendEntity.setPermissions(permissions, world);
 
 		clearCache();
-
-		this.callEvent(PermissionEntityEvent.Action.PERMISSIONS_CHANGED);
 	}
 
 	@Override
@@ -116,8 +112,6 @@ public abstract class ProxyPermissionUser extends PermissionUser {
 		backendEntity.setOption(permission, value, world);
 
 		clearCache();
-
-		this.callEvent(PermissionEntityEvent.Action.OPTIONS_CHANGED);
 	}
 
 	@Override

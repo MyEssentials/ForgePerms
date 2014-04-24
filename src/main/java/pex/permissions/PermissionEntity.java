@@ -25,8 +25,6 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
-import pex.permissions.events.PermissionEntityEvent;
-
 public abstract class PermissionEntity implements IPermissionEntity {
 
 	protected PermissionManager manager;
@@ -478,7 +476,6 @@ public abstract class PermissionEntity implements IPermissionEntity {
 			timedPermissionsTime.put(world + ":" + permission, System.currentTimeMillis() / 1000L + lifeTime);
 		}
 
-		this.callEvent(PermissionEntityEvent.Action.PERMISSIONS_CHANGED);
 	}
 
 	/*
@@ -500,16 +497,6 @@ public abstract class PermissionEntity implements IPermissionEntity {
 
 		timedPermissions.get(world).remove(permission);
 		timedPermissions.remove(world + ":" + permission);
-
-		this.callEvent(PermissionEntityEvent.Action.PERMISSIONS_CHANGED);
-	}
-
-	protected void callEvent(PermissionEntityEvent event) {
-		manager.callEvent(event);
-	}
-
-	protected void callEvent(PermissionEntityEvent.Action action) {
-		this.callEvent(new PermissionEntityEvent(this, action));
 	}
 
 	/*

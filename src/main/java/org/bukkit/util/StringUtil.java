@@ -2,7 +2,7 @@ package org.bukkit.util;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 public class StringUtil {
 

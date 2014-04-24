@@ -24,13 +24,11 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.command.ICommandSender;
-
-import org.bukkit.ChatColor;
-
 import pex.permissions.PermissionGroup;
 import pex.permissions.PermissionUser;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
+import pex.utils.ChatColor;
 import pex.utils.DateUtils;
 import pex.utils.StringUtils;
 

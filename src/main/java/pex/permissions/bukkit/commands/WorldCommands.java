@@ -25,12 +25,10 @@ import java.util.Map;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
-
-import org.bukkit.ChatColor;
-
 import pex.permissions.PermissionManager;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
+import pex.utils.ChatColor;
 import pex.utils.StringUtils;
 
 public class WorldCommands extends PermissionsCommand {

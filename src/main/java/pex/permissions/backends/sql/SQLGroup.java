@@ -20,7 +20,6 @@ package pex.permissions.backends.sql;
 
 import pex.permissions.PermissionManager;
 import pex.permissions.ProxyPermissionGroup;
-import pex.permissions.events.PermissionEntityEvent;
 
 public class SQLGroup extends ProxyPermissionGroup {
 
@@ -44,7 +43,5 @@ public class SQLGroup extends ProxyPermissionGroup {
 		}
 
 		backend.setParents(parentGroups, worldName);
-
-		this.callEvent(PermissionEntityEvent.Action.INHERITANCE_CHANGED);
 	}
 }

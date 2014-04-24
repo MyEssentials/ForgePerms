@@ -27,14 +27,12 @@ import java.util.Map;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-
-import org.bukkit.ChatColor;
-
 import pex.permissions.PermissionBackend;
 import pex.permissions.PermissionManager;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
 import pex.permissions.commands.CommandsManager.CommandBinding;
+import pex.utils.ChatColor;
 
 public class UtilityCommands extends PermissionsCommand {
 

@@ -29,7 +29,6 @@ import java.util.logging.Logger;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
-import pex.permissions.events.PermissionEntityEvent;
 import pex.permissions.exceptions.RankingException;
 
 /**
@@ -602,8 +601,6 @@ public abstract class PermissionUser extends PermissionEntity {
 
 		swapGroups(sourceGroup, targetGroup);
 
-		this.callEvent(PermissionEntityEvent.Action.RANK_CHANGED);
-
 		return targetGroup;
 	}
 
@@ -660,8 +657,6 @@ public abstract class PermissionUser extends PermissionEntity {
 		}
 
 		swapGroups(sourceGroup, targetGroup);
-
-		this.callEvent(PermissionEntityEvent.Action.RANK_CHANGED);
 
 		return targetGroup;
 	}
@@ -959,15 +954,11 @@ public abstract class PermissionUser extends PermissionEntity {
 	@Override
 	public void remove() {
 		clearCache();
-
-		this.callEvent(PermissionEntityEvent.Action.REMOVED);
 	}
 
 	@Override
 	public void save() {
 		clearCache();
-
-		this.callEvent(PermissionEntityEvent.Action.SAVED);
 	}
 
 	@Override

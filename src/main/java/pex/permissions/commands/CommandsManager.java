@@ -33,12 +33,10 @@ import java.util.regex.Pattern;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-
-import org.bukkit.ChatColor;
-
 import pex.permissions.PermissionManager;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.exceptions.AutoCompleteChoicesException;
+import pex.utils.ChatColor;
 import pex.utils.StringUtils;
 
 /**

@@ -26,9 +26,6 @@ import java.util.logging.Logger;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.Configuration;
-import pex.permissions.events.PermissionEntityEvent;
-import pex.permissions.events.PermissionEvent;
-import pex.permissions.events.PermissionSystemEvent;
 
 /**
  * 
@@ -343,8 +340,8 @@ public class PermissionManager {
 
 		defaultGroups.clear();
 
-		this.callEvent(PermissionSystemEvent.Action.DEFAULTGROUP_CHANGED);
-		this.callEvent(new PermissionEntityEvent(group, PermissionEntityEvent.Action.DEFAULTGROUP_CHANGED));
+//		this.callEvent(PermissionSystemEvent.Action.DEFAULTGROUP_CHANGED);
+//		this.callEvent(new PermissionEntityEvent(group, PermissionEntityEvent.Action.DEFAULTGROUP_CHANGED));
 	}
 
 	public void setDefaultGroup(PermissionGroup group) {
@@ -369,7 +366,7 @@ public class PermissionManager {
 	 */
 	public void setDebug(boolean debug) {
 		debugMode = debug;
-		this.callEvent(PermissionSystemEvent.Action.DEBUGMODE_TOGGLE);
+//		this.callEvent(PermissionSystemEvent.Action.DEBUGMODE_TOGGLE);
 	}
 
 	/**
@@ -425,7 +422,7 @@ public class PermissionManager {
 	 */
 	public void setWorldInheritance(String world, String[] parentWorlds) {
 		backend.setWorldInheritance(world, parentWorlds);
-		this.callEvent(PermissionSystemEvent.Action.WORLDINHERITANCE_CHANGED);
+//		this.callEvent(PermissionSystemEvent.Action.WORLDINHERITANCE_CHANGED);
 	}
 
 	/**
@@ -451,7 +448,7 @@ public class PermissionManager {
 			backend.initialize();
 		}
 
-		this.callEvent(PermissionSystemEvent.Action.BACKEND_CHANGED);
+//		this.callEvent(PermissionSystemEvent.Action.BACKEND_CHANGED);
 	}
 
 	/**
@@ -480,7 +477,7 @@ public class PermissionManager {
 		if (backend != null) {
 			backend.reload();
 		}
-		this.callEvent(PermissionSystemEvent.Action.RELOADED);
+//		this.callEvent(PermissionSystemEvent.Action.RELOADED);
 	}
 
 	public void end() {
@@ -511,13 +508,13 @@ public class PermissionManager {
 		setBackend(backendName);
 	}
 
-	protected void callEvent(PermissionEvent event) {
-		// Bukkit.getServer().getPluginManager().callEvent(event);
-	}
-
-	protected void callEvent(PermissionSystemEvent.Action action) {
-		this.callEvent(new PermissionSystemEvent(action));
-	}
+//	protected void callEvent(PermissionEvent event) {
+//		// Bukkit.getServer().getPluginManager().callEvent(event);
+//	}
+//
+//	protected void callEvent(PermissionSystemEvent.Action action) {
+//		this.callEvent(new PermissionSystemEvent(action));
+//	}
 
 	public PermissionMatcher getPermissionMatcher() {
 		return matcher;

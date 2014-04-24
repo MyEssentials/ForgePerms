@@ -23,14 +23,12 @@ import java.util.logging.Logger;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-
-import org.bukkit.ChatColor;
-
 import pex.permissions.PermissionGroup;
 import pex.permissions.PermissionUser;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
 import pex.permissions.exceptions.RankingException;
+import pex.utils.ChatColor;
 
 public class PromotionCommands extends PermissionsCommand {
 

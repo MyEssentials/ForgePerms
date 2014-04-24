@@ -20,8 +20,6 @@ package pex.permissions;
 
 import java.util.Map;
 
-import pex.permissions.events.PermissionEntityEvent;
-
 public abstract class ProxyPermissionGroup extends PermissionGroup {
 
 	protected IPermissionEntity backendEntity;
@@ -64,8 +62,6 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 		backendEntity.setPrefix(prefix, worldName);
 
 		clearMembersCache();
-
-		this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
 	}
 
 	@Override
@@ -73,8 +69,6 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 		backendEntity.setSuffix(suffix, worldName);
 
 		clearMembersCache();
-
-		this.callEvent(PermissionEntityEvent.Action.INFO_CHANGED);
 	}
 
 	@Override
@@ -110,7 +104,6 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 	@Override
 	public void save() {
 		backendEntity.save();
-		this.callEvent(PermissionEntityEvent.Action.SAVED);
 	}
 
 	@Override
@@ -123,8 +116,6 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 		backendEntity.setOption(permission, value, world);
 
 		clearMembersCache();
-
-		this.callEvent(PermissionEntityEvent.Action.OPTIONS_CHANGED);
 	}
 
 	@Override
@@ -132,7 +123,5 @@ public abstract class ProxyPermissionGroup extends PermissionGroup {
 		backendEntity.setPermissions(permissions, world);
 
 		clearMembersCache();
-
-		this.callEvent(PermissionEntityEvent.Action.PERMISSIONS_CHANGED);
 	}
 }

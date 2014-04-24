@@ -1,9 +1,9 @@
-package org.bukkit;
+package pex.utils;
 
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 
 import com.google.common.collect.Maps;
 
