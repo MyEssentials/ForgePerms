@@ -23,12 +23,12 @@ import java.util.logging.Logger;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import pex.permissions.PermissionGroup;
 import pex.permissions.PermissionUser;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
 import pex.permissions.exceptions.RankingException;
-import pex.utils.ChatColor;
 
 public class PromotionCommands extends PermissionsCommand {
 
@@ -39,7 +39,7 @@ public class PromotionCommands extends PermissionsCommand {
 		PermissionGroup group = PermissionsEx.getPermissionManager().getGroup(groupName);
 
 		if (group == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group \"" + groupName + "\" not found");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Group \"" + groupName + "\" not found");
 			return;
 		}
 
@@ -87,7 +87,7 @@ public class PromotionCommands extends PermissionsCommand {
 		if (sender instanceof EntityPlayer) {
 			promoter = PermissionsEx.getPermissionManager().getUser(((EntityPlayer) sender).username);
 			if (promoter == null || !promoter.has("permissions.user.promote." + ladder, String.valueOf(((EntityPlayer) sender).dimension))) {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "You don't have enough permissions to promote on this ladder");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "You don't have enough permissions to promote on this ladder");
 				return;
 			}
 
@@ -101,7 +101,7 @@ public class PromotionCommands extends PermissionsCommand {
 			PermissionsEx.sendChatToPlayer(sender, "User " + user.getName() + " promoted to " + targetGroup.getName() + " group");
 			Logger.getLogger("Minecraft").info("User " + user.getName() + " has been promoted to " + targetGroup.getName() + " group on " + targetGroup.getRankLadder() + " ladder by " + promoterName);
 		} catch (RankingException e) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Promotion error: " + e.getMessage());
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Promotion error: " + e.getMessage());
 			Logger.getLogger("Minecraft").severe("Ranking Error (" + promoterName + " > " + e.getTarget().getName() + "): " + e.getMessage());
 		}
 	}
@@ -112,7 +112,7 @@ public class PromotionCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Specified user \"" + args.get("user") + "\" not found!");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Specified user \"" + args.get("user") + "\" not found!");
 			return;
 		}
 
@@ -128,7 +128,7 @@ public class PromotionCommands extends PermissionsCommand {
 			demoter = PermissionsEx.getPermissionManager().getUser(((EntityPlayer) sender).username);
 
 			if (demoter == null || !demoter.has("permissions.user.demote." + ladder, String.valueOf(((EntityPlayer) sender).dimension))) {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "You don't have enough permissions to demote on this ladder");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "You don't have enough permissions to demote on this ladder");
 				return;
 			}
 
@@ -142,7 +142,7 @@ public class PromotionCommands extends PermissionsCommand {
 			PermissionsEx.sendChatToPlayer(sender, "User " + user.getName() + " demoted to " + targetGroup.getName() + " group");
 			Logger.getLogger("Minecraft").info("User " + user.getName() + " has been demoted to " + targetGroup.getName() + " group on " + targetGroup.getRankLadder() + " ladder by " + demoterName);
 		} catch (RankingException e) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Demotion error: " + e.getMessage());
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Demotion error: " + e.getMessage());
 			Logger.getLogger("Minecraft").severe("Ranking Error (" + demoterName + " demotes " + e.getTarget().getName() + "): " + e.getMessage());
 		}
 	}

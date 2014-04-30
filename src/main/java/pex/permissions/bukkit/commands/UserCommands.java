@@ -23,12 +23,12 @@ import java.util.Map;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumChatFormatting;
 import pex.permissions.PermissionGroup;
 import pex.permissions.PermissionManager;
 import pex.permissions.PermissionUser;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
-import pex.utils.ChatColor;
 import pex.utils.DateUtils;
 import pex.utils.StringUtils;
 
@@ -38,9 +38,9 @@ public class UserCommands extends PermissionsCommand {
 	public void usersList(Object plugin, ICommandSender sender, Map<String, String> args) {
 		PermissionUser[] users = PermissionsEx.getPermissionManager().getUsers();
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Currently registered users: ");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Currently registered users: ");
 		for (PermissionUser user : users) {
-			PermissionsEx.sendChatToPlayer(sender, " " + user.getName() + " " + ChatColor.DARK_GREEN + "[" + StringUtils.implode(user.getGroupsNames(), ", ") + "]");
+			PermissionsEx.sendChatToPlayer(sender, " " + user.getName() + " " + EnumChatFormatting.DARK_GREEN + "[" + StringUtils.implode(user.getGroupsNames(), ", ") + "]");
 		}
 	}
 
@@ -65,7 +65,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -99,7 +99,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -117,7 +117,7 @@ public class UserCommands extends PermissionsCommand {
 
 		EntityPlayer player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(userName);
 		if (player == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Player not found (offline?)");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Player not found (offline?)");
 			return;
 		}
 
@@ -131,9 +131,9 @@ public class UserCommands extends PermissionsCommand {
 		 * != null) { pluginName =
 		 * info.getAttachment().getPlugin().getDescription().getName(); }
 		 * 
-		 * PermissionsEx.sendChatToPlayer(sender, " '" + ChatColor.GREEN +
-		 * info.getPermission() + ChatColor.WHITE + "' = " + ChatColor.BLUE +
-		 * info.getValue() + ChatColor.WHITE + " by " + ChatColor.DARK_GREEN +
+		 * PermissionsEx.sendChatToPlayer(sender, " '" + EnumChatFormatting.GREEN +
+		 * info.getPermission() + EnumChatFormatting.WHITE + "' = " + EnumChatFormatting.BLUE +
+		 * info.getValue() + EnumChatFormatting.WHITE + " by " + EnumChatFormatting.DARK_GREEN +
 		 * pluginName); }
 		 */
 	}
@@ -146,7 +146,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -165,7 +165,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -183,7 +183,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -200,7 +200,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -223,7 +223,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -240,19 +240,19 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
 		if (user.isVirtual()) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User is virtual");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User is virtual");
 		}
 
 		user.remove();
 
 		PermissionsEx.getPermissionManager().resetUser(userName);
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "User \"" + user.getName() + "\" removed!");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "User \"" + user.getName() + "\" removed!");
 	}
 
 	@Command(name = "pex", syntax = "user <user> add <permission> [world]", permission = "permissions.manage.users.permissions.<user>", description = "Add <permission> to <user> in [world]")
@@ -263,13 +263,13 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
 		user.addPermission(args.get("permission"), worldName);
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Permission \"" + args.get("permission") + "\" added!");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Permission \"" + args.get("permission") + "\" added!");
 
 		informPlayer(plugin, userName, "Your permissions have been changed!");
 	}
@@ -282,7 +282,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -291,7 +291,7 @@ public class UserCommands extends PermissionsCommand {
 		user.removePermission(permission, worldName);
 		user.removeTimedPermission(permission, worldName);
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Permission \"" + permission + "\" removed!");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Permission \"" + permission + "\" removed!");
 		informPlayer(plugin, userName, "Your permissions have been changed!");
 	}
 
@@ -303,7 +303,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -322,7 +322,7 @@ public class UserCommands extends PermissionsCommand {
 
 			PermissionsEx.sendChatToPlayer(sender, "Permissions swapped!");
 		} catch (Throwable e) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Error: " + e.getMessage());
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Error: " + e.getMessage());
 		}
 	}
 
@@ -340,7 +340,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -348,7 +348,7 @@ public class UserCommands extends PermissionsCommand {
 
 		user.addTimedPermission(permission, worldName, lifetime);
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Timed permission \"" + permission + "\" added!");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Timed permission \"" + permission + "\" added!");
 		informPlayer(plugin, userName, "Your permissions have been changed!");
 
 		logger.info("User " + userName + " get timed permission \"" + args.get("permission") + "\" " + (lifetime > 0 ? "for " + lifetime + " seconds " : " ") + "from " + getSenderName(sender));
@@ -363,13 +363,13 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
 		user.removeTimedPermission(args.get("permission"), worldName);
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Timed permission \"" + permission + "\" removed!");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Timed permission \"" + permission + "\" removed!");
 		informPlayer(plugin, userName, "Your permissions have been changed!");
 	}
 
@@ -381,16 +381,16 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
 		user.setOption(args.get("option"), args.get("value"), worldName);
 
 		if (args.containsKey("value") && args.get("value").isEmpty()) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Option \"" + args.get("option") + "\" cleared!");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Option \"" + args.get("option") + "\" cleared!");
 		} else {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Option \"" + args.get("option") + "\" set!");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Option \"" + args.get("option") + "\" set!");
 		}
 
 		informPlayer(plugin, userName, "Your permissions have been changed!");
@@ -407,7 +407,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -426,7 +426,7 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -436,7 +436,7 @@ public class UserCommands extends PermissionsCommand {
 
 				user.addGroup(groupName, worldName, lifetime);
 			} catch (NumberFormatException e) {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Group lifetime should be number!");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Group lifetime should be number!");
 				return;
 			}
 
@@ -444,7 +444,7 @@ public class UserCommands extends PermissionsCommand {
 			user.addGroup(groupName, worldName);
 		}
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "User added to group \"" + groupName + "\"!");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "User added to group \"" + groupName + "\"!");
 		informPlayer(plugin, userName, "You are assigned to \"" + groupName + "\" group");
 	}
 
@@ -456,7 +456,7 @@ public class UserCommands extends PermissionsCommand {
 		String worldName = this.autoCompleteWorldName(args.get("world"));
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
@@ -470,7 +470,7 @@ public class UserCommands extends PermissionsCommand {
 
 			for (int i = 0; i < groupsNames.length; i++) {
 				if (sender instanceof EntityPlayer && !manager.has((EntityPlayer) sender, "permissions.manage.membership." + groupsNames[i].toLowerCase())) {
-					PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Don't have enough permission for group " + groupsNames[i]);
+					PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Don't have enough permission for group " + groupsNames[i]);
 					return;
 				}
 
@@ -484,21 +484,21 @@ public class UserCommands extends PermissionsCommand {
 				groups = new PermissionGroup[] { manager.getGroup(groupName) };
 
 				if (sender instanceof EntityPlayer && !manager.has((EntityPlayer) sender, "permissions.manage.membership." + groupName.toLowerCase())) {
-					PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Don't have enough permission for group " + groupName);
+					PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Don't have enough permission for group " + groupName);
 					return;
 				}
 
 			} else {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "No groups set!");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "No groups set!");
 				return;
 			}
 		}
 
 		if (groups.length > 0) {
 			user.setGroups(groups, worldName);
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "User groups set!");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "User groups set!");
 		} else {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "No groups set!");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "No groups set!");
 		}
 
 		informPlayer(plugin, user.getName(), "You are now only in \"" + groupName + "\" group");
@@ -513,13 +513,13 @@ public class UserCommands extends PermissionsCommand {
 		PermissionUser user = PermissionsEx.getPermissionManager().getUser(userName);
 
 		if (user == null) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "User does not exist");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "User does not exist");
 			return;
 		}
 
 		user.removeGroup(groupName, worldName);
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "User removed from group " + groupName + "!");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "User removed from group " + groupName + "!");
 
 		informPlayer(plugin, userName, "You were removed from \"" + groupName + "\" group");
 	}
@@ -539,7 +539,7 @@ public class UserCommands extends PermissionsCommand {
 																				// one
 																				// day
 			} catch (NumberFormatException e) {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Threshold should be number (in days)");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Threshold should be number (in days)");
 				return;
 			}
 		}

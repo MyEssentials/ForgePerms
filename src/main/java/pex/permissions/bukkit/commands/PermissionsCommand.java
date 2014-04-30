@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.WorldServer;
 import pex.permissions.IPermissionEntity;
 import pex.permissions.PermissionGroup;
@@ -36,7 +37,6 @@ import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.CommandListener;
 import pex.permissions.commands.CommandsManager;
 import pex.permissions.commands.exceptions.AutoCompleteChoicesException;
-import pex.utils.ChatColor;
 import pex.utils.StringUtils;
 
 public abstract class PermissionsCommand implements CommandListener {
@@ -64,7 +64,7 @@ public abstract class PermissionsCommand implements CommandListener {
 		if (player == null) {
 			return;
 		}
-		PermissionsEx.sendChatToPlayer(player, ChatColor.BLUE + "[PermissionsEx] " + ChatColor.WHITE + message);
+		PermissionsEx.sendChatToPlayer(player, EnumChatFormatting.BLUE + "[PermissionsEx] " + EnumChatFormatting.WHITE + message);
 		// player.sendChatToPlayer(ChatColor.BLUE + "[PermissionsEx] " +
 		// ChatColor.WHITE + message);
 	}

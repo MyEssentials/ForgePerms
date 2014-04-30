@@ -33,10 +33,10 @@ import java.util.regex.Pattern;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import pex.permissions.PermissionManager;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.exceptions.AutoCompleteChoicesException;
-import pex.utils.ChatColor;
 import pex.utils.StringUtils;
 
 /**
@@ -100,8 +100,8 @@ public class CommandsManager {
 		}
 
 		if (selectedBinding == null) { // there is fitting handler
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Error in command syntax. Check command help.");
-			// sender.sendChatToPlayer(ChatColor.RED +
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Error in command syntax. Check command help.");
+			// sender.sendChatToPlayer(EnumChatFormatting.RED +
 			// "Error in command syntax. Check command help.");
 			return true;
 		}
@@ -111,8 +111,8 @@ public class CommandsManager {
 												// required permission
 			if (!selectedBinding.checkPermissions((EntityPlayer) sender)) {
 				logger.warning("User " + ((EntityPlayer) sender).username + " tried to access chat command \"" + command.getCommandName() + " " + arguments + "\", but doesn't have permission to do this.");
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Sorry, you don't have enough permissions.");
-				// sender.sendChatToPlayer(ChatColor.RED +
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Sorry, you don't have enough permissions.");
+				// sender.sendChatToPlayer(EnumChatFormatting.RED +
 				// "Sorry, you don't have enough permissions.");
 				return true;
 			}

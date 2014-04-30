@@ -27,12 +27,12 @@ import java.util.Map;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumChatFormatting;
 import pex.permissions.PermissionBackend;
 import pex.permissions.PermissionManager;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
 import pex.permissions.commands.CommandsManager.CommandBinding;
-import pex.utils.ChatColor;
 
 public class UtilityCommands extends PermissionsCommand {
 
@@ -40,7 +40,7 @@ public class UtilityCommands extends PermissionsCommand {
 	public void reload(Object plugin, ICommandSender sender, Map<String, String> args) {
 		PermissionsEx.getPermissionManager().reset();
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Permissions reloaded");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Permissions reloaded");
 	}
 
 	@Command(name = "pex", syntax = "config <node> [value]", permission = "permissions.manage.config", description = "Print or set <node> [value]")
@@ -61,7 +61,7 @@ public class UtilityCommands extends PermissionsCommand {
 		 * if (args.get("value") != null) { config.get(category, key,
 		 * defaultValue).set(nodeName, this.parseValue(args.get("value"))); try
 		 * { config.save(); } catch (Throwable e) {
-		 * PermissionsEx.sendChatToPlayer(sender, ChatColor.RED +
+		 * PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED +
 		 * "[PermissionsEx] Failed to save configuration: " + e.getMessage()); }
 		 * }
 		 * 
@@ -91,12 +91,12 @@ public class UtilityCommands extends PermissionsCommand {
 
 		try {
 			PermissionsEx.getPermissionManager().setBackend(args.get("backend"));
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "Permission backend changed!");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "Permission backend changed!");
 		} catch (RuntimeException e) {
 			if (e.getCause() instanceof ClassNotFoundException) {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Specified backend not found.");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Specified backend not found.");
 			} else {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Error during backend initialization.");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Error during backend initialization.");
 				e.printStackTrace();
 			}
 		}
@@ -125,17 +125,17 @@ public class UtilityCommands extends PermissionsCommand {
 
 			outStream.close();
 
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.WHITE + "[PermissionsEx] Data dumped in \"" + dstFile.getName() + "\" ");
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.WHITE + "[PermissionsEx] Data dumped in \"" + dstFile.getName() + "\" ");
 		} catch (RuntimeException e) {
 			if (e.getCause() instanceof ClassNotFoundException) {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Specified backend not found!");
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Specified backend not found!");
 			} else {
-				PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "Error: " + e.getMessage());
+				PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "Error: " + e.getMessage());
 				logger.severe("Error: " + e.getMessage());
 				e.printStackTrace();
 			}
 		} catch (IOException e) {
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.RED + "IO Error: " + e.getMessage());
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.RED + "IO Error: " + e.getMessage());
 		}
 	}
 
@@ -168,7 +168,7 @@ public class UtilityCommands extends PermissionsCommand {
 
 		int totalPages = (int) Math.ceil(commands.size() / count);
 
-		PermissionsEx.sendChatToPlayer(sender, ChatColor.BLUE + "PermissionsEx" + ChatColor.WHITE + " commands (page " + ChatColor.GOLD + page + "/" + totalPages + ChatColor.WHITE + "): ");
+		PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.BLUE + "PermissionsEx" + EnumChatFormatting.WHITE + " commands (page " + EnumChatFormatting.GOLD + page + "/" + totalPages + EnumChatFormatting.WHITE + "): ");
 
 		int base = count * (page - 1);
 
@@ -178,11 +178,11 @@ public class UtilityCommands extends PermissionsCommand {
 			}
 
 			Command command = commands.get(i).getMethodAnnotation();
-			String commandName = String.format("/%s %s", command.name(), command.syntax()).replace("<", ChatColor.BOLD.toString() + ChatColor.RED + "<").replace(">", ">" + ChatColor.RESET + ChatColor.GOLD.toString()).replace("[", ChatColor.BOLD.toString() + ChatColor.BLUE + "[")
-					.replace("]", "]" + ChatColor.RESET + ChatColor.GOLD.toString());
+			String commandName = String.format("/%s %s", command.name(), command.syntax()).replace("<", EnumChatFormatting.BOLD.toString() + EnumChatFormatting.RED + "<").replace(">", ">" + EnumChatFormatting.RESET + EnumChatFormatting.GOLD.toString()).replace("[", EnumChatFormatting.BOLD.toString() + EnumChatFormatting.BLUE + "[")
+					.replace("]", "]" + EnumChatFormatting.RESET + EnumChatFormatting.GOLD.toString());
 
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.GOLD + commandName);
-			PermissionsEx.sendChatToPlayer(sender, ChatColor.AQUA + "    " + command.description());
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.GOLD + commandName);
+			PermissionsEx.sendChatToPlayer(sender, EnumChatFormatting.AQUA + "    " + command.description());
 		}
 	}
 }

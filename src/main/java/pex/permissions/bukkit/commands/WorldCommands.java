@@ -24,11 +24,11 @@ import java.util.Map;
 
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.WorldServer;
 import pex.permissions.PermissionManager;
 import pex.permissions.bukkit.PermissionsEx;
 import pex.permissions.commands.Command;
-import pex.utils.ChatColor;
 import pex.utils.StringUtils;
 
 public class WorldCommands extends PermissionsCommand {
@@ -44,7 +44,7 @@ public class WorldCommands extends PermissionsCommand {
 			String[] parentWorlds = manager.getWorldInheritance(String.valueOf(world.provider.dimensionId));
 			String output = "  " + String.valueOf(world.provider.dimensionId);
 			if (parentWorlds.length > 0) {
-				output += ChatColor.GREEN + " [" + ChatColor.WHITE + StringUtils.implode(parentWorlds, ", ") + ChatColor.GREEN + "]";
+				output += EnumChatFormatting.GREEN + " [" + EnumChatFormatting.WHITE + StringUtils.implode(parentWorlds, ", ") + EnumChatFormatting.GREEN + "]";
 			}
 
 			PermissionsEx.sendChatToPlayer(sender, output);
@@ -74,7 +74,7 @@ public class WorldCommands extends PermissionsCommand {
 			// String[] parents = manager.getWorldInheritance(parentWorld);
 			String output = "  " + parentWorld;
 			if (parentWorlds.length > 0) {
-				output += ChatColor.GREEN + " [" + ChatColor.WHITE + StringUtils.implode(parentWorlds, ", ") + ChatColor.GREEN + "]";
+				output += EnumChatFormatting.GREEN + " [" + EnumChatFormatting.WHITE + StringUtils.implode(parentWorlds, ", ") + EnumChatFormatting.GREEN + "]";
 			}
 
 			PermissionsEx.sendChatToPlayer(sender, output);

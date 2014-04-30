@@ -28,6 +28,7 @@ import net.minecraft.command.ServerCommandManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatMessageComponent;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.Configuration;
 import pex.permissions.CommandHandler;
 import pex.permissions.IPermissions;
@@ -44,7 +45,6 @@ import pex.permissions.bukkit.commands.UtilityCommands;
 import pex.permissions.bukkit.commands.WorldCommands;
 import pex.permissions.commands.CommandsManager;
 import pex.permissions.exceptions.PermissionsNotAvailable;
-import pex.utils.ChatColor;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.Mod;
@@ -154,7 +154,7 @@ public class PermissionsEx implements IPermissions {
 			return commandsManager.execute(sender, command, args);
 		} else {
 			if (sender instanceof EntityPlayer) {
-				sendChatToPlayer(sender, "[" + ChatColor.RED + "PermissionsEx" + ChatColor.WHITE + "]");
+				sendChatToPlayer(sender, "[" + EnumChatFormatting.RED + "PermissionsEx" + EnumChatFormatting.WHITE + "]");
 
 				return !permissionsManager.has((EntityPlayer) sender, "permissions.manage");
 			} else {

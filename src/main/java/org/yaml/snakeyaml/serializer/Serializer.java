@@ -145,6 +145,12 @@ public final class Serializer {
 						anchorNode(value);
 					}
 					break;
+			case anchor:
+				break;
+			case scalar:
+				break;
+			default:
+				break;
 			}
 		}
 	}
