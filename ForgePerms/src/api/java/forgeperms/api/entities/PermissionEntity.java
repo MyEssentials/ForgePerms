@@ -1,7 +1,8 @@
 package forgeperms.api.entities;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Base implementation of permission entities
@@ -9,13 +10,13 @@ import java.util.List;
  */
 public class PermissionEntity {
 	private String name, prefix, suffix;
-	private List<String> permissions;
+	private Map<String, List<String>> permissions;
 	
 	public PermissionEntity(String name, String prefix, String suffix) {
 		this.name = name;
 		this.prefix = prefix;
 		this.suffix = suffix;
-		permissions = new ArrayList<String>();
+		permissions = new HashMap<String, List<String>>();
 	}
 	
 	public String getName() {
@@ -30,7 +31,7 @@ public class PermissionEntity {
 		return suffix;
 	}
 	
-	public List<String> getPermissions() {
-		return permissions;
+	public List<String> getPermissions(String world) {
+		return permissions.get(world);
 	}
 }
