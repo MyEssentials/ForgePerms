@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+// TODO Load permissions from backend
+// TODO Inheritance
+// TODO Serialization
+
 /**
  * Base implementation of permission entities
  * @author Joe Goett

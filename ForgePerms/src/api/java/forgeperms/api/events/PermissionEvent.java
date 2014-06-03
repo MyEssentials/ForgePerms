@@ -4,6 +4,8 @@ import net.minecraftforge.event.Cancelable;
 import net.minecraftforge.event.Event;
 import forgeperms.api.entities.PermissionEntity;
 
+// TODO More events? (Option/meta value changed, inheritance changed?)
+
 public class PermissionEvent extends Event {
 	public PermissionEntity entity;
 	public String permission;

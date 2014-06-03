@@ -3,11 +3,10 @@ package forgeperms;
 import java.util.logging.Logger;
 
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import forgeperms.api.backend.PermissionBackend;
 
 @Mod(modid = "ForgePerms2", name = "ForgePerms 2", version = "2.0.0")
@@ -21,14 +20,13 @@ public class ForgePerms {
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent ev) {
 		log = ev.getModLog();
+		// TODO Load Config
 	}
 	
 	@Mod.EventHandler
-	public void init(FMLInitializationEvent ev) {
-	}
-	
-	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent ev) {
+	public void serverStarting(FMLServerStartingEvent ev) {
+		// TODO Init and load backend
+		// TODO Register Commands
 	}
 	
 	@Mod.EventHandler
