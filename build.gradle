@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+    }
+}
+
+ext.configFile = file "build.properties"
+
+ext.configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+project(':ForgePerms') {
+    apply plugin: "forge"
+
+    version = config.minecraft_version + "-" + config.mod_version + "." + config.build_number
+    group = config.group
+    archivesBaseName = config.archivesBaseName
+
+    minecraft {
+        version = config.minecraft_version + "-" + config.forge_version
+    }
+
+    processResources {
+        from(sourceSets.main.resources.srcDirs) {
+            include 'mcmod.info'
+            expand 'version':project.version, 'mcversion':project.minecraft.version
+        }
+        from(sourceSets.main.resources.srcDirs) {
+            exclude 'mcmod.info'
+        }
+    }
+}
+
+project(':CBBridge') {
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "java"
+
+    repositories {
+        maven {
+	    name = "Bukkit"
+	    url = "http://repo.bukkit.org/content/groups/public/"
+        }
+    }
+    dependencies {
+	compile 'org.bukkit:bukkit:1.6.4-R2.0'
+    }
+}
